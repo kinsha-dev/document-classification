@@ -1,0 +1,650 @@
+{
+  "jobId": "d4915577-64d6-49bd-894a-604076a07f8b",
+  "filename": "test_resume.png",
+  "fileType": "image",
+  "mimeType": "image/png",
+  "sizeBytes": 34076,
+  "processedAt": "2026-04-12T13:45:52.961Z",
+  "durationMs": 914,
+  "fullText": "RESUME / CURRICULUM VITAE\nKinsha Abid\n\nkinsha.abid@gmail.com\n\nWORK EXPERIENCE\n\nSenior Software Engineer — TechCorp (2022-Present)\n- Led development of document classification systems.\n\n- Integrated local Al models (Ollama, Qwen)\n\n- Built TypeScript microservices for PDF extraction\nEDUCATION\n\nB.Sc. Computer Science — State University (2018)\nSKILLS\n\nTypescript, Python, Node.js, Machine Learning, PDF\nREFERENCES\n\nAvailable upon request.",
+  "charCount": 436,
+  "wordCount": 55,
+  "ocrConfidence": 89.9,
+  "ocrLines": [
+    {
+      "text": "RESUME / CURRICULUM VITAE",
+      "confidence": 94.2,
+      "words": [
+        {
+          "text": "RESUME",
+          "confidence": 92.3,
+          "bbox": {
+            "x0": 42,
+            "y0": 35,
+            "x1": 141,
+            "y1": 51
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 92.1,
+          "bbox": {
+            "x0": 150,
+            "y0": 35,
+            "x1": 158,
+            "y1": 53
+          }
+        },
+        {
+          "text": "CURRICULUM",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 167,
+            "y0": 35,
+            "x1": 327,
+            "y1": 51
+          }
+        },
+        {
+          "text": "VITAE",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 337,
+            "y0": 35,
+            "x1": 405,
+            "y1": 51
+          }
+        }
+      ]
+    },
+    {
+      "text": "Kinsha Abid\n",
+      "confidence": 93.4,
+      "words": [
+        {
+          "text": "Kinsha",
+          "confidence": 89.8,
+          "bbox": {
+            "x0": 42,
+            "y0": 73,
+            "x1": 107,
+            "y1": 87
+          }
+        },
+        {
+          "text": "Abid",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 115,
+            "y0": 73,
+            "x1": 159,
+            "y1": 87
+          }
+        }
+      ]
+    },
+    {
+      "text": "kinsha.abid@gmail.com\n",
+      "confidence": 75.8,
+      "words": [
+        {
+          "text": "kinsha.abid@gmail.com",
+          "confidence": 75.8,
+          "bbox": {
+            "x0": 41,
+            "y0": 102,
+            "x1": 226,
+            "y1": 116
+          }
+        }
+      ]
+    },
+    {
+      "text": "WORK EXPERIENCE\n",
+      "confidence": 96.4,
+      "words": [
+        {
+          "text": "WORK",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 41,
+            "y0": 143,
+            "x1": 96,
+            "y1": 155
+          }
+        },
+        {
+          "text": "EXPERIENCE",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 103,
+            "y0": 143,
+            "x1": 212,
+            "y1": 155
+          }
+        }
+      ]
+    },
+    {
+      "text": "Senior Software Engineer — TechCorp (2022-Present)",
+      "confidence": 87.3,
+      "words": [
+        {
+          "text": "Senior",
+          "confidence": 71.6,
+          "bbox": {
+            "x0": 41,
+            "y0": 173,
+            "x1": 87,
+            "y1": 183
+          }
+        },
+        {
+          "text": "Software",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 93,
+            "y0": 173,
+            "x1": 157,
+            "y1": 183
+          }
+        },
+        {
+          "text": "Engineer",
+          "confidence": 93.3,
+          "bbox": {
+            "x0": 163,
+            "y0": 173,
+            "x1": 227,
+            "y1": 186
+          }
+        },
+        {
+          "text": "—",
+          "confidence": 89.5,
+          "bbox": {
+            "x0": 233,
+            "y0": 178,
+            "x1": 244,
+            "y1": 180
+          }
+        },
+        {
+          "text": "TechCorp",
+          "confidence": 89.5,
+          "bbox": {
+            "x0": 250,
+            "y0": 173,
+            "x1": 317,
+            "y1": 186
+          }
+        },
+        {
+          "text": "(2022-Present)",
+          "confidence": 83,
+          "bbox": {
+            "x0": 322,
+            "y0": 173,
+            "x1": 432,
+            "y1": 185
+          }
+        }
+      ]
+    },
+    {
+      "text": "- Led development of document classification systems.\n",
+      "confidence": 85.8,
+      "words": [
+        {
+          "text": "-",
+          "confidence": 54.9,
+          "bbox": {
+            "x0": 41,
+            "y0": 203,
+            "x1": 44,
+            "y1": 205
+          }
+        },
+        {
+          "text": "Led",
+          "confidence": 93,
+          "bbox": {
+            "x0": 50,
+            "y0": 197,
+            "x1": 73,
+            "y1": 207
+          }
+        },
+        {
+          "text": "development",
+          "confidence": 95.2,
+          "bbox": {
+            "x0": 79,
+            "y0": 197,
+            "x1": 167,
+            "y1": 210
+          }
+        },
+        {
+          "text": "of",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 170,
+            "y0": 197,
+            "x1": 184,
+            "y1": 207
+          }
+        },
+        {
+          "text": "document",
+          "confidence": 92.5,
+          "bbox": {
+            "x0": 189,
+            "y0": 197,
+            "x1": 256,
+            "y1": 207
+          }
+        },
+        {
+          "text": "classification",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 260,
+            "y0": 197,
+            "x1": 348,
+            "y1": 207
+          }
+        },
+        {
+          "text": "systems.",
+          "confidence": 71.9,
+          "bbox": {
+            "x0": 353,
+            "y0": 199,
+            "x1": 408,
+            "y1": 210
+          }
+        }
+      ]
+    },
+    {
+      "text": "- Integrated local Al models (Ollama, Qwen)\n",
+      "confidence": 85.6,
+      "words": [
+        {
+          "text": "-",
+          "confidence": 69.5,
+          "bbox": {
+            "x0": 41,
+            "y0": 223,
+            "x1": 44,
+            "y1": 225
+          }
+        },
+        {
+          "text": "Integrated",
+          "confidence": 89.3,
+          "bbox": {
+            "x0": 50,
+            "y0": 217,
+            "x1": 121,
+            "y1": 230
+          }
+        },
+        {
+          "text": "local",
+          "confidence": 91,
+          "bbox": {
+            "x0": 126,
+            "y0": 217,
+            "x1": 156,
+            "y1": 227
+          }
+        },
+        {
+          "text": "Al",
+          "confidence": 94.9,
+          "bbox": {
+            "x0": 161,
+            "y0": 218,
+            "x1": 173,
+            "y1": 227
+          }
+        },
+        {
+          "text": "models",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 180,
+            "y0": 217,
+            "x1": 228,
+            "y1": 227
+          }
+        },
+        {
+          "text": "(Ollama,",
+          "confidence": 73.1,
+          "bbox": {
+            "x0": 233,
+            "y0": 217,
+            "x1": 288,
+            "y1": 229
+          }
+        },
+        {
+          "text": "Qwen)",
+          "confidence": 88.3,
+          "bbox": {
+            "x0": 294,
+            "y0": 217,
+            "x1": 336,
+            "y1": 229
+          }
+        }
+      ]
+    },
+    {
+      "text": "- Built TypeScript microservices for PDF extraction",
+      "confidence": 86.7,
+      "words": [
+        {
+          "text": "-",
+          "confidence": 59.6,
+          "bbox": {
+            "x0": 41,
+            "y0": 243,
+            "x1": 44,
+            "y1": 245
+          }
+        },
+        {
+          "text": "Built",
+          "confidence": 80.5,
+          "bbox": {
+            "x0": 50,
+            "y0": 237,
+            "x1": 81,
+            "y1": 247
+          }
+        },
+        {
+          "text": "TypeScript",
+          "confidence": 91.8,
+          "bbox": {
+            "x0": 85,
+            "y0": 237,
+            "x1": 157,
+            "y1": 250
+          }
+        },
+        {
+          "text": "microservices",
+          "confidence": 89.2,
+          "bbox": {
+            "x0": 162,
+            "y0": 237,
+            "x1": 254,
+            "y1": 247
+          }
+        },
+        {
+          "text": "for",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 258,
+            "y0": 237,
+            "x1": 278,
+            "y1": 247
+          }
+        },
+        {
+          "text": "PDF",
+          "confidence": 92.2,
+          "bbox": {
+            "x0": 283,
+            "y0": 238,
+            "x1": 308,
+            "y1": 247
+          }
+        },
+        {
+          "text": "extraction",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 313,
+            "y0": 237,
+            "x1": 382,
+            "y1": 247
+          }
+        }
+      ]
+    },
+    {
+      "text": "EDUCATION\n",
+      "confidence": 96.5,
+      "words": [
+        {
+          "text": "EDUCATION",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 41,
+            "y0": 283,
+            "x1": 143,
+            "y1": 295
+          }
+        }
+      ]
+    },
+    {
+      "text": "B.Sc. Computer Science — State University (2018)",
+      "confidence": 94.3,
+      "words": [
+        {
+          "text": "B.Sc.",
+          "confidence": 94.2,
+          "bbox": {
+            "x0": 41,
+            "y0": 309,
+            "x1": 76,
+            "y1": 318
+          }
+        },
+        {
+          "text": "Computer",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 82,
+            "y0": 309,
+            "x1": 153,
+            "y1": 321
+          }
+        },
+        {
+          "text": "Science",
+          "confidence": 90.2,
+          "bbox": {
+            "x0": 159,
+            "y0": 308,
+            "x1": 213,
+            "y1": 318
+          }
+        },
+        {
+          "text": "—",
+          "confidence": 90.2,
+          "bbox": {
+            "x0": 220,
+            "y0": 313,
+            "x1": 231,
+            "y1": 315
+          }
+        },
+        {
+          "text": "State",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 237,
+            "y0": 309,
+            "x1": 275,
+            "y1": 318
+          }
+        },
+        {
+          "text": "University",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 281,
+            "y0": 308,
+            "x1": 354,
+            "y1": 321
+          }
+        },
+        {
+          "text": "(2018)",
+          "confidence": 95.2,
+          "bbox": {
+            "x0": 360,
+            "y0": 308,
+            "x1": 406,
+            "y1": 320
+          }
+        }
+      ]
+    },
+    {
+      "text": "SKILLS\n",
+      "confidence": 95.3,
+      "words": [
+        {
+          "text": "SKILLS",
+          "confidence": 95.3,
+          "bbox": {
+            "x0": 41,
+            "y0": 348,
+            "x1": 100,
+            "y1": 360
+          }
+        }
+      ]
+    },
+    {
+      "text": "Typescript, Python, Node.js, Machine Learning, PDF",
+      "confidence": 91.3,
+      "words": [
+        {
+          "text": "Typescript,",
+          "confidence": 82.4,
+          "bbox": {
+            "x0": 40,
+            "y0": 373,
+            "x1": 121,
+            "y1": 386
+          }
+        },
+        {
+          "text": "Python,",
+          "confidence": 93.3,
+          "bbox": {
+            "x0": 128,
+            "y0": 373,
+            "x1": 183,
+            "y1": 386
+          }
+        },
+        {
+          "text": "Node.js,",
+          "confidence": 86,
+          "bbox": {
+            "x0": 189,
+            "y0": 373,
+            "x1": 247,
+            "y1": 386
+          }
+        },
+        {
+          "text": "Machine",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 254,
+            "y0": 373,
+            "x1": 313,
+            "y1": 383
+          }
+        },
+        {
+          "text": "Learning,",
+          "confidence": 94.7,
+          "bbox": {
+            "x0": 319,
+            "y0": 373,
+            "x1": 387,
+            "y1": 386
+          }
+        },
+        {
+          "text": "PDF",
+          "confidence": 94.7,
+          "bbox": {
+            "x0": 393,
+            "y0": 374,
+            "x1": 421,
+            "y1": 383
+          }
+        }
+      ]
+    },
+    {
+      "text": "REFERENCES\n",
+      "confidence": 96.4,
+      "words": [
+        {
+          "text": "REFERENCES",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 41,
+            "y0": 418,
+            "x1": 154,
+            "y1": 430
+          }
+        }
+      ]
+    },
+    {
+      "text": "Available upon request.",
+      "confidence": 95.5,
+      "words": [
+        {
+          "text": "Available",
+          "confidence": 93.6,
+          "bbox": {
+            "x0": 40,
+            "y0": 443,
+            "x1": 106,
+            "y1": 453
+          }
+        },
+        {
+          "text": "upon",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 113,
+            "y0": 446,
+            "x1": 147,
+            "y1": 456
+          }
+        },
+        {
+          "text": "request.",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 154,
+            "y0": 444,
+            "x1": 213,
+            "y1": 456
+          }
+        }
+      ]
+    }
+  ],
+  "outputFile": ""
+}

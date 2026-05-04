@@ -1,0 +1,4578 @@
+{
+  "jobId": "09e4c634-2ece-45cd-9ae8-9c70455f071b",
+  "filename": "closure form.png",
+  "fileType": "image",
+  "mimeType": "image/png",
+  "sizeBytes": 1624146,
+  "processedAt": "2026-04-30T17:10:39.732Z",
+  "durationMs": 3519,
+  "fullText": "nA TUT COMBINED ACCOUNT CLOSURE FORM | IITTMNININMNIN\nWe understand your world pete { [TT TT]\n| / We request you to close my / our Savings / Curent Account\nCEE PE EE EE EEE EE EE EE EE ET]\n[I] nfafule] Tole] Jelefclofnfol | [uloffolelal TTT TT TTT TTTTTT]\nCLD De Tole Te eo Tees fe TTT TT TTT TTT TTT\n* If thers are more than 3 holders then pleases fill up the additional form\nPlease tick (v')the eppropriate option/s\nCR C= NN CA CN\nSaving/Curent Account | Trading Account Cred Card\nDepository Account | Losn locker | Other ECS / 81\n3 | TPP/ISA 8 | Gold Loan 9 | Si for Kids\nVie amare awere that mylour saving/cument account will not get closed, In case of any of the above products islare inked to mylour saving/cunrent account and | have not submitied\n‘additional request for delinking or closing these products. Please also note that any other ECS/ Slof other company linked 10 this account will get closed / deleted consequent to the closure.\n| am aware that the time lines mentioned above will be applicable only if the CASA account does not have any linkages\nVYweo anvare aware that the cashback amount, If applicable, accumulated on usage of HOFC Bank Debit Card can be redeemed by logging on to NetBanking or calling PhonoBanking and if\nWve do not exercise the same before closing the account, which is linked with tho Debit Card, all the accumulated cashback points pertaining to that Debit Card and account will Bpso\nseg comes [|| [ [111] mat pie\nPaythe proceeds by || Cast (only for branch closurs) |_| Managers Cheque! DD [7] cred io HOFC Bank Account\n“(As per the current income tax rules, If the account balance at the time of account closure exceeds Rs. 20000/- the payment will be made only by Manager's cheque)\nWe confirm that all unused cheques issued lo me/us have been enclosed / destroyed by me/us (Nos. from to )\nWe wre enclosing / destroying the ATM / Deblt Cars lssued tomes (Not Y(Ne2__________\nmss\nEe —\nProduct deficiency (features not adequate, other bank's product Consolidating Bank Account - within bank / another bank\nfeatures are superior) (Consolidating implies reducing multiple accounts)\nB i i li ed Ea a gal ih «| Ascot rng cp react rm, or pct |\nBe eee. TI EY\nService charges/AMB related (high AMB, high charges etc.) ue Roast ender a)\nRecurring Deposit-Premature closure / Matured RD Tatkal Account - Initial pay-in retumed/documents Insufficient [es\nDl RR Leer\n17 | As Business shut down / business close",
+  "charCount": 2442,
+  "wordCount": 437,
+  "ocrConfidence": 70.6,
+  "ocrLines": [
+    {
+      "text": "nA TUT COMBINED ACCOUNT CLOSURE FORM | IITTMNININMNIN",
+      "confidence": 51.7,
+      "words": [
+        {
+          "text": "nA",
+          "confidence": 23.2,
+          "bbox": {
+            "x0": 74,
+            "y0": 35,
+            "x1": 210,
+            "y1": 57
+          }
+        },
+        {
+          "text": "TUT",
+          "confidence": 27.8,
+          "bbox": {
+            "x0": 224,
+            "y0": 35,
+            "x1": 319,
+            "y1": 57
+          }
+        },
+        {
+          "text": "COMBINED",
+          "confidence": 71.7,
+          "bbox": {
+            "x0": 389,
+            "y0": 18,
+            "x1": 552,
+            "y1": 77
+          }
+        },
+        {
+          "text": "ACCOUNT",
+          "confidence": 95.3,
+          "bbox": {
+            "x0": 571,
+            "y0": 18,
+            "x1": 715,
+            "y1": 77
+          }
+        },
+        {
+          "text": "CLOSURE",
+          "confidence": 49.9,
+          "bbox": {
+            "x0": 728,
+            "y0": 35,
+            "x1": 878,
+            "y1": 60
+          }
+        },
+        {
+          "text": "FORM",
+          "confidence": 86.7,
+          "bbox": {
+            "x0": 888,
+            "y0": 35,
+            "x1": 977,
+            "y1": 60
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 72.5,
+          "bbox": {
+            "x0": 999,
+            "y0": 18,
+            "x1": 1029,
+            "y1": 77
+          }
+        },
+        {
+          "text": "IITTMNININMNIN",
+          "confidence": 0,
+          "bbox": {
+            "x0": 1056,
+            "y0": 22,
+            "x1": 1260,
+            "y1": 69
+          }
+        }
+      ]
+    },
+    {
+      "text": "We understand your world pete { [TT TT]",
+      "confidence": 69.5,
+      "words": [
+        {
+          "text": "We",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 57,
+            "y0": 74,
+            "x1": 86,
+            "y1": 105
+          }
+        },
+        {
+          "text": "understand",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 98,
+            "y0": 74,
+            "x1": 210,
+            "y1": 105
+          }
+        },
+        {
+          "text": "your",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 222,
+            "y0": 74,
+            "x1": 264,
+            "y1": 105
+          }
+        },
+        {
+          "text": "world",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 274,
+            "y0": 74,
+            "x1": 326,
+            "y1": 105
+          }
+        },
+        {
+          "text": "pete",
+          "confidence": 65.6,
+          "bbox": {
+            "x0": 1038,
+            "y0": 74,
+            "x1": 1084,
+            "y1": 120
+          }
+        },
+        {
+          "text": "{",
+          "confidence": 12.2,
+          "bbox": {
+            "x0": 1095,
+            "y0": 74,
+            "x1": 1104,
+            "y1": 120
+          }
+        },
+        {
+          "text": "[TT",
+          "confidence": 47.8,
+          "bbox": {
+            "x0": 1118,
+            "y0": 74,
+            "x1": 1192,
+            "y1": 120
+          }
+        },
+        {
+          "text": "TT]",
+          "confidence": 45.8,
+          "bbox": {
+            "x0": 1214,
+            "y0": 74,
+            "x1": 1295,
+            "y1": 120
+          }
+        }
+      ]
+    },
+    {
+      "text": "| / We request you to close my / our Savings / Curent Account",
+      "confidence": 87.1,
+      "words": [
+        {
+          "text": "|",
+          "confidence": 64.5,
+          "bbox": {
+            "x0": 60,
+            "y0": 177,
+            "x1": 64,
+            "y1": 193
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 64.5,
+          "bbox": {
+            "x0": 69,
+            "y0": 177,
+            "x1": 75,
+            "y1": 193
+          }
+        },
+        {
+          "text": "We",
+          "confidence": 95.9,
+          "bbox": {
+            "x0": 83,
+            "y0": 173,
+            "x1": 101,
+            "y1": 200
+          }
+        },
+        {
+          "text": "request",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 110,
+            "y0": 173,
+            "x1": 169,
+            "y1": 200
+          }
+        },
+        {
+          "text": "you",
+          "confidence": 95.8,
+          "bbox": {
+            "x0": 177,
+            "y0": 173,
+            "x1": 200,
+            "y1": 200
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 92.6,
+          "bbox": {
+            "x0": 209,
+            "y0": 173,
+            "x1": 223,
+            "y1": 200
+          }
+        },
+        {
+          "text": "close",
+          "confidence": 91.5,
+          "bbox": {
+            "x0": 229,
+            "y0": 173,
+            "x1": 270,
+            "y1": 200
+          }
+        },
+        {
+          "text": "my",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 278,
+            "y0": 173,
+            "x1": 297,
+            "y1": 200
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 93,
+          "bbox": {
+            "x0": 304,
+            "y0": 177,
+            "x1": 310,
+            "y1": 193
+          }
+        },
+        {
+          "text": "our",
+          "confidence": 95.5,
+          "bbox": {
+            "x0": 317,
+            "y0": 173,
+            "x1": 342,
+            "y1": 200
+          }
+        },
+        {
+          "text": "Savings",
+          "confidence": 93.3,
+          "bbox": {
+            "x0": 348,
+            "y0": 173,
+            "x1": 407,
+            "y1": 200
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 92.9,
+          "bbox": {
+            "x0": 414,
+            "y0": 177,
+            "x1": 420,
+            "y1": 193
+          }
+        },
+        {
+          "text": "Curent",
+          "confidence": 55.7,
+          "bbox": {
+            "x0": 429,
+            "y0": 173,
+            "x1": 484,
+            "y1": 200
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 492,
+            "y0": 173,
+            "x1": 556,
+            "y1": 200
+          }
+        }
+      ]
+    },
+    {
+      "text": "CEE PE EE EE EEE EE EE EE EE ET]",
+      "confidence": 28.4,
+      "words": [
+        {
+          "text": "CEE",
+          "confidence": 27.8,
+          "bbox": {
+            "x0": 60,
+            "y0": 207,
+            "x1": 182,
+            "y1": 242
+          }
+        },
+        {
+          "text": "PE",
+          "confidence": 24.2,
+          "bbox": {
+            "x0": 213,
+            "y0": 207,
+            "x1": 272,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 31.6,
+          "bbox": {
+            "x0": 308,
+            "y0": 207,
+            "x1": 364,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 20.2,
+          "bbox": {
+            "x0": 398,
+            "y0": 207,
+            "x1": 443,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EEE",
+          "confidence": 37.4,
+          "bbox": {
+            "x0": 461,
+            "y0": 203,
+            "x1": 565,
+            "y1": 257
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 33.7,
+          "bbox": {
+            "x0": 641,
+            "y0": 207,
+            "x1": 718,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 38.8,
+          "bbox": {
+            "x0": 735,
+            "y0": 207,
+            "x1": 781,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 14.7,
+          "bbox": {
+            "x0": 798,
+            "y0": 207,
+            "x1": 851,
+            "y1": 242
+          }
+        },
+        {
+          "text": "EE",
+          "confidence": 25.5,
+          "bbox": {
+            "x0": 915,
+            "y0": 203,
+            "x1": 988,
+            "y1": 257
+          }
+        },
+        {
+          "text": "ET]",
+          "confidence": 30.5,
+          "bbox": {
+            "x0": 1037,
+            "y0": 207,
+            "x1": 1279,
+            "y1": 242
+          }
+        }
+      ]
+    },
+    {
+      "text": "[I] nfafule] Tole] Jelefclofnfol | [uloffolelal TTT TT TTT TTTTTT]",
+      "confidence": 13.3,
+      "words": [
+        {
+          "text": "[I]",
+          "confidence": 30.6,
+          "bbox": {
+            "x0": 60,
+            "y0": 239,
+            "x1": 129,
+            "y1": 290
+          }
+        },
+        {
+          "text": "nfafule]",
+          "confidence": 11.4,
+          "bbox": {
+            "x0": 153,
+            "y0": 239,
+            "x1": 277,
+            "y1": 290
+          }
+        },
+        {
+          "text": "Tole]",
+          "confidence": 0,
+          "bbox": {
+            "x0": 294,
+            "y0": 239,
+            "x1": 371,
+            "y1": 290
+          }
+        },
+        {
+          "text": "Jelefclofnfol",
+          "confidence": 6.1,
+          "bbox": {
+            "x0": 391,
+            "y0": 239,
+            "x1": 588,
+            "y1": 290
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 59.8,
+          "bbox": {
+            "x0": 604,
+            "y0": 239,
+            "x1": 617,
+            "y1": 290
+          }
+        },
+        {
+          "text": "[uloffolelal",
+          "confidence": 33.4,
+          "bbox": {
+            "x0": 634,
+            "y0": 239,
+            "x1": 834,
+            "y1": 290
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 25.9,
+          "bbox": {
+            "x0": 855,
+            "y0": 239,
+            "x1": 928,
+            "y1": 290
+          }
+        },
+        {
+          "text": "TT",
+          "confidence": 0,
+          "bbox": {
+            "x0": 945,
+            "y0": 239,
+            "x1": 987,
+            "y1": 290
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 0,
+          "bbox": {
+            "x0": 999,
+            "y0": 239,
+            "x1": 1081,
+            "y1": 290
+          }
+        },
+        {
+          "text": "TTTTTT]",
+          "confidence": 0,
+          "bbox": {
+            "x0": 1093,
+            "y0": 239,
+            "x1": 1280,
+            "y1": 290
+          }
+        }
+      ]
+    },
+    {
+      "text": "CLD De Tole Te eo Tees fe TTT TT TTT TTT TTT",
+      "confidence": 23.2,
+      "words": [
+        {
+          "text": "CLD",
+          "confidence": 10.5,
+          "bbox": {
+            "x0": 60,
+            "y0": 277,
+            "x1": 182,
+            "y1": 311
+          }
+        },
+        {
+          "text": "De",
+          "confidence": 15.5,
+          "bbox": {
+            "x0": 211,
+            "y0": 273,
+            "x1": 272,
+            "y1": 325
+          }
+        },
+        {
+          "text": "Tole",
+          "confidence": 1.4,
+          "bbox": {
+            "x0": 298,
+            "y0": 273,
+            "x1": 368,
+            "y1": 325
+          }
+        },
+        {
+          "text": "Te",
+          "confidence": 20.1,
+          "bbox": {
+            "x0": 393,
+            "y0": 277,
+            "x1": 472,
+            "y1": 310
+          }
+        },
+        {
+          "text": "eo",
+          "confidence": 36.4,
+          "bbox": {
+            "x0": 489,
+            "y0": 273,
+            "x1": 546,
+            "y1": 325
+          }
+        },
+        {
+          "text": "Tees",
+          "confidence": 0,
+          "bbox": {
+            "x0": 575,
+            "y0": 273,
+            "x1": 780,
+            "y1": 325
+          }
+        },
+        {
+          "text": "fe",
+          "confidence": 23,
+          "bbox": {
+            "x0": 792,
+            "y0": 273,
+            "x1": 821,
+            "y1": 325
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 65,
+          "bbox": {
+            "x0": 853,
+            "y0": 273,
+            "x1": 927,
+            "y1": 325
+          }
+        },
+        {
+          "text": "TT",
+          "confidence": 64.8,
+          "bbox": {
+            "x0": 944,
+            "y0": 273,
+            "x1": 988,
+            "y1": 325
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 26.4,
+          "bbox": {
+            "x0": 1004,
+            "y0": 273,
+            "x1": 1083,
+            "y1": 325
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 14.9,
+          "bbox": {
+            "x0": 1095,
+            "y0": 273,
+            "x1": 1170,
+            "y1": 325
+          }
+        },
+        {
+          "text": "TTT",
+          "confidence": 14.9,
+          "bbox": {
+            "x0": 1182,
+            "y0": 273,
+            "x1": 1279,
+            "y1": 325
+          }
+        }
+      ]
+    },
+    {
+      "text": "* If thers are more than 3 holders then pleases fill up the additional form",
+      "confidence": 82.7,
+      "words": [
+        {
+          "text": "*",
+          "confidence": 91.6,
+          "bbox": {
+            "x0": 59,
+            "y0": 343,
+            "x1": 64,
+            "y1": 351
+          }
+        },
+        {
+          "text": "If",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 70,
+            "y0": 339,
+            "x1": 82,
+            "y1": 366
+          }
+        },
+        {
+          "text": "thers",
+          "confidence": 56.8,
+          "bbox": {
+            "x0": 88,
+            "y0": 339,
+            "x1": 125,
+            "y1": 366
+          }
+        },
+        {
+          "text": "are",
+          "confidence": 84,
+          "bbox": {
+            "x0": 133,
+            "y0": 339,
+            "x1": 159,
+            "y1": 366
+          }
+        },
+        {
+          "text": "more",
+          "confidence": 88.5,
+          "bbox": {
+            "x0": 167,
+            "y0": 339,
+            "x1": 202,
+            "y1": 366
+          }
+        },
+        {
+          "text": "than",
+          "confidence": 95.1,
+          "bbox": {
+            "x0": 210,
+            "y0": 339,
+            "x1": 240,
+            "y1": 366
+          }
+        },
+        {
+          "text": "3",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 248,
+            "y0": 343,
+            "x1": 258,
+            "y1": 358
+          }
+        },
+        {
+          "text": "holders",
+          "confidence": 83.8,
+          "bbox": {
+            "x0": 264,
+            "y0": 339,
+            "x1": 321,
+            "y1": 366
+          }
+        },
+        {
+          "text": "then",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 327,
+            "y0": 339,
+            "x1": 359,
+            "y1": 366
+          }
+        },
+        {
+          "text": "pleases",
+          "confidence": 26.7,
+          "bbox": {
+            "x0": 367,
+            "y0": 339,
+            "x1": 418,
+            "y1": 366
+          }
+        },
+        {
+          "text": "fill",
+          "confidence": 62.6,
+          "bbox": {
+            "x0": 424,
+            "y0": 339,
+            "x1": 445,
+            "y1": 366
+          }
+        },
+        {
+          "text": "up",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 451,
+            "y0": 339,
+            "x1": 465,
+            "y1": 366
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 471,
+            "y0": 339,
+            "x1": 494,
+            "y1": 366
+          }
+        },
+        {
+          "text": "additional",
+          "confidence": 73.6,
+          "bbox": {
+            "x0": 502,
+            "y0": 339,
+            "x1": 577,
+            "y1": 366
+          }
+        },
+        {
+          "text": "form",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 583,
+            "y0": 339,
+            "x1": 622,
+            "y1": 366
+          }
+        }
+      ]
+    },
+    {
+      "text": "Please tick (v')the eppropriate option/s",
+      "confidence": 74.5,
+      "words": [
+        {
+          "text": "Please",
+          "confidence": 83.8,
+          "bbox": {
+            "x0": 28,
+            "y0": 386,
+            "x1": 82,
+            "y1": 420
+          }
+        },
+        {
+          "text": "tick",
+          "confidence": 92.5,
+          "bbox": {
+            "x0": 90,
+            "y0": 386,
+            "x1": 119,
+            "y1": 420
+          }
+        },
+        {
+          "text": "(v')the",
+          "confidence": 53.9,
+          "bbox": {
+            "x0": 124,
+            "y0": 386,
+            "x1": 176,
+            "y1": 420
+          }
+        },
+        {
+          "text": "eppropriate",
+          "confidence": 77.8,
+          "bbox": {
+            "x0": 180,
+            "y0": 390,
+            "x1": 339,
+            "y1": 412
+          }
+        },
+        {
+          "text": "option/s",
+          "confidence": 64.6,
+          "bbox": {
+            "x0": 277,
+            "y0": 386,
+            "x1": 343,
+            "y1": 420
+          }
+        }
+      ]
+    },
+    {
+      "text": "CR C= NN CA CN",
+      "confidence": 22.5,
+      "words": [
+        {
+          "text": "CR",
+          "confidence": 14.9,
+          "bbox": {
+            "x0": 122,
+            "y0": 422,
+            "x1": 526,
+            "y1": 456
+          }
+        },
+        {
+          "text": "C=",
+          "confidence": 29.9,
+          "bbox": {
+            "x0": 599,
+            "y0": 397,
+            "x1": 710,
+            "y1": 475
+          }
+        },
+        {
+          "text": "NN",
+          "confidence": 16.1,
+          "bbox": {
+            "x0": 729,
+            "y0": 397,
+            "x1": 814,
+            "y1": 475
+          }
+        },
+        {
+          "text": "CA",
+          "confidence": 43.6,
+          "bbox": {
+            "x0": 833,
+            "y0": 397,
+            "x1": 866,
+            "y1": 475
+          }
+        },
+        {
+          "text": "CN",
+          "confidence": 8.2,
+          "bbox": {
+            "x0": 873,
+            "y0": 419,
+            "x1": 1020,
+            "y1": 459
+          }
+        }
+      ]
+    },
+    {
+      "text": "Saving/Curent Account | Trading Account Cred Card",
+      "confidence": 79.6,
+      "words": [
+        {
+          "text": "Saving/Curent",
+          "confidence": 44.6,
+          "bbox": {
+            "x0": 65,
+            "y0": 470,
+            "x1": 197,
+            "y1": 505
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 95.6,
+          "bbox": {
+            "x0": 205,
+            "y0": 470,
+            "x1": 273,
+            "y1": 505
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 82.4,
+          "bbox": {
+            "x0": 293,
+            "y0": 466,
+            "x1": 303,
+            "y1": 504
+          }
+        },
+        {
+          "text": "Trading",
+          "confidence": 87.2,
+          "bbox": {
+            "x0": 395,
+            "y0": 469,
+            "x1": 459,
+            "y1": 501
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 95.8,
+          "bbox": {
+            "x0": 467,
+            "y0": 469,
+            "x1": 531,
+            "y1": 501
+          }
+        },
+        {
+          "text": "Cred",
+          "confidence": 54.8,
+          "bbox": {
+            "x0": 925,
+            "y0": 470,
+            "x1": 969,
+            "y1": 501
+          }
+        },
+        {
+          "text": "Card",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 984,
+            "y0": 470,
+            "x1": 1024,
+            "y1": 501
+          }
+        }
+      ]
+    },
+    {
+      "text": "Depository Account | Losn locker | Other ECS / 81",
+      "confidence": 63.7,
+      "words": [
+        {
+          "text": "Depository",
+          "confidence": 22.4,
+          "bbox": {
+            "x0": 66,
+            "y0": 496,
+            "x1": 154,
+            "y1": 540
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 58.2,
+          "bbox": {
+            "x0": 165,
+            "y0": 496,
+            "x1": 228,
+            "y1": 540
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 58.7,
+          "bbox": {
+            "x0": 295,
+            "y0": 506,
+            "x1": 296,
+            "y1": 532
+          }
+        },
+        {
+          "text": "Losn",
+          "confidence": 66.5,
+          "bbox": {
+            "x0": 397,
+            "y0": 498,
+            "x1": 444,
+            "y1": 541
+          }
+        },
+        {
+          "text": "locker",
+          "confidence": 41.8,
+          "bbox": {
+            "x0": 632,
+            "y0": 497,
+            "x1": 707,
+            "y1": 544
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 74.1,
+          "bbox": {
+            "x0": 765,
+            "y0": 501,
+            "x1": 822,
+            "y1": 540
+          }
+        },
+        {
+          "text": "Other",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 922,
+            "y0": 498,
+            "x1": 973,
+            "y1": 541
+          }
+        },
+        {
+          "text": "ECS",
+          "confidence": 85.2,
+          "bbox": {
+            "x0": 982,
+            "y0": 498,
+            "x1": 1012,
+            "y1": 541
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 85.2,
+          "bbox": {
+            "x0": 1016,
+            "y0": 515,
+            "x1": 1023,
+            "y1": 530
+          }
+        },
+        {
+          "text": "81",
+          "confidence": 51.8,
+          "bbox": {
+            "x0": 1029,
+            "y0": 498,
+            "x1": 1044,
+            "y1": 541
+          }
+        }
+      ]
+    },
+    {
+      "text": "3 | TPP/ISA 8 | Gold Loan 9 | Si for Kids",
+      "confidence": 75.5,
+      "words": [
+        {
+          "text": "3",
+          "confidence": 90.6,
+          "bbox": {
+            "x0": 33,
+            "y0": 553,
+            "x1": 44,
+            "y1": 569
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 38.1,
+          "bbox": {
+            "x0": 58,
+            "y0": 549,
+            "x1": 68,
+            "y1": 578
+          }
+        },
+        {
+          "text": "TPP/ISA",
+          "confidence": 38.1,
+          "bbox": {
+            "x0": 71,
+            "y0": 554,
+            "x1": 151,
+            "y1": 569
+          }
+        },
+        {
+          "text": "8",
+          "confidence": 62.9,
+          "bbox": {
+            "x0": 360,
+            "y0": 555,
+            "x1": 370,
+            "y1": 571
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 92.3,
+          "bbox": {
+            "x0": 382,
+            "y0": 551,
+            "x1": 393,
+            "y1": 580
+          }
+        },
+        {
+          "text": "Gold",
+          "confidence": 88.1,
+          "bbox": {
+            "x0": 401,
+            "y0": 551,
+            "x1": 439,
+            "y1": 580
+          }
+        },
+        {
+          "text": "Loan",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 447,
+            "y0": 551,
+            "x1": 487,
+            "y1": 580
+          }
+        },
+        {
+          "text": "9",
+          "confidence": 76.9,
+          "bbox": {
+            "x0": 607,
+            "y0": 555,
+            "x1": 617,
+            "y1": 570
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 76.9,
+          "bbox": {
+            "x0": 629,
+            "y0": 550,
+            "x1": 637,
+            "y1": 579
+          }
+        },
+        {
+          "text": "Si",
+          "confidence": 82.7,
+          "bbox": {
+            "x0": 646,
+            "y0": 550,
+            "x1": 659,
+            "y1": 579
+          }
+        },
+        {
+          "text": "for",
+          "confidence": 86.4,
+          "bbox": {
+            "x0": 665,
+            "y0": 550,
+            "x1": 688,
+            "y1": 579
+          }
+        },
+        {
+          "text": "Kids",
+          "confidence": 76.8,
+          "bbox": {
+            "x0": 694,
+            "y0": 550,
+            "x1": 729,
+            "y1": 579
+          }
+        }
+      ]
+    },
+    {
+      "text": "Vie amare awere that mylour saving/cument account will not get closed, In case of any of the above products islare inked to mylour saving/cunrent account and | have not submitied",
+      "confidence": 71.8,
+      "words": [
+        {
+          "text": "Vie",
+          "confidence": 0,
+          "bbox": {
+            "x0": 19,
+            "y0": 580,
+            "x1": 55,
+            "y1": 616
+          }
+        },
+        {
+          "text": "amare",
+          "confidence": 65.4,
+          "bbox": {
+            "x0": 64,
+            "y0": 580,
+            "x1": 109,
+            "y1": 616
+          }
+        },
+        {
+          "text": "awere",
+          "confidence": 73,
+          "bbox": {
+            "x0": 118,
+            "y0": 580,
+            "x1": 151,
+            "y1": 616
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 91.7,
+          "bbox": {
+            "x0": 160,
+            "y0": 580,
+            "x1": 190,
+            "y1": 616
+          }
+        },
+        {
+          "text": "mylour",
+          "confidence": 64.7,
+          "bbox": {
+            "x0": 199,
+            "y0": 580,
+            "x1": 244,
+            "y1": 616
+          }
+        },
+        {
+          "text": "saving/cument",
+          "confidence": 2.4,
+          "bbox": {
+            "x0": 250,
+            "y0": 580,
+            "x1": 352,
+            "y1": 616
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 94.1,
+          "bbox": {
+            "x0": 361,
+            "y0": 580,
+            "x1": 415,
+            "y1": 616
+          }
+        },
+        {
+          "text": "will",
+          "confidence": 94.2,
+          "bbox": {
+            "x0": 421,
+            "y0": 580,
+            "x1": 445,
+            "y1": 616
+          }
+        },
+        {
+          "text": "not",
+          "confidence": 77.1,
+          "bbox": {
+            "x0": 454,
+            "y0": 580,
+            "x1": 475,
+            "y1": 616
+          }
+        },
+        {
+          "text": "get",
+          "confidence": 92.3,
+          "bbox": {
+            "x0": 481,
+            "y0": 580,
+            "x1": 499,
+            "y1": 616
+          }
+        },
+        {
+          "text": "closed,",
+          "confidence": 83.6,
+          "bbox": {
+            "x0": 508,
+            "y0": 580,
+            "x1": 556,
+            "y1": 616
+          }
+        },
+        {
+          "text": "In",
+          "confidence": 93.8,
+          "bbox": {
+            "x0": 563,
+            "y0": 595,
+            "x1": 575,
+            "y1": 608
+          }
+        },
+        {
+          "text": "case",
+          "confidence": 94.7,
+          "bbox": {
+            "x0": 583,
+            "y0": 580,
+            "x1": 613,
+            "y1": 616
+          }
+        },
+        {
+          "text": "of",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 619,
+            "y0": 580,
+            "x1": 634,
+            "y1": 616
+          }
+        },
+        {
+          "text": "any",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 640,
+            "y0": 580,
+            "x1": 664,
+            "y1": 616
+          }
+        },
+        {
+          "text": "of",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 670,
+            "y0": 580,
+            "x1": 682,
+            "y1": 616
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 91.7,
+          "bbox": {
+            "x0": 691,
+            "y0": 580,
+            "x1": 712,
+            "y1": 616
+          }
+        },
+        {
+          "text": "above",
+          "confidence": 90,
+          "bbox": {
+            "x0": 718,
+            "y0": 580,
+            "x1": 760,
+            "y1": 616
+          }
+        },
+        {
+          "text": "products",
+          "confidence": 61.6,
+          "bbox": {
+            "x0": 766,
+            "y0": 580,
+            "x1": 832,
+            "y1": 616
+          }
+        },
+        {
+          "text": "islare",
+          "confidence": 0,
+          "bbox": {
+            "x0": 841,
+            "y0": 580,
+            "x1": 877,
+            "y1": 616
+          }
+        },
+        {
+          "text": "inked",
+          "confidence": 88.7,
+          "bbox": {
+            "x0": 883,
+            "y0": 580,
+            "x1": 922,
+            "y1": 616
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 35.8,
+          "bbox": {
+            "x0": 931,
+            "y0": 580,
+            "x1": 945,
+            "y1": 616
+          }
+        },
+        {
+          "text": "mylour",
+          "confidence": 65.7,
+          "bbox": {
+            "x0": 955,
+            "y0": 580,
+            "x1": 1000,
+            "y1": 616
+          }
+        },
+        {
+          "text": "saving/cunrent",
+          "confidence": 13.8,
+          "bbox": {
+            "x0": 1009,
+            "y0": 580,
+            "x1": 1108,
+            "y1": 616
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 87.1,
+          "bbox": {
+            "x0": 1117,
+            "y0": 580,
+            "x1": 1171,
+            "y1": 616
+          }
+        },
+        {
+          "text": "and",
+          "confidence": 95.2,
+          "bbox": {
+            "x0": 1180,
+            "y0": 580,
+            "x1": 1201,
+            "y1": 616
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 1209,
+            "y0": 595,
+            "x1": 1212,
+            "y1": 608
+          }
+        },
+        {
+          "text": "have",
+          "confidence": 86.6,
+          "bbox": {
+            "x0": 1222,
+            "y0": 580,
+            "x1": 1252,
+            "y1": 616
+          }
+        },
+        {
+          "text": "not",
+          "confidence": 86.4,
+          "bbox": {
+            "x0": 1261,
+            "y0": 580,
+            "x1": 1282,
+            "y1": 616
+          }
+        },
+        {
+          "text": "submitied",
+          "confidence": 71.9,
+          "bbox": {
+            "x0": 1288,
+            "y0": 580,
+            "x1": 1360,
+            "y1": 616
+          }
+        }
+      ]
+    },
+    {
+      "text": "‘additional request for delinking or closing these products. Please also note that any other ECS/ Slof other company linked 10 this account will get closed / deleted consequent to the closure.",
+      "confidence": 86.1,
+      "words": [
+        {
+          "text": "‘additional",
+          "confidence": 55.3,
+          "bbox": {
+            "x0": 20,
+            "y0": 610,
+            "x1": 95,
+            "y1": 635
+          }
+        },
+        {
+          "text": "request",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 101,
+            "y0": 610,
+            "x1": 152,
+            "y1": 635
+          }
+        },
+        {
+          "text": "for",
+          "confidence": 92,
+          "bbox": {
+            "x0": 157,
+            "y0": 610,
+            "x1": 177,
+            "y1": 635
+          }
+        },
+        {
+          "text": "delinking",
+          "confidence": 91,
+          "bbox": {
+            "x0": 182,
+            "y0": 610,
+            "x1": 243,
+            "y1": 635
+          }
+        },
+        {
+          "text": "or",
+          "confidence": 94.5,
+          "bbox": {
+            "x0": 249,
+            "y0": 610,
+            "x1": 264,
+            "y1": 635
+          }
+        },
+        {
+          "text": "closing",
+          "confidence": 92.6,
+          "bbox": {
+            "x0": 269,
+            "y0": 610,
+            "x1": 318,
+            "y1": 635
+          }
+        },
+        {
+          "text": "these",
+          "confidence": 95.3,
+          "bbox": {
+            "x0": 324,
+            "y0": 610,
+            "x1": 360,
+            "y1": 635
+          }
+        },
+        {
+          "text": "products.",
+          "confidence": 94.1,
+          "bbox": {
+            "x0": 367,
+            "y0": 610,
+            "x1": 434,
+            "y1": 635
+          }
+        },
+        {
+          "text": "Please",
+          "confidence": 60.2,
+          "bbox": {
+            "x0": 440,
+            "y0": 610,
+            "x1": 483,
+            "y1": 635
+          }
+        },
+        {
+          "text": "also",
+          "confidence": 85.5,
+          "bbox": {
+            "x0": 488,
+            "y0": 610,
+            "x1": 516,
+            "y1": 635
+          }
+        },
+        {
+          "text": "note",
+          "confidence": 87.7,
+          "bbox": {
+            "x0": 524,
+            "y0": 610,
+            "x1": 552,
+            "y1": 635
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 557,
+            "y0": 610,
+            "x1": 585,
+            "y1": 635
+          }
+        },
+        {
+          "text": "any",
+          "confidence": 95.2,
+          "bbox": {
+            "x0": 590,
+            "y0": 610,
+            "x1": 612,
+            "y1": 635
+          }
+        },
+        {
+          "text": "other",
+          "confidence": 93.3,
+          "bbox": {
+            "x0": 617,
+            "y0": 610,
+            "x1": 654,
+            "y1": 635
+          }
+        },
+        {
+          "text": "ECS/",
+          "confidence": 83.1,
+          "bbox": {
+            "x0": 661,
+            "y0": 610,
+            "x1": 695,
+            "y1": 635
+          }
+        },
+        {
+          "text": "Slof",
+          "confidence": 41.2,
+          "bbox": {
+            "x0": 701,
+            "y0": 610,
+            "x1": 731,
+            "y1": 635
+          }
+        },
+        {
+          "text": "other",
+          "confidence": 96,
+          "bbox": {
+            "x0": 736,
+            "y0": 610,
+            "x1": 773,
+            "y1": 635
+          }
+        },
+        {
+          "text": "company",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 780,
+            "y0": 610,
+            "x1": 837,
+            "y1": 635
+          }
+        },
+        {
+          "text": "linked",
+          "confidence": 93.7,
+          "bbox": {
+            "x0": 844,
+            "y0": 610,
+            "x1": 885,
+            "y1": 635
+          }
+        },
+        {
+          "text": "10",
+          "confidence": 49.7,
+          "bbox": {
+            "x0": 890,
+            "y0": 610,
+            "x1": 902,
+            "y1": 635
+          }
+        },
+        {
+          "text": "this",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 909,
+            "y0": 610,
+            "x1": 937,
+            "y1": 635
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 94.1,
+          "bbox": {
+            "x0": 942,
+            "y0": 610,
+            "x1": 995,
+            "y1": 635
+          }
+        },
+        {
+          "text": "will",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 1003,
+            "y0": 610,
+            "x1": 1027,
+            "y1": 635
+          }
+        },
+        {
+          "text": "get",
+          "confidence": 95.8,
+          "bbox": {
+            "x0": 1032,
+            "y0": 610,
+            "x1": 1052,
+            "y1": 635
+          }
+        },
+        {
+          "text": "closed",
+          "confidence": 91,
+          "bbox": {
+            "x0": 1057,
+            "y0": 610,
+            "x1": 1100,
+            "y1": 635
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 87.8,
+          "bbox": {
+            "x0": 1105,
+            "y0": 615,
+            "x1": 1109,
+            "y1": 626
+          }
+        },
+        {
+          "text": "deleted",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 1115,
+            "y0": 610,
+            "x1": 1164,
+            "y1": 635
+          }
+        },
+        {
+          "text": "consequent",
+          "confidence": 87.3,
+          "bbox": {
+            "x0": 1172,
+            "y0": 610,
+            "x1": 1252,
+            "y1": 635
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 65,
+          "bbox": {
+            "x0": 1257,
+            "y0": 610,
+            "x1": 1268,
+            "y1": 635
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 92,
+          "bbox": {
+            "x0": 1276,
+            "y0": 610,
+            "x1": 1295,
+            "y1": 635
+          }
+        },
+        {
+          "text": "closure.",
+          "confidence": 81,
+          "bbox": {
+            "x0": 1301,
+            "y0": 610,
+            "x1": 1357,
+            "y1": 635
+          }
+        }
+      ]
+    },
+    {
+      "text": "| am aware that the time lines mentioned above will be applicable only if the CASA account does not have any linkages",
+      "confidence": 83.7,
+      "words": [
+        {
+          "text": "|",
+          "confidence": 39,
+          "bbox": {
+            "x0": 25,
+            "y0": 634,
+            "x1": 28,
+            "y1": 647
+          }
+        },
+        {
+          "text": "am",
+          "confidence": 39,
+          "bbox": {
+            "x0": 36,
+            "y0": 629,
+            "x1": 52,
+            "y1": 655
+          }
+        },
+        {
+          "text": "aware",
+          "confidence": 47.5,
+          "bbox": {
+            "x0": 59,
+            "y0": 629,
+            "x1": 97,
+            "y1": 655
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 105,
+            "y0": 629,
+            "x1": 132,
+            "y1": 655
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 137,
+            "y0": 629,
+            "x1": 158,
+            "y1": 655
+          }
+        },
+        {
+          "text": "time",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 163,
+            "y0": 629,
+            "x1": 190,
+            "y1": 655
+          }
+        },
+        {
+          "text": "lines",
+          "confidence": 92.5,
+          "bbox": {
+            "x0": 200,
+            "y0": 629,
+            "x1": 234,
+            "y1": 655
+          }
+        },
+        {
+          "text": "mentioned",
+          "confidence": 41.1,
+          "bbox": {
+            "x0": 241,
+            "y0": 629,
+            "x1": 312,
+            "y1": 655
+          }
+        },
+        {
+          "text": "above",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 317,
+            "y0": 629,
+            "x1": 359,
+            "y1": 655
+          }
+        },
+        {
+          "text": "will",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 365,
+            "y0": 629,
+            "x1": 388,
+            "y1": 655
+          }
+        },
+        {
+          "text": "be",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 397,
+            "y0": 629,
+            "x1": 411,
+            "y1": 655
+          }
+        },
+        {
+          "text": "applicable",
+          "confidence": 95.1,
+          "bbox": {
+            "x0": 417,
+            "y0": 629,
+            "x1": 487,
+            "y1": 655
+          }
+        },
+        {
+          "text": "only",
+          "confidence": 91,
+          "bbox": {
+            "x0": 495,
+            "y0": 629,
+            "x1": 522,
+            "y1": 655
+          }
+        },
+        {
+          "text": "if",
+          "confidence": 82.2,
+          "bbox": {
+            "x0": 527,
+            "y0": 629,
+            "x1": 537,
+            "y1": 655
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 95.3,
+          "bbox": {
+            "x0": 543,
+            "y0": 629,
+            "x1": 565,
+            "y1": 655
+          }
+        },
+        {
+          "text": "CASA",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 573,
+            "y0": 629,
+            "x1": 606,
+            "y1": 655
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 94.5,
+          "bbox": {
+            "x0": 614,
+            "y0": 629,
+            "x1": 671,
+            "y1": 655
+          }
+        },
+        {
+          "text": "does",
+          "confidence": 71.3,
+          "bbox": {
+            "x0": 679,
+            "y0": 629,
+            "x1": 710,
+            "y1": 655
+          }
+        },
+        {
+          "text": "not",
+          "confidence": 94.7,
+          "bbox": {
+            "x0": 716,
+            "y0": 629,
+            "x1": 739,
+            "y1": 655
+          }
+        },
+        {
+          "text": "have",
+          "confidence": 94.6,
+          "bbox": {
+            "x0": 746,
+            "y0": 629,
+            "x1": 775,
+            "y1": 655
+          }
+        },
+        {
+          "text": "any",
+          "confidence": 94.6,
+          "bbox": {
+            "x0": 783,
+            "y0": 629,
+            "x1": 804,
+            "y1": 655
+          }
+        },
+        {
+          "text": "linkages",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 811,
+            "y0": 629,
+            "x1": 875,
+            "y1": 655
+          }
+        }
+      ]
+    },
+    {
+      "text": "VYweo anvare aware that the cashback amount, If applicable, accumulated on usage of HOFC Bank Debit Card can be redeemed by logging on to NetBanking or calling PhonoBanking and if",
+      "confidence": 85.8,
+      "words": [
+        {
+          "text": "VYweo",
+          "confidence": 0,
+          "bbox": {
+            "x0": 21,
+            "y0": 667,
+            "x1": 51,
+            "y1": 692
+          }
+        },
+        {
+          "text": "anvare",
+          "confidence": 70.7,
+          "bbox": {
+            "x0": 58,
+            "y0": 667,
+            "x1": 105,
+            "y1": 692
+          }
+        },
+        {
+          "text": "aware",
+          "confidence": 95.6,
+          "bbox": {
+            "x0": 112,
+            "y0": 667,
+            "x1": 151,
+            "y1": 692
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 156,
+            "y0": 667,
+            "x1": 184,
+            "y1": 692
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 189,
+            "y0": 667,
+            "x1": 211,
+            "y1": 692
+          }
+        },
+        {
+          "text": "cashback",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 218,
+            "y0": 667,
+            "x1": 284,
+            "y1": 692
+          }
+        },
+        {
+          "text": "amount,",
+          "confidence": 85.9,
+          "bbox": {
+            "x0": 291,
+            "y0": 667,
+            "x1": 346,
+            "y1": 692
+          }
+        },
+        {
+          "text": "If",
+          "confidence": 74.9,
+          "bbox": {
+            "x0": 352,
+            "y0": 667,
+            "x1": 361,
+            "y1": 692
+          }
+        },
+        {
+          "text": "applicable,",
+          "confidence": 93,
+          "bbox": {
+            "x0": 366,
+            "y0": 667,
+            "x1": 442,
+            "y1": 692
+          }
+        },
+        {
+          "text": "accumulated",
+          "confidence": 89.5,
+          "bbox": {
+            "x0": 450,
+            "y0": 667,
+            "x1": 536,
+            "y1": 692
+          }
+        },
+        {
+          "text": "on",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 541,
+            "y0": 667,
+            "x1": 559,
+            "y1": 692
+          }
+        },
+        {
+          "text": "usage",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 566,
+            "y0": 667,
+            "x1": 607,
+            "y1": 692
+          }
+        },
+        {
+          "text": "of",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 614,
+            "y0": 667,
+            "x1": 630,
+            "y1": 692
+          }
+        },
+        {
+          "text": "HOFC",
+          "confidence": 83.7,
+          "bbox": {
+            "x0": 637,
+            "y0": 667,
+            "x1": 669,
+            "y1": 692
+          }
+        },
+        {
+          "text": "Bank",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 679,
+            "y0": 667,
+            "x1": 713,
+            "y1": 692
+          }
+        },
+        {
+          "text": "Debit",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 718,
+            "y0": 667,
+            "x1": 757,
+            "y1": 692
+          }
+        },
+        {
+          "text": "Card",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 764,
+            "y0": 667,
+            "x1": 792,
+            "y1": 692
+          }
+        },
+        {
+          "text": "can",
+          "confidence": 95.5,
+          "bbox": {
+            "x0": 800,
+            "y0": 667,
+            "x1": 824,
+            "y1": 692
+          }
+        },
+        {
+          "text": "be",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 829,
+            "y0": 667,
+            "x1": 844,
+            "y1": 692
+          }
+        },
+        {
+          "text": "redeemed",
+          "confidence": 87,
+          "bbox": {
+            "x0": 852,
+            "y0": 667,
+            "x1": 919,
+            "y1": 692
+          }
+        },
+        {
+          "text": "by",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 925,
+            "y0": 667,
+            "x1": 940,
+            "y1": 692
+          }
+        },
+        {
+          "text": "logging",
+          "confidence": 90.4,
+          "bbox": {
+            "x0": 948,
+            "y0": 667,
+            "x1": 1001,
+            "y1": 692
+          }
+        },
+        {
+          "text": "on",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 1006,
+            "y0": 667,
+            "x1": 1024,
+            "y1": 692
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 87.2,
+          "bbox": {
+            "x0": 1029,
+            "y0": 667,
+            "x1": 1044,
+            "y1": 692
+          }
+        },
+        {
+          "text": "NetBanking",
+          "confidence": 92.6,
+          "bbox": {
+            "x0": 1050,
+            "y0": 667,
+            "x1": 1130,
+            "y1": 692
+          }
+        },
+        {
+          "text": "or",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 1135,
+            "y0": 667,
+            "x1": 1151,
+            "y1": 692
+          }
+        },
+        {
+          "text": "calling",
+          "confidence": 93,
+          "bbox": {
+            "x0": 1156,
+            "y0": 667,
+            "x1": 1203,
+            "y1": 692
+          }
+        },
+        {
+          "text": "PhonoBanking",
+          "confidence": 26.7,
+          "bbox": {
+            "x0": 1210,
+            "y0": 667,
+            "x1": 1311,
+            "y1": 692
+          }
+        },
+        {
+          "text": "and",
+          "confidence": 96.8,
+          "bbox": {
+            "x0": 1318,
+            "y0": 667,
+            "x1": 1340,
+            "y1": 692
+          }
+        },
+        {
+          "text": "if",
+          "confidence": 70.7,
+          "bbox": {
+            "x0": 1349,
+            "y0": 667,
+            "x1": 1361,
+            "y1": 692
+          }
+        }
+      ]
+    },
+    {
+      "text": "Wve do not exercise the same before closing the account, which is linked with tho Debit Card, all the accumulated cashback points pertaining to that Debit Card and account will Bpso",
+      "confidence": 87.6,
+      "words": [
+        {
+          "text": "Wve",
+          "confidence": 28.5,
+          "bbox": {
+            "x0": 21,
+            "y0": 687,
+            "x1": 50,
+            "y1": 713
+          }
+        },
+        {
+          "text": "do",
+          "confidence": 95.6,
+          "bbox": {
+            "x0": 57,
+            "y0": 687,
+            "x1": 73,
+            "y1": 713
+          }
+        },
+        {
+          "text": "not",
+          "confidence": 94,
+          "bbox": {
+            "x0": 79,
+            "y0": 687,
+            "x1": 102,
+            "y1": 713
+          }
+        },
+        {
+          "text": "exercise",
+          "confidence": 92.7,
+          "bbox": {
+            "x0": 107,
+            "y0": 687,
+            "x1": 164,
+            "y1": 713
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96,
+          "bbox": {
+            "x0": 172,
+            "y0": 687,
+            "x1": 193,
+            "y1": 713
+          }
+        },
+        {
+          "text": "same",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 200,
+            "y0": 687,
+            "x1": 234,
+            "y1": 713
+          }
+        },
+        {
+          "text": "before",
+          "confidence": 90.5,
+          "bbox": {
+            "x0": 241,
+            "y0": 687,
+            "x1": 286,
+            "y1": 713
+          }
+        },
+        {
+          "text": "closing",
+          "confidence": 92.4,
+          "bbox": {
+            "x0": 291,
+            "y0": 687,
+            "x1": 340,
+            "y1": 713
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 80.6,
+          "bbox": {
+            "x0": 345,
+            "y0": 687,
+            "x1": 368,
+            "y1": 713
+          }
+        },
+        {
+          "text": "account,",
+          "confidence": 95.3,
+          "bbox": {
+            "x0": 376,
+            "y0": 687,
+            "x1": 435,
+            "y1": 713
+          }
+        },
+        {
+          "text": "which",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 441,
+            "y0": 687,
+            "x1": 479,
+            "y1": 713
+          }
+        },
+        {
+          "text": "is",
+          "confidence": 82.9,
+          "bbox": {
+            "x0": 484,
+            "y0": 687,
+            "x1": 498,
+            "y1": 713
+          }
+        },
+        {
+          "text": "linked",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 504,
+            "y0": 687,
+            "x1": 544,
+            "y1": 713
+          }
+        },
+        {
+          "text": "with",
+          "confidence": 91,
+          "bbox": {
+            "x0": 551,
+            "y0": 687,
+            "x1": 580,
+            "y1": 713
+          }
+        },
+        {
+          "text": "tho",
+          "confidence": 70.5,
+          "bbox": {
+            "x0": 586,
+            "y0": 687,
+            "x1": 606,
+            "y1": 713
+          }
+        },
+        {
+          "text": "Debit",
+          "confidence": 45.3,
+          "bbox": {
+            "x0": 614,
+            "y0": 687,
+            "x1": 650,
+            "y1": 713
+          }
+        },
+        {
+          "text": "Card,",
+          "confidence": 91.9,
+          "bbox": {
+            "x0": 655,
+            "y0": 687,
+            "x1": 690,
+            "y1": 713
+          }
+        },
+        {
+          "text": "all",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 694,
+            "y0": 687,
+            "x1": 713,
+            "y1": 713
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 94.8,
+          "bbox": {
+            "x0": 716,
+            "y0": 687,
+            "x1": 736,
+            "y1": 713
+          }
+        },
+        {
+          "text": "accumulated",
+          "confidence": 96.3,
+          "bbox": {
+            "x0": 744,
+            "y0": 687,
+            "x1": 832,
+            "y1": 713
+          }
+        },
+        {
+          "text": "cashback",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 839,
+            "y0": 687,
+            "x1": 905,
+            "y1": 713
+          }
+        },
+        {
+          "text": "points",
+          "confidence": 94.3,
+          "bbox": {
+            "x0": 911,
+            "y0": 687,
+            "x1": 955,
+            "y1": 713
+          }
+        },
+        {
+          "text": "pertaining",
+          "confidence": 86.7,
+          "bbox": {
+            "x0": 961,
+            "y0": 687,
+            "x1": 1029,
+            "y1": 713
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 96,
+          "bbox": {
+            "x0": 1037,
+            "y0": 687,
+            "x1": 1051,
+            "y1": 713
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 1056,
+            "y0": 687,
+            "x1": 1083,
+            "y1": 713
+          }
+        },
+        {
+          "text": "Debit",
+          "confidence": 92.7,
+          "bbox": {
+            "x0": 1091,
+            "y0": 687,
+            "x1": 1126,
+            "y1": 713
+          }
+        },
+        {
+          "text": "Card",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 1132,
+            "y0": 687,
+            "x1": 1161,
+            "y1": 713
+          }
+        },
+        {
+          "text": "and",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 1169,
+            "y0": 687,
+            "x1": 1191,
+            "y1": 713
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 1199,
+            "y0": 687,
+            "x1": 1255,
+            "y1": 713
+          }
+        },
+        {
+          "text": "will",
+          "confidence": 92.6,
+          "bbox": {
+            "x0": 1262,
+            "y0": 687,
+            "x1": 1287,
+            "y1": 713
+          }
+        },
+        {
+          "text": "Bpso",
+          "confidence": 51.7,
+          "bbox": {
+            "x0": 1292,
+            "y0": 687,
+            "x1": 1330,
+            "y1": 713
+          }
+        }
+      ]
+    },
+    {
+      "text": "seg comes [|| [ [111] mat pie",
+      "confidence": 6.2,
+      "words": [
+        {
+          "text": "seg",
+          "confidence": 26.9,
+          "bbox": {
+            "x0": 55,
+            "y0": 704,
+            "x1": 130,
+            "y1": 786
+          }
+        },
+        {
+          "text": "comes",
+          "confidence": 0,
+          "bbox": {
+            "x0": 143,
+            "y0": 704,
+            "x1": 295,
+            "y1": 786
+          }
+        },
+        {
+          "text": "[||",
+          "confidence": 0,
+          "bbox": {
+            "x0": 344,
+            "y0": 725,
+            "x1": 773,
+            "y1": 762
+          }
+        },
+        {
+          "text": "[",
+          "confidence": 48.6,
+          "bbox": {
+            "x0": 499,
+            "y0": 704,
+            "x1": 513,
+            "y1": 786
+          }
+        },
+        {
+          "text": "[111]",
+          "confidence": 0,
+          "bbox": {
+            "x0": 540,
+            "y0": 725,
+            "x1": 773,
+            "y1": 762
+          }
+        },
+        {
+          "text": "mat",
+          "confidence": 8.8,
+          "bbox": {
+            "x0": 994,
+            "y0": 728,
+            "x1": 1105,
+            "y1": 763
+          }
+        },
+        {
+          "text": "pie",
+          "confidence": 13,
+          "bbox": {
+            "x0": 1160,
+            "y0": 727,
+            "x1": 1284,
+            "y1": 767
+          }
+        }
+      ]
+    },
+    {
+      "text": "Paythe proceeds by || Cast (only for branch closurs) |_| Managers Cheque! DD [7] cred io HOFC Bank Account",
+      "confidence": 61.1,
+      "words": [
+        {
+          "text": "Paythe",
+          "confidence": 58.8,
+          "bbox": {
+            "x0": 57,
+            "y0": 762,
+            "x1": 121,
+            "y1": 807
+          }
+        },
+        {
+          "text": "proceeds",
+          "confidence": 0,
+          "bbox": {
+            "x0": 124,
+            "y0": 762,
+            "x1": 204,
+            "y1": 807
+          }
+        },
+        {
+          "text": "by",
+          "confidence": 72.5,
+          "bbox": {
+            "x0": 210,
+            "y0": 762,
+            "x1": 224,
+            "y1": 807
+          }
+        },
+        {
+          "text": "||",
+          "confidence": 69.1,
+          "bbox": {
+            "x0": 248,
+            "y0": 762,
+            "x1": 296,
+            "y1": 807
+          }
+        },
+        {
+          "text": "Cast",
+          "confidence": 68.8,
+          "bbox": {
+            "x0": 308,
+            "y0": 762,
+            "x1": 350,
+            "y1": 807
+          }
+        },
+        {
+          "text": "(only",
+          "confidence": 76,
+          "bbox": {
+            "x0": 364,
+            "y0": 762,
+            "x1": 399,
+            "y1": 807
+          }
+        },
+        {
+          "text": "for",
+          "confidence": 95.1,
+          "bbox": {
+            "x0": 405,
+            "y0": 762,
+            "x1": 429,
+            "y1": 807
+          }
+        },
+        {
+          "text": "branch",
+          "confidence": 91.3,
+          "bbox": {
+            "x0": 435,
+            "y0": 762,
+            "x1": 489,
+            "y1": 807
+          }
+        },
+        {
+          "text": "closurs)",
+          "confidence": 73.1,
+          "bbox": {
+            "x0": 495,
+            "y0": 762,
+            "x1": 556,
+            "y1": 807
+          }
+        },
+        {
+          "text": "|_|",
+          "confidence": 61.6,
+          "bbox": {
+            "x0": 585,
+            "y0": 762,
+            "x1": 642,
+            "y1": 807
+          }
+        },
+        {
+          "text": "Managers",
+          "confidence": 88.7,
+          "bbox": {
+            "x0": 649,
+            "y0": 762,
+            "x1": 729,
+            "y1": 807
+          }
+        },
+        {
+          "text": "Cheque!",
+          "confidence": 31.1,
+          "bbox": {
+            "x0": 739,
+            "y0": 762,
+            "x1": 800,
+            "y1": 807
+          }
+        },
+        {
+          "text": "DD",
+          "confidence": 89.3,
+          "bbox": {
+            "x0": 810,
+            "y0": 762,
+            "x1": 837,
+            "y1": 807
+          }
+        },
+        {
+          "text": "[7]",
+          "confidence": 12,
+          "bbox": {
+            "x0": 893,
+            "y0": 762,
+            "x1": 931,
+            "y1": 807
+          }
+        },
+        {
+          "text": "cred",
+          "confidence": 55,
+          "bbox": {
+            "x0": 941,
+            "y0": 762,
+            "x1": 980,
+            "y1": 807
+          }
+        },
+        {
+          "text": "io",
+          "confidence": 28.7,
+          "bbox": {
+            "x0": 994,
+            "y0": 762,
+            "x1": 1006,
+            "y1": 807
+          }
+        },
+        {
+          "text": "HOFC",
+          "confidence": 40.4,
+          "bbox": {
+            "x0": 1016,
+            "y0": 762,
+            "x1": 1058,
+            "y1": 807
+          }
+        },
+        {
+          "text": "Bank",
+          "confidence": 71.8,
+          "bbox": {
+            "x0": 1069,
+            "y0": 762,
+            "x1": 1103,
+            "y1": 807
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 78.5,
+          "bbox": {
+            "x0": 1110,
+            "y0": 762,
+            "x1": 1175,
+            "y1": 807
+          }
+        }
+      ]
+    },
+    {
+      "text": "“(As per the current income tax rules, If the account balance at the time of account closure exceeds Rs. 20000/- the payment will be made only by Manager's cheque)",
+      "confidence": 88.6,
+      "words": [
+        {
+          "text": "“(As",
+          "confidence": 41.8,
+          "bbox": {
+            "x0": 41,
+            "y0": 808,
+            "x1": 76,
+            "y1": 836
+          }
+        },
+        {
+          "text": "per",
+          "confidence": 73,
+          "bbox": {
+            "x0": 83,
+            "y0": 808,
+            "x1": 109,
+            "y1": 836
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96.1,
+          "bbox": {
+            "x0": 115,
+            "y0": 808,
+            "x1": 137,
+            "y1": 836
+          }
+        },
+        {
+          "text": "current",
+          "confidence": 93,
+          "bbox": {
+            "x0": 146,
+            "y0": 808,
+            "x1": 200,
+            "y1": 836
+          }
+        },
+        {
+          "text": "income",
+          "confidence": 93.8,
+          "bbox": {
+            "x0": 206,
+            "y0": 808,
+            "x1": 258,
+            "y1": 836
+          }
+        },
+        {
+          "text": "tax",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 267,
+            "y0": 808,
+            "x1": 289,
+            "y1": 836
+          }
+        },
+        {
+          "text": "rules,",
+          "confidence": 95,
+          "bbox": {
+            "x0": 297,
+            "y0": 808,
+            "x1": 340,
+            "y1": 836
+          }
+        },
+        {
+          "text": "If",
+          "confidence": 71.8,
+          "bbox": {
+            "x0": 346,
+            "y0": 808,
+            "x1": 356,
+            "y1": 836
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 96.4,
+          "bbox": {
+            "x0": 360,
+            "y0": 808,
+            "x1": 384,
+            "y1": 836
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 391,
+            "y0": 808,
+            "x1": 452,
+            "y1": 836
+          }
+        },
+        {
+          "text": "balance",
+          "confidence": 88,
+          "bbox": {
+            "x0": 458,
+            "y0": 808,
+            "x1": 517,
+            "y1": 836
+          }
+        },
+        {
+          "text": "at",
+          "confidence": 86.4,
+          "bbox": {
+            "x0": 525,
+            "y0": 808,
+            "x1": 538,
+            "y1": 836
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 544,
+            "y0": 808,
+            "x1": 566,
+            "y1": 836
+          }
+        },
+        {
+          "text": "time",
+          "confidence": 91.3,
+          "bbox": {
+            "x0": 573,
+            "y0": 808,
+            "x1": 606,
+            "y1": 836
+          }
+        },
+        {
+          "text": "of",
+          "confidence": 97,
+          "bbox": {
+            "x0": 613,
+            "y0": 808,
+            "x1": 629,
+            "y1": 836
+          }
+        },
+        {
+          "text": "account",
+          "confidence": 84,
+          "bbox": {
+            "x0": 636,
+            "y0": 808,
+            "x1": 695,
+            "y1": 836
+          }
+        },
+        {
+          "text": "closure",
+          "confidence": 91,
+          "bbox": {
+            "x0": 701,
+            "y0": 808,
+            "x1": 758,
+            "y1": 836
+          }
+        },
+        {
+          "text": "exceeds",
+          "confidence": 86.8,
+          "bbox": {
+            "x0": 766,
+            "y0": 808,
+            "x1": 830,
+            "y1": 836
+          }
+        },
+        {
+          "text": "Rs.",
+          "confidence": 92.8,
+          "bbox": {
+            "x0": 836,
+            "y0": 808,
+            "x1": 863,
+            "y1": 836
+          }
+        },
+        {
+          "text": "20000/-",
+          "confidence": 54.2,
+          "bbox": {
+            "x0": 871,
+            "y0": 808,
+            "x1": 928,
+            "y1": 836
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 97,
+          "bbox": {
+            "x0": 934,
+            "y0": 808,
+            "x1": 956,
+            "y1": 836
+          }
+        },
+        {
+          "text": "payment",
+          "confidence": 94.9,
+          "bbox": {
+            "x0": 964,
+            "y0": 808,
+            "x1": 1031,
+            "y1": 836
+          }
+        },
+        {
+          "text": "will",
+          "confidence": 96,
+          "bbox": {
+            "x0": 1039,
+            "y0": 808,
+            "x1": 1063,
+            "y1": 836
+          }
+        },
+        {
+          "text": "be",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 1070,
+            "y0": 808,
+            "x1": 1087,
+            "y1": 836
+          }
+        },
+        {
+          "text": "made",
+          "confidence": 96.5,
+          "bbox": {
+            "x0": 1095,
+            "y0": 808,
+            "x1": 1133,
+            "y1": 836
+          }
+        },
+        {
+          "text": "only",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 1142,
+            "y0": 808,
+            "x1": 1173,
+            "y1": 836
+          }
+        },
+        {
+          "text": "by",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 1182,
+            "y0": 808,
+            "x1": 1199,
+            "y1": 836
+          }
+        },
+        {
+          "text": "Manager's",
+          "confidence": 82.6,
+          "bbox": {
+            "x0": 1207,
+            "y0": 808,
+            "x1": 1287,
+            "y1": 836
+          }
+        },
+        {
+          "text": "cheque)",
+          "confidence": 96,
+          "bbox": {
+            "x0": 1294,
+            "y0": 808,
+            "x1": 1356,
+            "y1": 836
+          }
+        }
+      ]
+    },
+    {
+      "text": "We confirm that all unused cheques issued lo me/us have been enclosed / destroyed by me/us (Nos. from to )",
+      "confidence": 85.8,
+      "words": [
+        {
+          "text": "We",
+          "confidence": 63.1,
+          "bbox": {
+            "x0": 60,
+            "y0": 834,
+            "x1": 91,
+            "y1": 862
+          }
+        },
+        {
+          "text": "confirm",
+          "confidence": 96,
+          "bbox": {
+            "x0": 100,
+            "y0": 834,
+            "x1": 154,
+            "y1": 862
+          }
+        },
+        {
+          "text": "that",
+          "confidence": 85.4,
+          "bbox": {
+            "x0": 163,
+            "y0": 834,
+            "x1": 194,
+            "y1": 862
+          }
+        },
+        {
+          "text": "all",
+          "confidence": 85,
+          "bbox": {
+            "x0": 200,
+            "y0": 834,
+            "x1": 220,
+            "y1": 862
+          }
+        },
+        {
+          "text": "unused",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 226,
+            "y0": 834,
+            "x1": 280,
+            "y1": 862
+          }
+        },
+        {
+          "text": "cheques",
+          "confidence": 69.4,
+          "bbox": {
+            "x0": 286,
+            "y0": 834,
+            "x1": 350,
+            "y1": 862
+          }
+        },
+        {
+          "text": "issued",
+          "confidence": 90.6,
+          "bbox": {
+            "x0": 357,
+            "y0": 834,
+            "x1": 406,
+            "y1": 862
+          }
+        },
+        {
+          "text": "lo",
+          "confidence": 63.8,
+          "bbox": {
+            "x0": 415,
+            "y0": 834,
+            "x1": 430,
+            "y1": 862
+          }
+        },
+        {
+          "text": "me/us",
+          "confidence": 94.6,
+          "bbox": {
+            "x0": 438,
+            "y0": 834,
+            "x1": 483,
+            "y1": 862
+          }
+        },
+        {
+          "text": "have",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 492,
+            "y0": 834,
+            "x1": 525,
+            "y1": 862
+          }
+        },
+        {
+          "text": "been",
+          "confidence": 81.6,
+          "bbox": {
+            "x0": 534,
+            "y0": 834,
+            "x1": 570,
+            "y1": 862
+          }
+        },
+        {
+          "text": "enclosed",
+          "confidence": 82,
+          "bbox": {
+            "x0": 578,
+            "y0": 834,
+            "x1": 647,
+            "y1": 862
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 92.7,
+          "bbox": {
+            "x0": 653,
+            "y0": 838,
+            "x1": 660,
+            "y1": 852
+          }
+        },
+        {
+          "text": "destroyed",
+          "confidence": 88.6,
+          "bbox": {
+            "x0": 667,
+            "y0": 834,
+            "x1": 740,
+            "y1": 862
+          }
+        },
+        {
+          "text": "by",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 749,
+            "y0": 834,
+            "x1": 766,
+            "y1": 862
+          }
+        },
+        {
+          "text": "me/us",
+          "confidence": 92.9,
+          "bbox": {
+            "x0": 774,
+            "y0": 834,
+            "x1": 819,
+            "y1": 862
+          }
+        },
+        {
+          "text": "(Nos.",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 826,
+            "y0": 834,
+            "x1": 868,
+            "y1": 862
+          }
+        },
+        {
+          "text": "from",
+          "confidence": 95.5,
+          "bbox": {
+            "x0": 875,
+            "y0": 834,
+            "x1": 913,
+            "y1": 862
+          }
+        },
+        {
+          "text": "to",
+          "confidence": 59.1,
+          "bbox": {
+            "x0": 1054,
+            "y0": 834,
+            "x1": 1074,
+            "y1": 862
+          }
+        },
+        {
+          "text": ")",
+          "confidence": 93.1,
+          "bbox": {
+            "x0": 1249,
+            "y0": 838,
+            "x1": 1254,
+            "y1": 856
+          }
+        }
+      ]
+    },
+    {
+      "text": "We wre enclosing / destroying the ATM / Deblt Cars lssued tomes (Not Y(Ne2__________",
+      "confidence": 59,
+      "words": [
+        {
+          "text": "We",
+          "confidence": 64.5,
+          "bbox": {
+            "x0": 60,
+            "y0": 856,
+            "x1": 91,
+            "y1": 891
+          }
+        },
+        {
+          "text": "wre",
+          "confidence": 74.1,
+          "bbox": {
+            "x0": 102,
+            "y0": 856,
+            "x1": 126,
+            "y1": 891
+          }
+        },
+        {
+          "text": "enclosing",
+          "confidence": 86,
+          "bbox": {
+            "x0": 134,
+            "y0": 856,
+            "x1": 205,
+            "y1": 891
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 92,
+          "bbox": {
+            "x0": 213,
+            "y0": 868,
+            "x1": 217,
+            "y1": 883
+          }
+        },
+        {
+          "text": "destroying",
+          "confidence": 93.8,
+          "bbox": {
+            "x0": 225,
+            "y0": 856,
+            "x1": 304,
+            "y1": 891
+          }
+        },
+        {
+          "text": "the",
+          "confidence": 94.7,
+          "bbox": {
+            "x0": 309,
+            "y0": 856,
+            "x1": 336,
+            "y1": 891
+          }
+        },
+        {
+          "text": "ATM",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 344,
+            "y0": 856,
+            "x1": 371,
+            "y1": 891
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 72.7,
+          "bbox": {
+            "x0": 380,
+            "y0": 868,
+            "x1": 386,
+            "y1": 882
+          }
+        },
+        {
+          "text": "Deblt",
+          "confidence": 72.7,
+          "bbox": {
+            "x0": 394,
+            "y0": 856,
+            "x1": 433,
+            "y1": 891
+          }
+        },
+        {
+          "text": "Cars",
+          "confidence": 36.5,
+          "bbox": {
+            "x0": 440,
+            "y0": 856,
+            "x1": 491,
+            "y1": 891
+          }
+        },
+        {
+          "text": "lssued",
+          "confidence": 1.5,
+          "bbox": {
+            "x0": 496,
+            "y0": 856,
+            "x1": 546,
+            "y1": 891
+          }
+        },
+        {
+          "text": "tomes",
+          "confidence": 20.4,
+          "bbox": {
+            "x0": 551,
+            "y0": 856,
+            "x1": 622,
+            "y1": 891
+          }
+        },
+        {
+          "text": "(Not",
+          "confidence": 21.9,
+          "bbox": {
+            "x0": 627,
+            "y0": 856,
+            "x1": 661,
+            "y1": 891
+          }
+        },
+        {
+          "text": "Y(Ne2__________",
+          "confidence": 1.5,
+          "bbox": {
+            "x0": 840,
+            "y0": 856,
+            "x1": 1063,
+            "y1": 891
+          }
+        }
+      ]
+    },
+    {
+      "text": "mss",
+      "confidence": 27.9,
+      "words": [
+        {
+          "text": "mss",
+          "confidence": 27.9,
+          "bbox": {
+            "x0": 156,
+            "y0": 931,
+            "x1": 526,
+            "y1": 950
+          }
+        }
+      ]
+    },
+    {
+      "text": "Ee —",
+      "confidence": 0,
+      "words": [
+        {
+          "text": "Ee",
+          "confidence": 1.2,
+          "bbox": {
+            "x0": 65,
+            "y0": 980,
+            "x1": 143,
+            "y1": 1096
+          }
+        },
+        {
+          "text": "—",
+          "confidence": 0,
+          "bbox": {
+            "x0": 171,
+            "y0": 984,
+            "x1": 422,
+            "y1": 1004
+          }
+        }
+      ]
+    },
+    {
+      "text": "Product deficiency (features not adequate, other bank's product Consolidating Bank Account - within bank / another bank",
+      "confidence": 89.9,
+      "words": [
+        {
+          "text": "Product",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 65,
+            "y0": 1027,
+            "x1": 128,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "deficiency",
+          "confidence": 30.1,
+          "bbox": {
+            "x0": 135,
+            "y0": 1027,
+            "x1": 210,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "(features",
+          "confidence": 95.4,
+          "bbox": {
+            "x0": 219,
+            "y0": 1027,
+            "x1": 288,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "not",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 297,
+            "y0": 1027,
+            "x1": 322,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "adequate,",
+          "confidence": 95.5,
+          "bbox": {
+            "x0": 328,
+            "y0": 1027,
+            "x1": 404,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "other",
+          "confidence": 94.4,
+          "bbox": {
+            "x0": 410,
+            "y0": 1027,
+            "x1": 450,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "bank's",
+          "confidence": 92.2,
+          "bbox": {
+            "x0": 458,
+            "y0": 1027,
+            "x1": 508,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "product",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 514,
+            "y0": 1027,
+            "x1": 575,
+            "y1": 1056
+          }
+        },
+        {
+          "text": "Consolidating",
+          "confidence": 83.3,
+          "bbox": {
+            "x0": 776,
+            "y0": 1027,
+            "x1": 888,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "Bank",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 897,
+            "y0": 1027,
+            "x1": 933,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 92.8,
+          "bbox": {
+            "x0": 941,
+            "y0": 1027,
+            "x1": 1003,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "-",
+          "confidence": 89.1,
+          "bbox": {
+            "x0": 1009,
+            "y0": 1040,
+            "x1": 1015,
+            "y1": 1043
+          }
+        },
+        {
+          "text": "within",
+          "confidence": 94.2,
+          "bbox": {
+            "x0": 1023,
+            "y0": 1027,
+            "x1": 1066,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "bank",
+          "confidence": 92.1,
+          "bbox": {
+            "x0": 1072,
+            "y0": 1027,
+            "x1": 1105,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 91.9,
+          "bbox": {
+            "x0": 1114,
+            "y0": 1032,
+            "x1": 1119,
+            "y1": 1047
+          }
+        },
+        {
+          "text": "another",
+          "confidence": 95.1,
+          "bbox": {
+            "x0": 1126,
+            "y0": 1027,
+            "x1": 1182,
+            "y1": 1055
+          }
+        },
+        {
+          "text": "bank",
+          "confidence": 95.7,
+          "bbox": {
+            "x0": 1191,
+            "y0": 1027,
+            "x1": 1231,
+            "y1": 1055
+          }
+        }
+      ]
+    },
+    {
+      "text": "features are superior) (Consolidating implies reducing multiple accounts)",
+      "confidence": 84.1,
+      "words": [
+        {
+          "text": "features",
+          "confidence": 59.5,
+          "bbox": {
+            "x0": 64,
+            "y0": 1048,
+            "x1": 132,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "are",
+          "confidence": 88.6,
+          "bbox": {
+            "x0": 138,
+            "y0": 1048,
+            "x1": 163,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "superior)",
+          "confidence": 91.4,
+          "bbox": {
+            "x0": 169,
+            "y0": 1048,
+            "x1": 244,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "(Consolidating",
+          "confidence": 84.3,
+          "bbox": {
+            "x0": 780,
+            "y0": 1052,
+            "x1": 1179,
+            "y1": 1071
+          }
+        },
+        {
+          "text": "implies",
+          "confidence": 68.5,
+          "bbox": {
+            "x0": 902,
+            "y0": 1048,
+            "x1": 954,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "reducing",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 962,
+            "y0": 1048,
+            "x1": 1028,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "multiple",
+          "confidence": 88.4,
+          "bbox": {
+            "x0": 1037,
+            "y0": 1048,
+            "x1": 1096,
+            "y1": 1075
+          }
+        },
+        {
+          "text": "accounts)",
+          "confidence": 95.6,
+          "bbox": {
+            "x0": 1104,
+            "y0": 1048,
+            "x1": 1184,
+            "y1": 1075
+          }
+        }
+      ]
+    },
+    {
+      "text": "B i i li ed Ea a gal ih «| Ascot rng cp react rm, or pct |",
+      "confidence": 41.1,
+      "words": [
+        {
+          "text": "B",
+          "confidence": 28.3,
+          "bbox": {
+            "x0": 18,
+            "y0": 1087,
+            "x1": 58,
+            "y1": 1152
+          }
+        },
+        {
+          "text": "i",
+          "confidence": 41.8,
+          "bbox": {
+            "x0": 68,
+            "y0": 1108,
+            "x1": 122,
+            "y1": 1128
+          }
+        },
+        {
+          "text": "i",
+          "confidence": 51,
+          "bbox": {
+            "x0": 149,
+            "y0": 1109,
+            "x1": 183,
+            "y1": 1128
+          }
+        },
+        {
+          "text": "li",
+          "confidence": 44.2,
+          "bbox": {
+            "x0": 202,
+            "y0": 1083,
+            "x1": 232,
+            "y1": 1132
+          }
+        },
+        {
+          "text": "ed",
+          "confidence": 44.2,
+          "bbox": {
+            "x0": 300,
+            "y0": 1083,
+            "x1": 379,
+            "y1": 1132
+          }
+        },
+        {
+          "text": "Ea",
+          "confidence": 36.1,
+          "bbox": {
+            "x0": 390,
+            "y0": 1083,
+            "x1": 448,
+            "y1": 1132
+          }
+        },
+        {
+          "text": "a",
+          "confidence": 35.9,
+          "bbox": {
+            "x0": 468,
+            "y0": 1110,
+            "x1": 489,
+            "y1": 1125
+          }
+        },
+        {
+          "text": "gal",
+          "confidence": 8.8,
+          "bbox": {
+            "x0": 509,
+            "y0": 1083,
+            "x1": 555,
+            "y1": 1132
+          }
+        },
+        {
+          "text": "ih",
+          "confidence": 27.6,
+          "bbox": {
+            "x0": 562,
+            "y0": 1083,
+            "x1": 591,
+            "y1": 1132
+          }
+        },
+        {
+          "text": "«|",
+          "confidence": 59,
+          "bbox": {
+            "x0": 660,
+            "y0": 1083,
+            "x1": 717,
+            "y1": 1156
+          }
+        },
+        {
+          "text": "Ascot",
+          "confidence": 33.6,
+          "bbox": {
+            "x0": 775,
+            "y0": 1084,
+            "x1": 844,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "rng",
+          "confidence": 20.4,
+          "bbox": {
+            "x0": 853,
+            "y0": 1084,
+            "x1": 898,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "cp",
+          "confidence": 23.5,
+          "bbox": {
+            "x0": 912,
+            "y0": 1084,
+            "x1": 948,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "react",
+          "confidence": 34.8,
+          "bbox": {
+            "x0": 976,
+            "y0": 1084,
+            "x1": 1041,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "rm,",
+          "confidence": 14.7,
+          "bbox": {
+            "x0": 1045,
+            "y0": 1084,
+            "x1": 1120,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "or",
+          "confidence": 73.6,
+          "bbox": {
+            "x0": 1153,
+            "y0": 1084,
+            "x1": 1169,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "pct",
+          "confidence": 69.2,
+          "bbox": {
+            "x0": 1178,
+            "y0": 1084,
+            "x1": 1233,
+            "y1": 1143
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 93.4,
+          "bbox": {
+            "x0": 1281,
+            "y0": 1091,
+            "x1": 1282,
+            "y1": 1148
+          }
+        }
+      ]
+    },
+    {
+      "text": "Be eee. TI EY",
+      "confidence": 21,
+      "words": [
+        {
+          "text": "Be",
+          "confidence": 17.9,
+          "bbox": {
+            "x0": 18,
+            "y0": 1153,
+            "x1": 229,
+            "y1": 1202
+          }
+        },
+        {
+          "text": "eee.",
+          "confidence": 43,
+          "bbox": {
+            "x0": 421,
+            "y0": 1153,
+            "x1": 714,
+            "y1": 1202
+          }
+        },
+        {
+          "text": "TI",
+          "confidence": 17.4,
+          "bbox": {
+            "x0": 671,
+            "y0": 1149,
+            "x1": 702,
+            "y1": 1222
+          }
+        },
+        {
+          "text": "EY",
+          "confidence": 5.6,
+          "bbox": {
+            "x0": 725,
+            "y0": 1149,
+            "x1": 757,
+            "y1": 1222
+          }
+        }
+      ]
+    },
+    {
+      "text": "Service charges/AMB related (high AMB, high charges etc.) ue Roast ender a)",
+      "confidence": 68,
+      "words": [
+        {
+          "text": "Service",
+          "confidence": 93.2,
+          "bbox": {
+            "x0": 64,
+            "y0": 1256,
+            "x1": 128,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "charges/AMB",
+          "confidence": 72.1,
+          "bbox": {
+            "x0": 136,
+            "y0": 1256,
+            "x1": 235,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "related",
+          "confidence": 85.3,
+          "bbox": {
+            "x0": 242,
+            "y0": 1256,
+            "x1": 299,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "(high",
+          "confidence": 83.7,
+          "bbox": {
+            "x0": 306,
+            "y0": 1256,
+            "x1": 344,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "AMB,",
+          "confidence": 88.2,
+          "bbox": {
+            "x0": 354,
+            "y0": 1256,
+            "x1": 390,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "high",
+          "confidence": 97,
+          "bbox": {
+            "x0": 397,
+            "y0": 1256,
+            "x1": 430,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "charges",
+          "confidence": 96.7,
+          "bbox": {
+            "x0": 437,
+            "y0": 1256,
+            "x1": 496,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "etc.)",
+          "confidence": 93.7,
+          "bbox": {
+            "x0": 504,
+            "y0": 1256,
+            "x1": 544,
+            "y1": 1288
+          }
+        },
+        {
+          "text": "ue",
+          "confidence": 0,
+          "bbox": {
+            "x0": 779,
+            "y0": 1248,
+            "x1": 951,
+            "y1": 1296
+          }
+        },
+        {
+          "text": "Roast",
+          "confidence": 23.5,
+          "bbox": {
+            "x0": 967,
+            "y0": 1248,
+            "x1": 1011,
+            "y1": 1296
+          }
+        },
+        {
+          "text": "ender",
+          "confidence": 41.4,
+          "bbox": {
+            "x0": 1019,
+            "y0": 1248,
+            "x1": 1055,
+            "y1": 1296
+          }
+        },
+        {
+          "text": "a)",
+          "confidence": 50.1,
+          "bbox": {
+            "x0": 1067,
+            "y0": 1273,
+            "x1": 1098,
+            "y1": 1292
+          }
+        }
+      ]
+    },
+    {
+      "text": "Recurring Deposit-Premature closure / Matured RD Tatkal Account - Initial pay-in retumed/documents Insufficient [es",
+      "confidence": 68.6,
+      "words": [
+        {
+          "text": "Recurring",
+          "confidence": 92.5,
+          "bbox": {
+            "x0": 65,
+            "y0": 1312,
+            "x1": 144,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "Deposit-Premature",
+          "confidence": 77.9,
+          "bbox": {
+            "x0": 152,
+            "y0": 1312,
+            "x1": 299,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "closure",
+          "confidence": 91.6,
+          "bbox": {
+            "x0": 305,
+            "y0": 1312,
+            "x1": 362,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 91.6,
+          "bbox": {
+            "x0": 371,
+            "y0": 1317,
+            "x1": 375,
+            "y1": 1331
+          }
+        },
+        {
+          "text": "Matured",
+          "confidence": 95,
+          "bbox": {
+            "x0": 384,
+            "y0": 1312,
+            "x1": 446,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "RD",
+          "confidence": 94.5,
+          "bbox": {
+            "x0": 454,
+            "y0": 1312,
+            "x1": 479,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "Tatkal",
+          "confidence": 35.8,
+          "bbox": {
+            "x0": 776,
+            "y0": 1312,
+            "x1": 828,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "Account",
+          "confidence": 86.8,
+          "bbox": {
+            "x0": 834,
+            "y0": 1312,
+            "x1": 893,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "-",
+          "confidence": 73.1,
+          "bbox": {
+            "x0": 899,
+            "y0": 1323,
+            "x1": 906,
+            "y1": 1328
+          }
+        },
+        {
+          "text": "Initial",
+          "confidence": 0,
+          "bbox": {
+            "x0": 913,
+            "y0": 1312,
+            "x1": 954,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "pay-in",
+          "confidence": 65.1,
+          "bbox": {
+            "x0": 960,
+            "y0": 1312,
+            "x1": 1006,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "retumed/documents",
+          "confidence": 85.1,
+          "bbox": {
+            "x0": 1012,
+            "y0": 1312,
+            "x1": 1168,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "Insufficient",
+          "confidence": 63.2,
+          "bbox": {
+            "x0": 1174,
+            "y0": 1312,
+            "x1": 1265,
+            "y1": 1339
+          }
+        },
+        {
+          "text": "[es",
+          "confidence": 23.7,
+          "bbox": {
+            "x0": 1278,
+            "y0": 1299,
+            "x1": 1330,
+            "y1": 1305
+          }
+        }
+      ]
+    },
+    {
+      "text": "Dl RR Leer",
+      "confidence": 0,
+      "words": [
+        {
+          "text": "Dl",
+          "confidence": 0,
+          "bbox": {
+            "x0": 18,
+            "y0": 1324,
+            "x1": 54,
+            "y1": 1403
+          }
+        },
+        {
+          "text": "RR",
+          "confidence": 9.9,
+          "bbox": {
+            "x0": 672,
+            "y0": 1324,
+            "x1": 706,
+            "y1": 1403
+          }
+        },
+        {
+          "text": "Leer",
+          "confidence": 20,
+          "bbox": {
+            "x0": 716,
+            "y0": 1347,
+            "x1": 1333,
+            "y1": 1387
+          }
+        }
+      ]
+    },
+    {
+      "text": "17 | As Business shut down / business close",
+      "confidence": 91.6,
+      "words": [
+        {
+          "text": "17",
+          "confidence": 96.2,
+          "bbox": {
+            "x0": 728,
+            "y0": 1402,
+            "x1": 747,
+            "y1": 1417
+          }
+        },
+        {
+          "text": "|",
+          "confidence": 86.6,
+          "bbox": {
+            "x0": 756,
+            "y0": 1398,
+            "x1": 766,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "As",
+          "confidence": 86.6,
+          "bbox": {
+            "x0": 778,
+            "y0": 1398,
+            "x1": 798,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "Business",
+          "confidence": 93,
+          "bbox": {
+            "x0": 806,
+            "y0": 1398,
+            "x1": 876,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "shut",
+          "confidence": 96.9,
+          "bbox": {
+            "x0": 884,
+            "y0": 1398,
+            "x1": 917,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "down",
+          "confidence": 88.2,
+          "bbox": {
+            "x0": 925,
+            "y0": 1398,
+            "x1": 961,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "/",
+          "confidence": 88.2,
+          "bbox": {
+            "x0": 969,
+            "y0": 1402,
+            "x1": 975,
+            "y1": 1417
+          }
+        },
+        {
+          "text": "business",
+          "confidence": 96.6,
+          "bbox": {
+            "x0": 981,
+            "y0": 1398,
+            "x1": 1047,
+            "y1": 1424
+          }
+        },
+        {
+          "text": "close",
+          "confidence": 92.3,
+          "bbox": {
+            "x0": 1055,
+            "y0": 1398,
+            "x1": 1101,
+            "y1": 1424
+          }
+        }
+      ]
+    }
+  ],
+  "outputFile": "/Users/kinsha/document-classification/extractor-service/output/closure_form_09e4c634.json"
+}

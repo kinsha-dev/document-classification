@@ -1,0 +1,32 @@
+{
+  "jobId": "f82e1434-e167-4dac-88f7-65deccaa45e2",
+  "filename": "test_invoice.pdf",
+  "fileType": "pdf",
+  "mimeType": "application/pdf",
+  "sizeBytes": 2124,
+  "processedAt": "2026-04-12T13:45:52.098Z",
+  "durationMs": 54,
+  "fullText": "INVOICE #2026-0042\nBilled To: Kinsha Abid\nEmail: kinsha.abid@gmail.com\nInvoice Date: April 12, 2026\nPayment Due: May 12, 2026\nLine Items\n Document Classifier License x1 $299.00 $299.00\n Extractor Service Setup x1 $150.00 $150.00\n Ollama Integration Module x2 $75.00 $150.00\nSubtotal: $599.00\nVAT (10%): $59.90\nTotal Amount Due: $658.90\n\nPayment Terms and Conditions\nPayment is due within 30 days of the invoice date. Late payments will incur a 1.5% monthly interest\ncharge. This invoice constitutes an agreement between the parties. All services are provided as\ndescribed in the Statement of Work.\nBank Transfer Details:\nAccount Number: 1234-5678-9012\nBank: First National Bank",
+  "charCount": 677,
+  "wordCount": 99,
+  "pageCount": 2,
+  "pages": [
+    {
+      "pageNumber": 1,
+      "text": "INVOICE #2026-0042\nBilled To: Kinsha Abid\nEmail: kinsha.abid@gmail.com\nInvoice Date: April 12, 2026\nPayment Due: May 12, 2026\nLine Items\n Document Classifier License x1 $299.00 $299.00\n Extractor Service Setup x1 $150.00 $150.00\n Ollama Integration Module x2 $75.00 $150.00\nSubtotal: $599.00\nVAT (10%): $59.90\nTotal Amount Due: $658.90",
+      "charCount": 335,
+      "wordCount": 47
+    },
+    {
+      "pageNumber": 2,
+      "text": "Payment Terms and Conditions\nPayment is due within 30 days of the invoice date. Late payments will incur a 1.5% monthly interest\ncharge. This invoice constitutes an agreement between the parties. All services are provided as\ndescribed in the Statement of Work.\nBank Transfer Details:\nAccount Number: 1234-5678-9012\nBank: First National Bank",
+      "charCount": 340,
+      "wordCount": 52
+    }
+  ],
+  "metadata": {
+    "pageCount": 2,
+    "creationDate": "D:20260412134457Z"
+  },
+  "outputFile": ""
+}

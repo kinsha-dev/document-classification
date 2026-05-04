@@ -1,0 +1,26 @@
+{
+  "jobId": "03e09d50-ba6c-4bbf-ba60-ab6d0f6ea781",
+  "filename": "test_contract.pdf",
+  "fileType": "pdf",
+  "mimeType": "application/pdf",
+  "sizeBytes": 1618,
+  "processedAt": "2026-04-12T13:47:16.309Z",
+  "durationMs": 426,
+  "fullText": "SERVICE AGREEMENT CONTRACT\nThis Agreement is entered into as of April 12, 2026, between TechCorp Ltd. (Service Provider) and\nKinsha Abid (Client). The parties hereby agree and accept the following terms and conditions of this\ncontract.\n1. SCOPE OF SERVICES\nThe Service Provider agrees to deliver document classification and PDF extraction software\nservices as described in Schedule A.\n2. PAYMENT TERMS\nClient shall pay the total contract amount of $10,000 in two installments: 50% upon signing this\nagreement and 50% upon final delivery.\n3. SIGNATURES\nService Provider Signature: ____________________\nClient Signature: ____________________",
+  "charCount": 639,
+  "wordCount": 92,
+  "pageCount": 1,
+  "pages": [
+    {
+      "pageNumber": 1,
+      "text": "SERVICE AGREEMENT CONTRACT\nThis Agreement is entered into as of April 12, 2026, between TechCorp Ltd. (Service Provider) and\nKinsha Abid (Client). The parties hereby agree and accept the following terms and conditions of this\ncontract.\n1. SCOPE OF SERVICES\nThe Service Provider agrees to deliver document classification and PDF extraction software\nservices as described in Schedule A.\n2. PAYMENT TERMS\nClient shall pay the total contract amount of $10,000 in two installments: 50% upon signing this\nagreement and 50% upon final delivery.\n3. SIGNATURES\nService Provider Signature: ____________________\nClient Signature: ____________________",
+      "charCount": 639,
+      "wordCount": 92
+    }
+  ],
+  "metadata": {
+    "pageCount": 1,
+    "creationDate": "D:20260412134457Z"
+  },
+  "outputFile": ""
+}

@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DocExtract Dashboard</title>
+<style>
+/* ══════════════════════════════════════════════
+   RESET & VARIABLES
+══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:       #080f1a;
+  --surface:  #0f1c2e;
+  --surface2: #162236;
+  --surface3: #1d2e46;
+  --border:   #1e3352;
+  --text:     #e2e8f0;
+  --muted:    #64748b;
+  --accent:   #6366f1;
+  --accent2:  #4f46e5;
+  --green:    #22c55e;
+  --yellow:   #f59e0b;
+  --red:      #ef4444;
+  --blue:     #38bdf8;
+  --purple:   #a78bfa;
+  --r:        8px;
+  --sidebar:  220px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;
+  display:flex;overflow:hidden}
+
+/* ══════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════ */
+#sidebar{
+  width:var(--sidebar);min-height:100vh;
+  background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;position:relative;z-index:10;
+}
+.sidebar-logo{
+  padding:18px 16px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.sidebar-logo .logo-icon{font-size:22px}
+.sidebar-logo .logo-text{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.sidebar-logo .logo-text span{color:var(--accent)}
+
+.nav-section{padding:12px 10px 4px;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 14px;margin:1px 6px;border-radius:var(--r);
+  cursor:pointer;color:var(--muted);font-weight:500;font-size:13px;
+  transition:all .15s;border:none;background:none;width:calc(100% - 12px);
+  text-align:left;
+}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,#1e2a5e,#2d1e5e);
+  color:#c4b5fd;border:1px solid #4c3d9033}
+.nav-item .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--accent);color:#fff;
+  font-size:10px;padding:1px 6px;border-radius:8px;font-weight:700}
+
+.sidebar-bottom{
+  margin-top:auto;padding:12px;border-top:1px solid var(--border);
+}
+.service-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;background:var(--surface2);border-radius:var(--r);
+  border:1px solid var(--border);font-size:11px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.dot.green{background:var(--green);box-shadow:0 0 6px #22c55e66}
+.dot.red{background:var(--red)}
+.dot.pulse{animation:pulse .9s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.service-text{flex:1;overflow:hidden}
+.service-text .s-label{font-weight:600;color:var(--text)}
+.service-text .s-url{color:var(--muted);font-size:10px;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ══════════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════════ */
+#main{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+
+/* top bar */
+#topbar{
+  height:52px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;
+}
+#topbar h1{font-size:15px;font-weight:700;flex:1}
+.topbar-chip{
+  display:flex;align-items:center;gap:6px;font-size:11px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:14px;padding:4px 10px;color:var(--muted);
+}
+#ollama-chip .dot{transition:background .3s}
+
+/* content */
+#content{flex:1;overflow-y:auto;padding:20px 24px}
+
+/* ══════════════════════════════════════════════
+   VIEWS
+══════════════════════════════════════════════ */
+.view{display:none}
+.view.active{display:block}
+
+/* ══════════════════════════════════════════════
+   CARDS & GRIDS
+══════════════════════════════════════════════ */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.card-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.card-title2{font-size:12px;font-weight:700;margin-bottom:10px;color:var(--blue)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:900px){.two-col,.three-col{grid-template-columns:1fr}}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:800px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;text-align:center}
+.stat-num{font-size:28px;font-weight:800;color:var(--accent);line-height:1}
+.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:5px;letter-spacing:.05em}
+
+/* ══════════════════════════════════════════════
+   UPLOAD ZONE
+══════════════════════════════════════════════ */
+#drop-zone{
+  border:2px dashed var(--border);border-radius:12px;
+  padding:52px 30px;text-align:center;cursor:pointer;
+  transition:all .2s;background:var(--surface);margin-bottom:16px;
+}
+#drop-zone.drag{border-color:var(--accent);background:#0f1433}
+#drop-zone.processing{border-color:var(--yellow);background:#1a1500;cursor:wait}
+#drop-zone .dz-icon{font-size:44px;margin-bottom:12px}
+#drop-zone h3{font-size:16px;font-weight:700;margin-bottom:6px}
+#drop-zone p{color:var(--muted);font-size:12px;line-height:1.6}
+#drop-zone input{display:none}
+.upload-btn{
+  display:inline-block;margin-top:14px;padding:9px 20px;
+  background:var(--accent);color:#fff;border:none;border-radius:var(--r);
+  cursor:pointer;font-size:13px;font-weight:600;transition:opacity .15s;
+}
+.upload-btn:hover{opacity:.85}
+.upload-btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* progress bar */
+.progress-wrap{background:var(--surface3);border-radius:4px;height:4px;overflow:hidden;margin-top:12px;display:none}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));
+  width:0%;transition:width .3s;border-radius:4px}
+
+/* ══════════════════════════════════════════════
+   BATCH QUEUE
+══════════════════════════════════════════════ */
+.batch-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;background:var(--surface2);border-radius:6px;margin-bottom:6px;
+}
+.bi-icon{font-size:18px}
+.bi-name{flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bi-size{color:var(--muted);font-size:11px;flex-shrink:0}
+.bi-status{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;flex-shrink:0}
+.bi-status.pending {background:#1a1f3a;color:var(--muted)}
+.bi-status.running {background:#1a1a00;color:var(--yellow)}
+.bi-status.done    {background:#0d2e18;color:var(--green)}
+.bi-status.error   {background:#2e0d0d;color:var(--red)}
+.bi-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px}
+.bi-remove:hover{color:var(--red)}
+
+/* ══════════════════════════════════════════════
+   RESULT VIEWER
+══════════════════════════════════════════════ */
+#result-view{display:none}
+.result-header{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;background:var(--surface2);border-radius:var(--r);
+  border:1px solid var(--border);margin-bottom:16px;
+}
+.result-file-icon{font-size:32px}
+.result-meta h3{font-size:15px;font-weight:700}
+.result-meta p{color:var(--muted);font-size:11px;margin-top:2px}
+.meta-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.chip-blue  {background:#0c2a3a;color:var(--blue);border:1px solid #1e4d6044}
+.chip-green {background:#0c2a18;color:var(--green);border:1px solid #22c55e33}
+.chip-purple{background:#1e1040;color:var(--purple);border:1px solid #7c3aed33}
+.chip-yellow{background:#2a1a00;color:var(--yellow);border:1px solid #f59e0b33}
+
+.tabs-row{display:flex;gap:4px;margin-bottom:14px}
+.tab-btn{padding:7px 14px;border-radius:6px;border:none;background:var(--surface2);
+  color:var(--muted);cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
+.tab-btn.active{background:var(--accent);color:#fff}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* JSON viewer */
+.json-box{
+  background:#050d18;border:1px solid var(--border);border-radius:var(--r);
+  padding:14px;font-size:12px;font-family:'Fira Mono','Cascadia Code',monospace;
+  max-height:400px;overflow-y:auto;white-space:pre-wrap;line-height:1.7;
+  color:#94d8fb;
+}
+.json-key   {color:#7dd3fc}
+.json-str   {color:#86efac}
+.json-num   {color:#fde68a}
+.json-bool  {color:#f9a8d4}
+.json-null  {color:#94a3b8}
+
+/* pages breakdown */
+.page-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 14px;margin-bottom:8px;
+}
+.page-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.page-num{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase}
+.page-stats{display:flex;gap:8px;font-size:11px;color:var(--muted)}
+.page-text{font-size:12px;color:var(--text);line-height:1.65;
+  max-height:120px;overflow-y:auto;white-space:pre-wrap}
+
+/* Sheet cards */
+.sheet-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 14px;margin-bottom:8px;
+}
+.sheet-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.sheet-name{font-size:12px;font-weight:700;color:#34d399;display:flex;align-items:center;gap:6px}
+.sheet-stats{display:flex;gap:8px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.sheet-headers{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.header-chip{background:#0c1f30;color:#93c5fd;border:1px solid #3b82f633;
+  font-size:10px;padding:2px 7px;border-radius:6px;font-family:monospace}
+.sheet-text{font-size:12px;color:var(--text);line-height:1.65;
+  max-height:160px;overflow-y:auto;white-space:pre-wrap;font-family:'Fira Mono','Cascadia Code',monospace}
+
+/* OCR lines */
+.ocr-line{
+  padding:6px 10px;background:var(--surface2);border-radius:6px;
+  margin-bottom:5px;display:flex;align-items:baseline;gap:10px;
+}
+.ocr-line-text{flex:1;font-size:12px;line-height:1.5}
+.ocr-conf{font-size:10px;color:var(--muted);white-space:nowrap}
+.ocr-conf.high{color:var(--green)}
+.ocr-conf.med {color:var(--yellow)}
+.ocr-conf.low {color:var(--red)}
+
+/* ══════════════════════════════════════════════
+   CLASSIFICATION
+══════════════════════════════════════════════ */
+.suggest-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 14px;background:var(--surface2);border-radius:var(--r);
+  border:1px solid var(--border);margin-bottom:14px;
+}
+.suggest-lbl{font-size:11px;color:var(--muted);font-weight:600}
+.conf-badge{font-size:11px;padding:2px 9px;border-radius:10px;font-weight:700}
+.conf-high {background:#0d2e18;color:var(--green);border:1px solid #22c55e33}
+.conf-low  {background:#2a1500;color:var(--yellow);border:1px solid #f59e0b33}
+.kw-chip{background:#0c1f3a;color:#93c5fd;border:1px solid #3b82f633;
+  font-size:11px;padding:2px 7px;border-radius:8px;display:inline-block}
+
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
+.cat-btn{
+  padding:9px 10px;border-radius:var(--r);border:2px solid var(--border);
+  background:var(--surface2);color:var(--text);cursor:pointer;font-size:12px;
+  font-weight:500;text-align:center;transition:all .15s;
+}
+.cat-btn:hover{border-color:var(--accent);background:#0f1433}
+.cat-btn.sel{border-color:var(--accent);background:#0f1433;color:#c4b5fd}
+
+.btn{padding:8px 16px;border:none;border-radius:var(--r);cursor:pointer;
+  font-size:13px;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-success{background:var(--green);color:#fff}
+.btn-ghost  {background:var(--surface3);color:var(--text);border:1px solid var(--border)}
+.btn-ai{background:linear-gradient(135deg,#1e3a8a,#5b21b6);color:#fff;
+  display:flex;align-items:center;gap:7px}
+
+/* AI panel */
+.ai-panel{
+  background:#050d18;border:1px solid #1e3a5f;border-radius:var(--r);
+  padding:14px;margin-top:14px;
+}
+.ai-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ai-title{font-size:12px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:7px}
+.ai-model-tag{font-size:10px;background:#0c1f38;border:1px solid #1e4060;
+  color:var(--blue);padding:2px 8px;border-radius:8px;font-family:monospace}
+#ai-stream-box{
+  background:#020810;border:1px solid #1e3352;border-radius:6px;
+  padding:10px 12px;font-size:12px;color:#bae6fd;min-height:60px;max-height:140px;
+  overflow-y:auto;white-space:pre-wrap;line-height:1.65;font-family:monospace;
+  display:none;
+}
+.ai-result-row{
+  display:flex;align-items:center;gap:10px;margin-top:10px;
+  padding:9px 12px;background:#071a0e;border:1px solid #22c55e33;
+  border-radius:var(--r);display:none;
+}
+.ai-cat{font-weight:700;color:var(--green);font-size:13px}
+.ai-apply-btn{margin-left:auto;background:#0d3320;border:1px solid #22c55e44;
+  color:var(--green);border-radius:6px;padding:4px 12px;font-size:11px;
+  font-weight:700;cursor:pointer}
+.ai-apply-btn:hover{background:#145228}
+
+/* status text */
+.ai-status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.spinner{width:11px;height:11px;border:2px solid #38bdf822;border-top-color:#38bdf8;
+  border-radius:50%;display:inline-block;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══════════════════════════════════════════════
+   AI DOCUMENT PROFILE
+══════════════════════════════════════════════ */
+.doc-profile{
+  margin-top:12px;background:#030b15;border:1px solid #1e3a5f;
+  border-radius:var(--r);overflow:hidden;display:none;
+}
+.doc-profile-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;background:#071426;border-bottom:1px solid #1e3a5f;
+}
+.dp-category{font-size:14px;font-weight:800;color:var(--text)}
+.dp-subcategory{font-size:11px;color:var(--blue);margin-top:1px}
+.dp-badges{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
+.dp-badge{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700}
+.dp-badge.high  {background:#0d2e18;color:var(--green);border:1px solid #22c55e44}
+.dp-badge.medium{background:#1a1500;color:var(--yellow);border:1px solid #f59e0b44}
+.dp-badge.low   {background:#2e0d0d;color:var(--red);border:1px solid #ef444444}
+.dp-badge.good  {background:#0d2e18;color:#6ee7b7;border:1px solid #6ee7b744}
+.dp-badge.fair  {background:#1a1200;color:#fcd34d;border:1px solid #fcd34d44}
+.dp-badge.poor  {background:#2e0d0d;color:#fca5a5;border:1px solid #fca5a544}
+
+.dp-fields{padding:10px 14px}
+.dp-fields-title{font-size:9px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.dp-field-row{
+  display:flex;align-items:baseline;gap:8px;
+  padding:5px 0;border-bottom:1px solid #0f1c2e;font-size:12px;
+}
+.dp-field-row:last-child{border-bottom:none}
+.dp-field-key{color:var(--muted);font-size:11px;min-width:130px;flex-shrink:0}
+.dp-field-val{color:var(--text);font-weight:500;word-break:break-word}
+.dp-reason{
+  padding:8px 14px;font-size:11px;color:var(--muted);
+  border-top:1px solid #0f1c2e;font-style:italic;line-height:1.5;
+}
+
+/* label saved */
+.label-banner{
+  display:none;padding:10px 14px;border-radius:var(--r);margin-top:10px;
+  font-size:12px;font-weight:600;
+  background:#071a0e;border:1px solid #22c55e44;color:var(--green);
+}
+
+/* subcategory tag on selected cat button */
+.cat-btn .cat-sub{
+  display:block;font-size:10px;font-weight:500;
+  color:#a78bfa;margin-top:3px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+/* category-changed banner */
+.cat-changed-banner{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:6px;margin-top:8px;font-size:11px;
+  background:#0c1a38;border:1px solid #3b82f644;color:#93c5fd;
+}
+.cat-changed-banner .from{text-decoration:line-through;color:var(--muted)}
+.cat-changed-banner .arrow{color:var(--accent)}
+.cat-changed-banner .to{font-weight:700;color:var(--text)}
+/* subcategory pill in suggest bar */
+.sub-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;padding:2px 9px;border-radius:10px;font-weight:600;
+  background:#1e1040;color:#c4b5fd;border:1px solid #7c3aed33;
+}
+.sub-source{font-size:9px;padding:1px 5px;border-radius:6px;font-weight:700;
+  background:#0c1f38;color:#60a5fa;border:1px solid #3b82f633;margin-left:2px}
+
+/* ══════════════════════════════════════════════
+   HISTORY
+══════════════════════════════════════════════ */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.filter-btn{padding:5px 12px;border-radius:14px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--muted);cursor:pointer;font-size:11px;transition:all .15s}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:#0f1433}
+.search-input{background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text);padding:6px 12px;font-size:12px;
+  outline:none;min-width:200px;margin-left:auto}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:9px 12px;color:var(--muted);font-weight:700;
+  border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.05em}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.tbl-file{font-weight:600;display:flex;align-items:center;gap:8px}
+.tbl-type{color:var(--muted)}
+.empty-state{text-align:center;padding:52px 24px;color:var(--muted)}
+.empty-state .ei{font-size:36px;margin-bottom:10px}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:11px 16px;font-size:12px;
+  box-shadow:0 8px 32px #00000088;z-index:999;
+  transform:translateY(16px);opacity:0;transition:all .25s;max-width:300px;
+}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.success{border-color:var(--green);color:var(--green)}
+#toast.error  {border-color:var(--red);color:var(--red)}
+#toast.info   {border-color:var(--blue);color:var(--blue)}
+
+/* ══════════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════════ */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* misc */
+.section-gap{margin-bottom:20px}
+.flex-row{display:flex;align-items:center;gap:10px}
+.text-muted{color:var(--muted)}
+.monospace{font-family:'Fira Mono','Cascadia Code',monospace}
+.copy-btn{background:var(--surface3);border:1px solid var(--border);color:var(--muted);
+  border-radius:5px;padding:3px 9px;font-size:10px;cursor:pointer}
+.copy-btn:hover{color:var(--text)}
+.copy-btn.ok{color:var(--green);border-color:var(--green)}
+
+/* ══════════════════════════════════════════════
+   EXTRACTION MODE TOGGLE
+══════════════════════════════════════════════ */
+.mode-toggle{
+  display:flex;background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:3px;gap:3px;margin-top:14px;
+}
+.mode-btn{
+  flex:1;padding:7px 10px;border:none;border-radius:6px;cursor:pointer;
+  font-size:12px;font-weight:600;color:var(--muted);background:transparent;
+  transition:all .15s;
+}
+.mode-btn.active{background:var(--accent);color:#fff}
+.mode-btn.screenshot-mode.active{background:linear-gradient(135deg,#7c3aed,#4338ca);color:#fff}
+.mode-hint{font-size:10px;color:var(--muted);margin-top:6px;font-style:italic}
+
+/* ══════════════════════════════════════════════
+   SCREENSHOT OCR PAGE THUMBNAILS
+══════════════════════════════════════════════ */
+.thumb-img{
+  width:100%;border-radius:6px;border:1px solid var(--border);
+  display:block;margin-top:8px;object-fit:contain;max-height:360px;
+  cursor:zoom-in;transition:opacity .15s;
+}
+.thumb-img:hover{opacity:.85}
+.page-ocr-badge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:700}
+.page-ocr-badge.high{background:#0d2e18;color:var(--green);border:1px solid #22c55e33}
+.page-ocr-badge.med {background:#2a1500;color:var(--yellow);border:1px solid #f59e0b33}
+.page-ocr-badge.low {background:#2e0d0d;color:var(--red);border:1px solid #ef444433}
+
+/* lightbox for thumbnails */
+#thumb-lightbox{
+  display:none;position:fixed;inset:0;background:#000000cc;z-index:999;
+  align-items:center;justify-content:center;cursor:zoom-out;
+}
+#thumb-lightbox.show{display:flex}
+#thumb-lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;border:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">📂</span>
+    <span class="logo-text">Doc<span>Extract</span></span>
+  </div>
+
+  <div class="nav-section">Workspace</div>
+  <button class="nav-item active" onclick="nav('upload',this)">
+    <span class="nav-icon">⬆</span> Upload
+  </button>
+  <button class="nav-item" onclick="nav('classify',this)">
+    <span class="nav-icon">🏷</span> Classify
+    <span class="nav-badge" id="classify-badge" style="display:none">1</span>
+  </button>
+  <button class="nav-item" onclick="nav('history',this)" id="hist-nav">
+    <span class="nav-icon">🗂</span> History
+    <span class="nav-badge" id="hist-badge">0</span>
+  </button>
+
+  <div class="nav-section">Config</div>
+  <button class="nav-item" onclick="nav('settings',this)">
+    <span class="nav-icon">⚙</span> Settings
+  </button>
+
+  <div class="sidebar-bottom">
+    <div class="service-pill" id="extractor-pill">
+      <span class="dot pulse" id="ext-dot"></span>
+      <div class="service-text">
+        <div class="s-label">Extractor</div>
+        <div class="s-url" id="ext-url">localhost:3100</div>
+      </div>
+    </div>
+    <div class="service-pill" style="margin-top:7px" id="ollama-pill">
+      <span class="dot" id="ol-dot"></span>
+      <div class="service-text">
+        <div class="s-label">LM Studio</div>
+        <div class="s-url" id="ol-url">127.0.0.1:1234</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<div id="main">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <h1 id="page-title">Upload Documents</h1>
+    <div class="topbar-chip" id="extractor-chip">
+      <span class="dot pulse" id="chip-ext-dot"></span>
+      <span id="chip-ext-label">Connecting…</span>
+    </div>
+    <div class="topbar-chip" id="ollama-chip">
+      <span class="dot" id="chip-ol-dot"></span>
+      <span id="chip-ol-label">LM Studio</span>
+    </div>
+  </div>
+
+  <div id="content">
+
+  <!-- ═══════════════ VIEW: UPLOAD ═══════════════ -->
+  <div class="view active" id="view-upload">
+
+    <div class="two-col">
+
+      <!-- LEFT: drop zone + queue -->
+      <div>
+        <div id="drop-zone" onclick="document.getElementById('file-input').click()">
+          <div class="dz-icon" id="dz-icon">📄</div>
+          <h3 id="dz-title">Drop files here</h3>
+          <p>PDF, PNG, JPG, WEBP, TIFF, BMP, XLSX, XLS, CSV<br>Up to 50 MB per file</p>
+          <div class="mode-toggle" id="mode-toggle">
+            <button class="mode-btn active" id="mode-text-btn"
+              onclick="event.stopPropagation();setExtractionMode('text')">⚡ Text Stream</button>
+            <button class="mode-btn screenshot-mode" id="mode-scr-btn"
+              onclick="event.stopPropagation();setExtractionMode('screenshot')">📷 Screenshot OCR</button>
+          </div>
+          <div class="mode-hint" id="mode-hint">Fast text extraction — best for digital PDFs</div>
+          <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('file-input').click()">
+            Browse Files
+          </button>
+          <input type="file" id="file-input" multiple
+            accept=".pdf,.png,.jpg,.jpeg,.webp,.tiff,.bmp,.gif,.xlsx,.xls,.csv"/>
+          <div class="progress-wrap" id="progress-wrap">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- batch queue -->
+        <div class="card" id="queue-card" style="display:none">
+          <div class="card-title">Queue (<span id="queue-count">0</span> files)</div>
+          <div id="queue-list"></div>
+          <div class="flex-row" style="margin-top:12px">
+            <button class="btn btn-primary" id="run-all-btn" onclick="runBatch()">⚡ Extract All</button>
+            <button class="btn btn-ghost" onclick="clearQueue()">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: last result summary -->
+      <div>
+        <div class="card" id="no-result-hint" style="text-align:center;padding:52px 24px">
+          <div style="font-size:36px;margin-bottom:10px">🔍</div>
+          <p class="text-muted">Upload a file to see extraction results here</p>
+        </div>
+
+        <div id="result-view">
+          <!-- result header -->
+          <div class="result-header">
+            <div class="result-file-icon" id="r-icon">📄</div>
+            <div class="result-meta" style="flex:1;overflow:hidden">
+              <h3 id="r-filename" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</h3>
+              <p id="r-meta">—</p>
+              <div class="meta-chips" id="r-chips"></div>
+            </div>
+            <button class="btn btn-ghost" style="font-size:11px" onclick="nav('classify',document.querySelector('.nav-item:nth-child(4)'))">
+              🏷 Classify →
+            </button>
+          </div>
+
+          <!-- tab switcher -->
+          <div class="tabs-row" id="result-tabs">
+            <button class="tab-btn active" onclick="switchTab('text',this)">📝 Full Text</button>
+            <button class="tab-btn" id="tab-btn-pages" onclick="switchTab('pages',this)">📄 Pages</button>
+            <button class="tab-btn" id="tab-btn-sheets" onclick="switchTab('sheets',this)" style="display:none">📊 Sheets</button>
+            <button class="tab-btn" onclick="switchTab('json',this)">{ } JSON</button>
+          </div>
+
+          <!-- text tab -->
+          <div class="tab-panel active" id="tab-text">
+            <div class="card" style="padding:14px">
+              <div class="flex-row" style="margin-bottom:10px">
+                <span class="card-title" style="margin:0">Extracted Text</span>
+                <button class="copy-btn" id="copy-text-btn" onclick="copyText()">Copy</button>
+              </div>
+              <div class="json-box" id="full-text-box" style="color:var(--text);font-family:inherit;line-height:1.75"></div>
+            </div>
+          </div>
+
+          <!-- pages tab -->
+          <div class="tab-panel" id="tab-pages">
+            <div id="pages-container"></div>
+          </div>
+
+          <!-- sheets tab (spreadsheets only) -->
+          <div class="tab-panel" id="tab-sheets">
+            <div id="sheets-container"></div>
+          </div>
+
+          <!-- json tab -->
+          <div class="tab-panel" id="tab-json">
+            <div class="card" style="padding:14px">
+              <div class="flex-row" style="margin-bottom:10px">
+                <span class="card-title" style="margin:0">Raw JSON</span>
+                <button class="copy-btn" onclick="copyJSON()">Copy JSON</button>
+              </div>
+              <div class="json-box" id="json-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ VIEW: CLASSIFY ═══════════════ -->
+  <div class="view" id="view-classify">
+    <div class="two-col">
+
+      <!-- LEFT: classifier -->
+      <div>
+        <div class="card section-gap">
+          <div class="card-title">Auto-Classification</div>
+          <div class="suggest-bar" id="classify-suggest">
+            <span class="suggest-lbl" id="cl-source-lbl">Suggest:</span>
+            <span id="cl-cat">—</span>
+            <span id="cl-conf" class="conf-badge" style="display:none"></span>
+            <span id="cl-sub" class="sub-pill" style="display:none"></span>
+            <div id="cl-kws"></div>
+          </div>
+          <div id="cat-changed-banner" class="cat-changed-banner" style="display:none">
+            🤖 Category updated:
+            <span class="from" id="ccb-from"></span>
+            <span class="arrow">→</span>
+            <span class="to" id="ccb-to"></span>
+            <span style="color:var(--muted);margin-left:auto;font-size:10px">by AI</span>
+          </div>
+          <div class="card-title" style="margin-bottom:10px;margin-top:12px">Select Category</div>
+          <div class="cat-grid" id="cat-grid"></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <input id="new-cat-input" placeholder="Add category…" maxlength="40"
+              style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:7px 11px;font-size:12px;outline:none"/>
+            <button class="btn btn-ghost" onclick="addCategory()" style="font-size:12px">+ Add</button>
+          </div>
+        </div>
+
+        <!-- AI panel -->
+        <div class="card">
+          <div class="card-title">AI Classification (LM Studio)</div>
+          <div class="ai-panel">
+            <div class="ai-panel-header">
+              <div class="ai-title">
+                🤖 <span id="ai-model-label">gemma-4-e2b-it:2</span>
+                <span class="ai-model-tag" id="ai-model-tag">gemma-4-e2b-it:2</span>
+              </div>
+              <button class="btn btn-ai" id="ai-run-btn" onclick="runOllamaClassify()" disabled>
+                ▶ Run AI
+              </button>
+            </div>
+            <div class="ai-status" id="ai-status-el">Load a document first</div>
+            <div id="ai-stream-box"></div>
+
+            <!-- simple category suggestion row (shown while streaming) -->
+            <div class="ai-result-row" id="ai-result-row">
+              <span>AI suggests:</span>
+              <span class="ai-cat" id="ai-result-cat">—</span>
+              <button class="ai-apply-btn" onclick="applyAiSuggestion()">Apply ✓</button>
+            </div>
+          </div>
+
+          <!-- Document profile card (shown after full parse) -->
+          <div class="doc-profile" id="doc-profile">
+            <div class="doc-profile-header">
+              <div>
+                <div class="dp-category" id="dp-category">—</div>
+                <div class="dp-subcategory" id="dp-subcategory"></div>
+              </div>
+              <div class="dp-badges" id="dp-badges"></div>
+            </div>
+            <div class="dp-fields">
+              <div class="dp-fields-title">Extracted Fields</div>
+              <div id="dp-fields-list"></div>
+            </div>
+            <div class="dp-reason" id="dp-reason"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-success" id="apply-label-btn" onclick="applyLabel()"
+          style="width:100%;margin-top:14px;padding:11px" disabled>
+          ✅ Apply Label & Save
+        </button>
+        <div class="label-banner" id="label-banner"></div>
+      </div>
+
+      <!-- RIGHT: document context -->
+      <div>
+        <div class="card section-gap" id="cl-doc-info" style="padding:14px">
+          <div class="card-title">Document</div>
+          <div style="text-align:center;padding:32px 0;color:var(--muted)" id="cl-no-doc">
+            <div style="font-size:32px;margin-bottom:8px">📄</div>
+            Upload a document first
+          </div>
+          <div id="cl-doc-meta" style="display:none">
+            <div class="result-header" style="margin-bottom:12px">
+              <div class="result-file-icon" id="cl-icon">📄</div>
+              <div class="result-meta">
+                <h3 id="cl-filename" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></h3>
+                <p id="cl-metainfo" class="text-muted"></p>
+                <div class="meta-chips" id="cl-chips"></div>
+              </div>
+            </div>
+            <div class="card-title2">Text Preview</div>
+            <div class="json-box" id="cl-text-preview"
+              style="max-height:200px;color:var(--text);font-family:inherit;line-height:1.7;font-size:12px"></div>
+          </div>
+        </div>
+
+        <!-- OCR confidence (image only) -->
+        <div class="card" id="ocr-detail-card" style="display:none">
+          <div class="card-title">OCR Lines</div>
+          <div id="ocr-lines-list" style="max-height:280px;overflow-y:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VIEW: HISTORY ═══════════════ -->
+  <div class="view" id="view-history">
+    <div class="stat-grid" id="hist-stats"></div>
+    <div class="card" style="margin-bottom:16px;padding:14px">
+      <div class="filter-row" id="hist-filters">
+        <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" onclick="setFilter('pdf',this)">PDF</button>
+        <button class="filter-btn" onclick="setFilter('image',this)">Image</button>
+        <input class="search-input" id="hist-search" placeholder="Search filename…" oninput="renderHistory()"/>
+      </div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div id="hist-table-wrap"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VIEW: SETTINGS ═══════════════ -->
+  <div class="view" id="view-settings">
+    <div class="two-col">
+
+      <div class="card">
+        <div class="card-title">Extractor Service</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Base URL</label>
+            <input id="ext-url-input" value="http://localhost:3100"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border);
+                border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
+          </div>
+          <button class="btn btn-ghost" onclick="testExtractor()" style="width:100%">🔌 Test Connection</button>
+          <div class="ai-status" id="ext-test-status"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">LM Studio</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Endpoint</label>
+            <input id="ol-url-input" value="http://127.0.0.1:1234"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border);
+                border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Model</label>
+            <input id="ol-model-input" value="gemma-4-e2b-it:2"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border);
+                border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
+          </div>
+          <button class="btn btn-ghost" onclick="testOllama()" style="width:100%">🔌 Test LM Studio</button>
+          <div class="ai-status" id="ol-test-status"></div>
+          <div id="ol-model-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <div class="card-title">Categories (keyword rules)</div>
+      <div id="cat-rules-list" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+      <div style="font-size:11px;color:var(--muted)">
+        Categories are shared between the Classify view and the keyword engine.
+        Add / remove in the Classify tab.
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<div id="toast"></div>
+
+<!-- Thumbnail lightbox -->
+<div id="thumb-lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Page thumbnail"/>
+</div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────
+//  Config (persisted to localStorage)
+// ─────────────────────────────────────────────────────────
+const CFG = {
+  get extUrl()   { return localStorage.getItem('ext_url')   || 'http://localhost:3100' },
+  // Backend is LM Studio (OpenAI-compatible). The /v1 suffix is auto-
+  // appended in lmBase() — leave it off the input field so the value
+  // matches what the user sees in LM Studio's "Reachable at:" line.
+  get olUrl()    { return localStorage.getItem('ol_url')    || 'http://127.0.0.1:1234' },
+  get olModel()  { return localStorage.getItem('ol_model')  || 'gemma-4-e2b-it:2' },
+  save(extUrl, olUrl, olModel) {
+    localStorage.setItem('ext_url',  extUrl);
+    localStorage.setItem('ol_url',   olUrl);
+    localStorage.setItem('ol_model', olModel);
+  }
+};
+
+// ─────────────────────────────────────────────────────────
+//  Default classification categories + rules
+// ─────────────────────────────────────────────────────────
+const DEFAULT_CATS = [
+  {id:'invoice',  name:'Invoice',     emoji:'🧾'},
+  {id:'contract', name:'Contract',    emoji:'📋'},
+  {id:'report',   name:'Report',      emoji:'📊'},
+  {id:'receipt',  name:'Receipt',     emoji:'🧾'},
+  {id:'resume',   name:'Resume / CV', emoji:'👤'},
+  {id:'id_doc',   name:'ID Document', emoji:'🪪'},
+  {id:'medical',  name:'Medical',     emoji:'🏥'},
+  {id:'legal',    name:'Legal',       emoji:'⚖'},
+  {id:'financial',name:'Financial',   emoji:'💰'},
+  {id:'other',    name:'Other',       emoji:'📁'},
+];
+const DEFAULT_RULES = [
+  {c:'invoice',   k:'invoice',weight:3},{c:'invoice',  k:'payment due',weight:3},
+  {c:'invoice',   k:'total amount',weight:3},{c:'invoice',k:'subtotal',weight:2},
+  {c:'invoice',   k:'vat',weight:2},{c:'invoice',k:'bill',weight:2},
+  {c:'contract',  k:'agreement',weight:3},{c:'contract',k:'contract',weight:3},
+  {c:'contract',  k:'parties',weight:2},{c:'contract',k:'terms and conditions',weight:3},
+  {c:'contract',  k:'signature',weight:2},{c:'contract',k:'hereby agree',weight:3},
+  {c:'report',    k:'report',weight:2},{c:'report',k:'findings',weight:3},
+  {c:'report',    k:'analysis',weight:2},{c:'report',k:'conclusion',weight:2},
+  {c:'receipt',   k:'receipt',weight:3},{c:'receipt',k:'transaction',weight:2},
+  {c:'receipt',   k:'order number',weight:2},
+  {c:'resume',    k:'resume',weight:3},{c:'resume',k:'curriculum vitae',weight:3},
+  {c:'resume',    k:'work experience',weight:3},{c:'resume',k:'education',weight:2},
+  {c:'resume',    k:'references',weight:2},{c:'resume',k:'skills',weight:1},
+  {c:'id_doc',    k:'passport',weight:3},{c:'id_doc',k:'date of birth',weight:3},
+  {c:'id_doc',    k:'national id',weight:3},{c:'id_doc',k:'expiry date',weight:2},
+  {c:'medical',   k:'patient',weight:3},{c:'medical',k:'diagnosis',weight:3},
+  {c:'medical',   k:'prescription',weight:3},{c:'medical',k:'doctor',weight:2},
+  {c:'legal',     k:'court',weight:3},{c:'legal',k:'plaintiff',weight:3},
+  {c:'legal',     k:'attorney',weight:2},{c:'legal',k:'judgment',weight:3},
+  // spreadsheet-specific sheet name signals (from [Sheet: ...] prefix in fullText)
+  {c:'financial', k:'sheet: account opening',weight:4},{c:'financial',k:'sheet: account opening form',weight:4},
+  {c:'financial', k:'sheet: kyc',weight:4},{c:'financial',k:'sheet: transactions',weight:3},
+  {c:'financial', k:'sheet: balance',weight:3},{c:'invoice',k:'sheet: invoice',weight:4},
+  {c:'invoice',   k:'sheet: billing',weight:3},{c:'report',k:'sheet: summary',weight:2},
+  {c:'report',    k:'sheet: report',weight:3},{c:'resume', k:'sheet: experience',weight:2},
+  // general spreadsheet content
+  {c:'financial', k:'balance',weight:2},{c:'financial',k:'statement',weight:2},
+  {c:'financial', k:'account number',weight:3},{c:'financial',k:'debit',weight:2},
+  {c:'financial', k:'account opening',weight:3},{c:'financial',k:'account opening form',weight:3},
+  {c:'financial', k:'new account',weight:2},{c:'financial',k:'account application',weight:3},
+  {c:'financial', k:'kyc',weight:3},{c:'financial',k:'know your customer',weight:3},
+  {c:'financial', k:'customer onboarding',weight:2},{c:'financial',k:'account type',weight:2},
+  {c:'financial', k:'branch name',weight:2},{c:'financial',k:'sort code',weight:3},
+  {c:'financial', k:'iban',weight:3},{c:'financial',k:'bic',weight:2},
+  {c:'financial', k:'initial deposit',weight:3},{c:'financial',k:'opening deposit',weight:3},
+];
+
+// ─────────────────────────────────────────────────────────
+//  State
+// ─────────────────────────────────────────────────────────
+let categories = loadCats();
+let documents  = loadDocs();
+let queue      = [];           // batch queue items
+let currentDoc = null;         // last extracted ExtractionResult
+let selectedCatId    = null;
+let aiSuggestedCatId = null;
+let currentSubcategory = null;   // AI-detected subcategory for the active doc
+let histFilter  = 'all';
+let ollamaConnected = false;
+let extractorConnected = false;
+let extractionMode = 'text';   // 'text' | 'screenshot'
+
+function loadCats() {
+  try { return JSON.parse(localStorage.getItem('cats')) || DEFAULT_CATS.map(c=>({...c})); }
+  catch { return DEFAULT_CATS.map(c=>({...c})); }
+}
+function loadDocs() {
+  try {
+    const docs = JSON.parse(localStorage.getItem('docs')) || [];
+    // Sanitize any previously-stored thumbnails that made it in
+    return docs.map(d => ({
+      ...d,
+      pages: d.pages ? d.pages.map(p => { const {thumbnailDataUrl, ...rest} = p; return rest; }) : d.pages,
+    }));
+  } catch { return []; }
+}
+function saveCats() { localStorage.setItem('cats', JSON.stringify(categories)); }
+function saveDocs() { localStorage.setItem('docs', JSON.stringify(documents)); }
+
+// ─────────────────────────────────────────────────────────
+//  Navigation
+// ─────────────────────────────────────────────────────────
+const PAGE_TITLES = {
+  upload:'Upload Documents', classify:'Classify Document',
+  history:'Extraction History', settings:'Settings'
+};
+function nav(view, btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('page-title').textContent = PAGE_TITLES[view] || view;
+  if (view === 'history')  renderHistory();
+  if (view === 'classify') renderClassify();
+  if (view === 'settings') renderSettings();
+}
+
+// ─────────────────────────────────────────────────────────
+//  Toast
+// ─────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, type='info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.className='', 3000);
+}
+
+// ─────────────────────────────────────────────────────────
+//  Service status checks
+// ─────────────────────────────────────────────────────────
+function setExtStatus(ok, label) {
+  extractorConnected = ok;
+  const dotCls = ok ? 'dot green' : 'dot red';
+  document.getElementById('ext-dot').className      = dotCls;
+  document.getElementById('chip-ext-dot').className = dotCls;
+  document.getElementById('chip-ext-label').textContent = label;
+  document.getElementById('ext-url').textContent    = CFG.extUrl.replace('http://','');
+}
+function setOlStatus(ok, label) {
+  ollamaConnected = ok;
+  const dotCls = ok ? 'dot green' : 'dot';
+  document.getElementById('ol-dot').className       = dotCls;
+  document.getElementById('chip-ol-dot').className  = dotCls;
+  document.getElementById('chip-ol-label').textContent = label || 'LM Studio';
+  document.getElementById('ol-url').textContent     = CFG.olUrl.replace('http://','');
+  const aiBtn = document.getElementById('ai-run-btn');
+  if (aiBtn) aiBtn.disabled = !(ok && currentDoc);
+}
+
+async function pingExtractor() {
+  try {
+    const r = await fetch(CFG.extUrl+'/health', {signal:AbortSignal.timeout(4000)});
+    if (!r.ok) throw new Error('bad');
+    const d = await r.json();
+    setExtStatus(true, 'Extractor ✓');
+    // Warn if screenshot OCR not available
+    if (d.capabilities && !d.capabilities.screenshotOcr) {
+      const scrBtn = document.getElementById('mode-scr-btn');
+      if (scrBtn) {
+        scrBtn.title = 'pdftoppm not installed — run: brew install poppler (macOS) or apt-get install poppler-utils (Linux)';
+        scrBtn.style.opacity = '0.5';
+        scrBtn.style.cursor  = 'not-allowed';
+      }
+      const hint = document.getElementById('mode-hint');
+      if (hint && extractionMode === 'screenshot') {
+        hint.innerHTML = '⚠ pdftoppm missing — <code>brew install poppler</code> (macOS) or <code>apt-get install poppler-utils</code> (Linux)';
+        hint.style.color = '#ef4444';
+      }
+    } else {
+      const scrBtn = document.getElementById('mode-scr-btn');
+      if (scrBtn) { scrBtn.style.opacity=''; scrBtn.style.cursor=''; scrBtn.title=''; }
+    }
+  } catch {
+    setExtStatus(false, 'Extractor offline');
+  }
+}
+// All LLM traffic now goes through the extractor service to dodge
+// browser CORS on LM Studio. The "Endpoint" field still controls
+// which LM Studio gets called — we forward it as the x-llm-url
+// header and the service uses that instead of its own configured URL.
+
+async function pingOllama() {
+  try {
+    const r = await fetch(CFG.extUrl+'/llm/health', {
+      signal:  AbortSignal.timeout(4000),
+      headers: { 'x-llm-url': CFG.olUrl },
+    });
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    const payload = await r.json();
+    if (!payload?.success) throw new Error(payload?.error || 'service reports LM Studio unreachable');
+    // Service wraps health in { success, data: { ok, url, models: [{name, ownedBy}] } }
+    const models = (payload.data?.models || []).map(m => m.name).filter(Boolean);
+    setOlStatus(true, CFG.olModel);
+    return models;
+  } catch {
+    setOlStatus(false, 'LM Studio offline');
+    return [];
+  }
+}
+
+async function testExtractor() {
+  const el = document.getElementById('ext-test-status');
+  el.innerHTML = '<span class="spinner"></span> Testing…';
+  const url = document.getElementById('ext-url-input').value.trim().replace(/\/$/,'');
+  localStorage.setItem('ext_url', url);
+  try {
+    const r = await fetch(url+'/health', {signal:AbortSignal.timeout(5000)});
+    const d = await r.json();
+    el.innerHTML = `<span style="color:var(--green)">✓ Connected · ${d.version}</span>`;
+    setExtStatus(true, 'Extractor ✓');
+    toast('Extractor connected', 'success');
+  } catch(e) {
+    el.innerHTML = `<span style="color:var(--red)">✕ ${e.message}</span>`;
+    setExtStatus(false, 'Offline');
+  }
+}
+async function testOllama() {
+  const el = document.getElementById('ol-test-status');
+  el.innerHTML = '<span class="spinner"></span> Testing…';
+  const url   = document.getElementById('ol-url-input').value.trim().replace(/\/$/,'');
+  const model = document.getElementById('ol-model-input').value.trim();
+  localStorage.setItem('ol_url',   url);
+  localStorage.setItem('ol_model', model);
+  document.getElementById('ai-model-tag').textContent   = model;
+  document.getElementById('ai-model-label').textContent = model;
+  const models = await pingOllama();
+  if (ollamaConnected) {
+    let found = models.includes(model);
+    // Auto-switch when the configured model isn't loaded — LM Studio's
+    // "API Model Identifier" includes a `:N` instance slot that changes
+    // across reloads, so chasing exact matches by hand is annoying.
+    if (!found && models.length) {
+      const picked = models.find(m => /gemma/i.test(m)) || models[0];
+      pickOlModel(picked);
+      el.innerHTML = `<span style="color:var(--green)">✓ Connected · auto-switched to "${picked}"</span>`;
+      toast('Auto-switched to loaded model: '+picked, 'success');
+    } else {
+      el.innerHTML = found
+        ? `<span style="color:var(--green)">✓ Connected · model loaded</span>`
+        : `<span style="color:var(--yellow)">⚠ Connected but no models loaded. Open LM Studio → load a model → Start Server</span>`;
+      toast('LM Studio connected', 'success');
+    }
+    const chips = document.getElementById('ol-model-chips');
+    chips.innerHTML = models.slice(0,8).map(m=>
+      `<button class="chip chip-blue" style="cursor:pointer" onclick="pickOlModel('${m}')">${m}</button>`
+    ).join('');
+  } else {
+    el.innerHTML = `<span style="color:var(--red)">✕ Cannot reach LM Studio at ${url}. Open LM Studio → Local Server tab → load a model → Start Server (port 1234)</span>`;
+  }
+}
+function pickOlModel(name) {
+  document.getElementById('ol-model-input').value = name;
+  localStorage.setItem('ol_model', name);
+  document.getElementById('ai-model-tag').textContent   = name;
+  document.getElementById('ai-model-label').textContent = name;
+  toast('Model set to '+name, 'info');
+}
+
+// ─────────────────────────────────────────────────────────
+//  Upload / Extract
+// ─────────────────────────────────────────────────────────
+function fileIcon(type) {
+  if (!type) return '📄';
+  if (type==='pdf'  || type.includes('pdf'))   return '📕';
+  if (type==='image'|| type.includes('image')) return '🖼';
+  if (type==='spreadsheet' || type.includes('sheet') || type.includes('excel') || type.includes('csv')) return '📊';
+  return '📄';
+}
+function fmt(b) {
+  if (b<1024) return b+'B';
+  if (b<1048576) return (b/1024).toFixed(1)+'KB';
+  return (b/1048576).toFixed(1)+'MB';
+}
+
+// Drop zone events
+const dz = document.getElementById('drop-zone');
+const fi = document.getElementById('file-input');
+dz.addEventListener('dragover', e=>{e.preventDefault();dz.classList.add('drag')});
+dz.addEventListener('dragleave', ()=>dz.classList.remove('drag'));
+dz.addEventListener('drop', e=>{
+  e.preventDefault(); dz.classList.remove('drag');
+  addToQueue([...e.dataTransfer.files]);
+});
+fi.addEventListener('change', e=>{ addToQueue([...e.target.files]); fi.value=''; });
+
+function addToQueue(files) {
+  for (const f of files) {
+    queue.push({ id: Math.random().toString(36).slice(2), file: f, status: 'pending', result: null });
+  }
+  renderQueue();
+  // If any spreadsheet is in the queue, nudge user away from Screenshot OCR mode
+  const hasSheet = queue.some(q => /\.(xlsx|xls|csv)$/i.test(q.file.name));
+  if (hasSheet && extractionMode === 'screenshot') {
+    setExtractionMode('text');
+    toast('📊 Switched to Text Stream — Screenshot OCR does not apply to spreadsheets', 'info');
+  }
+}
+
+function renderQueue() {
+  const card = document.getElementById('queue-card');
+  const list = document.getElementById('queue-list');
+  document.getElementById('queue-count').textContent = queue.length;
+  if (!queue.length) { card.style.display='none'; return; }
+  card.style.display = 'block';
+  list.innerHTML = queue.map(item => `
+    <div class="batch-item" id="qi-${item.id}">
+      <span class="bi-icon">${fileIcon(item.file.type)}</span>
+      <span class="bi-name">${esc(item.file.name)}</span>
+      <span class="bi-size">${fmt(item.file.size)}</span>
+      <span class="bi-status ${item.status}" id="qs-${item.id}">${item.status}</span>
+      ${item.status==='pending'
+        ? `<button class="bi-remove" onclick="removeFromQueue('${item.id}')">✕</button>`
+        : ''}
+    </div>
+    ${item.status==='error' && item.errorMsg
+      ? `<div style="font-size:11px;color:var(--red);padding:4px 12px 8px 40px;white-space:pre-wrap;line-height:1.5">${esc(item.errorMsg)}</div>`
+      : ''}`).join('');
+}
+
+function removeFromQueue(id) {
+  queue = queue.filter(q=>q.id!==id);
+  renderQueue();
+}
+function clearQueue() { queue=[]; renderQueue(); }
+
+// ─────────────────────────────────────────────────────────
+//  Extraction mode toggle
+// ─────────────────────────────────────────────────────────
+function setExtractionMode(mode) {
+  extractionMode = mode;
+  const textBtn = document.getElementById('mode-text-btn');
+  const scrBtn  = document.getElementById('mode-scr-btn');
+  const hint    = document.getElementById('mode-hint');
+  if (mode === 'screenshot') {
+    textBtn.classList.remove('active');
+    scrBtn.classList.add('active');
+    hint.textContent = 'Renders each page as image then OCRs — works for scanned PDFs';
+    hint.style.color = '#a78bfa';
+  } else {
+    scrBtn.classList.remove('active');
+    textBtn.classList.add('active');
+    hint.textContent = 'Fast text extraction — best for digital PDFs';
+    hint.style.color = '';
+  }
+}
+
+async function runBatch() {
+  if (!queue.length) return;
+  if (!extractorConnected) {
+    toast('Extractor service is offline — start it first', 'error'); return;
+  }
+  const btn = document.getElementById('run-all-btn');
+  btn.disabled = true;
+
+  // progress animation
+  const pw = document.getElementById('progress-wrap');
+  const pb = document.getElementById('progress-bar');
+  pw.style.display = 'block';
+
+  let done = 0;
+  for (const item of queue) {
+    item.status = 'running';
+    renderQueue();
+    try {
+      const fd = new FormData();
+      fd.append('file', item.file);
+      // Choose endpoint based on mode and file type
+      const fname   = item.file.name.toLowerCase();
+      const isPdf   = item.file.type === 'application/pdf' || fname.endsWith('.pdf');
+      const isSheet = /\.(xlsx|xls|csv)$/.test(fname)
+        || item.file.type.includes('spreadsheet') || item.file.type.includes('excel')
+        || item.file.type === 'text/csv';
+      let endpoint;
+      if (extractionMode === 'screenshot' && isPdf) {
+        endpoint = CFG.extUrl + '/extract/screenshot?dpi=200&thumbnails=true';
+      } else {
+        endpoint = CFG.extUrl + '/extract';
+      }
+      const r = await fetch(endpoint, {method:'POST', body:fd});
+      const d = await r.json();
+      if (d.success) {
+        item.status = 'done';
+        item.result = d.data;
+        showResult(d.data);
+        saveToHistory(d.data);
+      } else {
+        item.status = 'error';
+        // Show full details if available (e.g. "pdftoppm not found — install poppler-utils")
+        const errMsg = d.details || d.error || 'Unknown error';
+        item.errorMsg = errMsg;
+        showErrorBanner(errMsg);
+        toast('❌ '+d.error, 'error');
+      }
+    } catch(e) {
+      item.status = 'error';
+      item.errorMsg = e.message;
+      toast('Network error: '+e.message, 'error');
+    }
+    done++;
+    pb.style.width = (done/queue.length*100)+'%';
+    renderQueue();
+  }
+
+  setTimeout(()=>{ pw.style.display='none'; pb.style.width='0'; }, 1200);
+  btn.disabled = false;
+  updateHistBadge();
+  toast(`✅ Extracted ${done} file(s)`, 'success');
+}
+
+function saveToHistory(doc) {
+  if (!documents.find(d=>d.jobId===doc.jobId)) {
+    // Strip thumbnailDataUrl before persisting — base64 images blow the localStorage quota fast
+    const slim = {
+      ...doc,
+      labeledCategory: null,
+      pages: doc.pages
+        ? doc.pages.map(p => { const {thumbnailDataUrl, ...rest} = p; return rest; })
+        : doc.pages,
+    };
+    documents.unshift(slim);
+    try {
+      saveDocs();
+    } catch(e) {
+      // If still over quota, evict oldest entries until it fits
+      while (documents.length > 1) {
+        documents.pop();
+        try { saveDocs(); break; } catch {}
+      }
+      toast('⚠ History trimmed — localStorage quota reached', 'info');
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  Error banner (install instructions, etc.)
+// ─────────────────────────────────────────────────────────
+function showErrorBanner(msg) {
+  // Remove any existing banner
+  const old = document.getElementById('error-banner');
+  if (old) old.remove();
+
+  const isPdftoppm = msg.toLowerCase().includes('pdftoppm');
+  const banner = document.createElement('div');
+  banner.id = 'error-banner';
+  banner.style.cssText = `
+    background:#1a0808;border:1px solid #ef444466;border-radius:8px;
+    padding:14px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;
+    color:#fca5a5;position:relative;
+  `;
+
+  if (isPdftoppm) {
+    banner.innerHTML = `
+      <button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:10px;
+        background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px">✕</button>
+      <strong style="color:#ef4444;display:block;margin-bottom:6px">
+        📷 Screenshot OCR requires poppler-utils
+      </strong>
+      <code style="display:block;background:#0a0404;padding:8px 10px;border-radius:6px;
+        font-size:11px;margin-bottom:6px;color:#fde68a">
+        macOS:  brew install poppler<br>
+        Ubuntu: sudo apt-get install poppler-utils
+      </code>
+      Then restart the extractor service with <code style="color:#93c5fd">npm start</code>.
+      <br><span style="color:var(--muted)">Use <strong>⚡ Text Stream</strong> mode for now — it works without poppler.</span>
+    `;
+  } else {
+    banner.innerHTML = `
+      <button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:10px;
+        background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px">✕</button>
+      <strong style="color:#ef4444">Extraction error:</strong><br>
+      <code style="font-size:11px;white-space:pre-wrap">${esc(msg)}</code>
+    `;
+  }
+
+  // Insert before the drop zone
+  const dz = document.getElementById('drop-zone');
+  dz.parentElement.insertBefore(banner, dz);
+}
+
+// ─────────────────────────────────────────────────────────
+//  Show result in UI
+// ─────────────────────────────────────────────────────────
+function showResult(doc) {
+  currentDoc = doc;
+  selectedCatId = null;
+  aiSuggestedCatId = null;
+
+  document.getElementById('no-result-hint').style.display = 'none';
+  document.getElementById('result-view').style.display    = 'block';
+
+  // header
+  document.getElementById('r-icon').textContent     = fileIcon(doc.fileType);
+  document.getElementById('r-filename').textContent = doc.filename;
+  const typeLabel = doc.fileType === 'spreadsheet'
+    ? (doc.filename.toLowerCase().endsWith('.csv') ? 'CSV' : 'XLSX')
+    : doc.fileType.toUpperCase();
+  document.getElementById('r-meta').textContent     =
+    `${fmt(doc.sizeBytes)} · ${typeLabel} · ${doc.durationMs}ms · ${doc.wordCount} words`;
+
+  // Show/hide Pages vs Sheets tab based on file type
+  const isSheet = doc.fileType === 'spreadsheet';
+  document.getElementById('tab-btn-pages').style.display  = isSheet ? 'none' : '';
+  document.getElementById('tab-btn-sheets').style.display = isSheet ? '' : 'none';
+  // Auto-switch to appropriate tab
+  if (isSheet) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-btn-sheets').classList.add('active');
+    document.getElementById('tab-sheets').classList.add('active');
+  } else {
+    // Reset to text tab for non-spreadsheets
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('.tab-btn').classList.add('active');
+    document.getElementById('tab-text').classList.add('active');
+  }
+
+  // chips
+  const chips = [];
+  if (doc.sheetCount)     chips.push(`<span class="chip chip-blue">📊 ${doc.sheetCount} sheet${doc.sheetCount>1?'s':''}</span>`);
+  if (doc.pageCount)      chips.push(`<span class="chip chip-blue">${doc.pageCount} pages</span>`);
+  if (doc.ocrConfidence)  chips.push(`<span class="chip chip-${doc.ocrConfidence>70?'green':'yellow'}">${doc.ocrConfidence}% OCR</span>`);
+  if (doc.avgOcrConfidence != null) {
+    const cls = doc.avgOcrConfidence >= 80 ? 'green' : doc.avgOcrConfidence >= 50 ? 'yellow' : 'red';
+    chips.push(`<span class="chip chip-${cls}" title="Average OCR confidence across all pages">${doc.avgOcrConfidence.toFixed(1)}% avg OCR</span>`);
+  }
+  if (doc.extractionMethod) {
+    const methodLabel = {
+      'pdf-parse':       '⚡ text-stream',
+      'pdftotext-fallback': '⚡ pdftotext',
+      'screenshot-ocr':  '📷 screenshot-ocr',
+      'tesseract':       '🔍 tesseract',
+    }[doc.extractionMethod] || doc.extractionMethod;
+    chips.push(`<span class="chip chip-purple">${methodLabel}</span>`);
+  }
+  if (doc.renderDpi)   chips.push(`<span class="chip chip-blue">${doc.renderDpi} DPI</span>`);
+  chips.push(`<span class="chip chip-purple">${doc.charCount} chars</span>`);
+  document.getElementById('r-chips').innerHTML = chips.join('');
+
+  // text tab
+  document.getElementById('full-text-box').textContent = doc.fullText || '(no text extracted)';
+
+  // pages tab
+  const pc = document.getElementById('pages-container');
+  if (doc.pages && doc.pages.length) {
+    pc.innerHTML = doc.pages.map(p=>{
+      const hasThumb  = !!p.thumbnailDataUrl;
+      const hasOcrConf = p.ocrConfidence != null;
+      const ocrCls = hasOcrConf
+        ? (p.ocrConfidence >= 80 ? 'high' : p.ocrConfidence >= 50 ? 'med' : 'low')
+        : '';
+      const dims = p.imageDimensions
+        ? `<span style="font-size:10px;color:var(--muted)">${p.imageDimensions.width}×${p.imageDimensions.height}px</span>`
+        : '';
+      const ocrBadge = hasOcrConf
+        ? `<span class="page-ocr-badge ${ocrCls}" title="Tesseract OCR confidence">${p.ocrConfidence.toFixed(1)}% OCR</span>`
+        : '';
+      const thumbHtml = hasThumb
+        ? `<img class="thumb-img" src="${p.thumbnailDataUrl}" alt="Page ${p.pageNumber} thumbnail"
+             onclick="openLightbox(this.src)" title="Click to enlarge"/>`
+        : '';
+      return `
+      <div class="page-card">
+        <div class="page-card-header">
+          <span class="page-num">Page ${p.pageNumber}</span>
+          <div class="page-stats">
+            ${ocrBadge}
+            ${dims}
+            <span>${p.wordCount} words</span>
+            <span>${p.charCount} chars</span>
+          </div>
+        </div>
+        ${thumbHtml}
+        <div class="page-text" style="${hasThumb?'margin-top:10px':''}">${esc(p.text)||'<em style="color:var(--muted)">(empty)</em>'}</div>
+      </div>`;
+    }).join('');
+  } else if (doc.ocrLines) {
+    pc.innerHTML = doc.ocrLines.map(l=>{
+      const conf = l.confidence;
+      const cls  = conf>=80?'high':conf>=50?'med':'low';
+      return `<div class="ocr-line">
+        <span class="ocr-line-text">${esc(l.text)}</span>
+        <span class="ocr-conf ${cls}">${conf.toFixed(1)}%</span>
+      </div>`;
+    }).join('');
+  } else {
+    pc.innerHTML = '<p class="text-muted" style="padding:16px">No per-page data available</p>';
+  }
+
+  // sheets tab
+  const sc = document.getElementById('sheets-container');
+  if (doc.sheets && doc.sheets.length) {
+    sc.innerHTML = doc.sheets.map(s => {
+      const headerChips = s.headers.slice(0, 10).map(h =>
+        `<span class="header-chip">${esc(h)}</span>`).join('');
+      const moreHeaders = s.headers.length > 10
+        ? `<span class="header-chip" style="color:var(--muted)">+${s.headers.length-10} more</span>` : '';
+      return `
+      <div class="sheet-card">
+        <div class="sheet-card-header">
+          <span class="sheet-name">📊 ${esc(s.name)}</span>
+          <div class="sheet-stats">
+            <span>${s.rowCount} rows</span>
+            <span>${s.colCount} cols</span>
+            <span>${s.wordCount} words</span>
+          </div>
+        </div>
+        ${s.headers.length ? `<div class="sheet-headers">${headerChips}${moreHeaders}</div>` : ''}
+        <div class="sheet-text">${esc(s.text) || '<em style="color:var(--muted)">(empty sheet)</em>'}</div>
+      </div>`;
+    }).join('');
+  } else {
+    sc.innerHTML = '<p class="text-muted" style="padding:16px">No sheet data available</p>';
+  }
+
+  // json tab
+  document.getElementById('json-box').innerHTML = syntaxHighlight(doc);
+
+  // auto-classify (text + filename)
+  const cl = autoClassify(doc.fullText || '', doc.filename || '');
+  if (cl.catId) {
+    selectedCatId = cl.catId;
+    document.getElementById('apply-label-btn').disabled = false;
+  }
+  updateClassifyBadge(true);
+  updateHistBadge();
+}
+
+function syntaxHighlight(obj) {
+  return JSON.stringify(obj, null, 2)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, m=>{
+      if (/^"/.test(m)) return /:$/.test(m)
+        ? `<span class="json-key">${m}</span>`
+        : `<span class="json-str">${m}</span>`;
+      if (/true|false/.test(m)) return `<span class="json-bool">${m}</span>`;
+      if (/null/.test(m))       return `<span class="json-null">${m}</span>`;
+      return `<span class="json-num">${m}</span>`;
+    });
+}
+
+function copyText() {
+  if (!currentDoc) return;
+  navigator.clipboard.writeText(currentDoc.fullText||'');
+  const btn = document.getElementById('copy-text-btn');
+  btn.textContent='✓ Copied'; btn.classList.add('ok');
+  setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok')},1800);
+}
+function copyJSON() {
+  if (!currentDoc) return;
+  navigator.clipboard.writeText(JSON.stringify(currentDoc,null,2));
+  toast('JSON copied','success');
+}
+
+// tab switcher
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────
+//  Filename tokeniser — normalises a filename into searchable tokens
+//  e.g. "Kinsha_Account-Opening_Form.pdf" → "kinsha account opening form"
+// ─────────────────────────────────────────────────────────
+function tokeniseFilename(filename) {
+  return (filename || '')
+    .replace(/\.\w{2,5}$/, '')            // strip extension (before case ops)
+    .replace(/([a-z])([A-Z])/g, '$1 $2')  // camelCase: accountOpening → account Opening
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2') // ACRONYMWord → ACRONYM Word
+    .toLowerCase()
+    .replace(/[_\-\.]+/g, ' ')            // separators → spaces
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// ─────────────────────────────────────────────────────────
+//  Keyword classifier  (text + filename, filename = 2.5× weight)
+// ─────────────────────────────────────────────────────────
+function autoClassify(text, filename = '') {
+  const lower  = text.toLowerCase();
+  const fnLow  = tokeniseFilename(filename);
+
+  const scores    = {};   // category → total score
+  const textKws   = {};   // category → keywords matched in text
+  const fnKws     = {};   // category → keywords matched in filename
+
+  for (const r of DEFAULT_RULES) {
+    const inText = lower.includes(r.k);
+    const inFn   = fnLow.length > 0 && fnLow.includes(r.k);
+
+    if (inText) {
+      scores[r.c] = (scores[r.c] || 0) + r.weight;
+      (textKws[r.c] = textKws[r.c] || []).push(r.k);
+    }
+    if (inFn) {
+      // Filename is a deliberate label — weight it 2.5× for stronger signal
+      scores[r.c] = (scores[r.c] || 0) + r.weight * 2.5;
+      (fnKws[r.c]  = fnKws[r.c]  || []).push(r.k);
+    }
+  }
+
+  const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  if (!entries.length) return { catId: null, conf: 0, kws: [], fnKws: [] };
+
+  const [topId, topScore] = entries[0];
+  const maxPossible = DEFAULT_RULES
+    .filter(r => r.c === topId)
+    .reduce((s, r) => s + r.weight, 0);
+  // Denominator stays the same so conf stays in [0,1]; filename boost pushes past 1, cap it
+  const conf = maxPossible > 0 ? Math.min(topScore / maxPossible, 1) : 0;
+
+  return {
+    catId:  topId,
+    conf,
+    kws:    (textKws[topId] || []).slice(0, 5),   // text keywords
+    fnKws:  (fnKws[topId]   || []).slice(0, 5),   // filename keywords
+  };
+}
+
+// ─────────────────────────────────────────────────────────
+//  Classify view
+// ─────────────────────────────────────────────────────────
+function renderClassify() {
+  renderCatGrid();
+  if (!currentDoc) return;
+
+  // populate doc meta
+  document.getElementById('cl-no-doc').style.display  = 'none';
+  document.getElementById('cl-doc-meta').style.display = 'block';
+  document.getElementById('cl-icon').textContent      = fileIcon(currentDoc.fileType);
+  document.getElementById('cl-filename').textContent  = currentDoc.filename;
+  document.getElementById('cl-metainfo').textContent  =
+    `${fmt(currentDoc.sizeBytes)} · ${currentDoc.wordCount} words · ${currentDoc.durationMs}ms`;
+
+  const chips = [];
+  if (currentDoc.pageCount)      chips.push(`<span class="chip chip-blue">${currentDoc.pageCount} pages</span>`);
+  if (currentDoc.ocrConfidence)  chips.push(`<span class="chip chip-${currentDoc.ocrConfidence>70?'green':'yellow'}">${currentDoc.ocrConfidence}% OCR</span>`);
+  if (currentDoc.avgOcrConfidence != null) {
+    const cls = currentDoc.avgOcrConfidence >= 80 ? 'green' : currentDoc.avgOcrConfidence >= 50 ? 'yellow' : 'red';
+    chips.push(`<span class="chip chip-${cls}">${currentDoc.avgOcrConfidence.toFixed(1)}% avg OCR</span>`);
+  }
+  if (currentDoc.extractionMethod === 'screenshot-ocr') {
+    chips.push(`<span class="chip chip-purple">📷 screenshot-ocr</span>`);
+  }
+  document.getElementById('cl-chips').innerHTML = chips.join('');
+
+  document.getElementById('cl-text-preview').textContent =
+    (currentDoc.fullText||'').slice(0,800) + ((currentDoc.fullText||'').length>800?'…':'');
+
+  // OCR lines (images)
+  const ocrCard = document.getElementById('ocr-detail-card');
+  if (currentDoc.ocrLines && currentDoc.ocrLines.length) {
+    ocrCard.style.display = 'block';
+    document.getElementById('ocr-lines-list').innerHTML =
+      currentDoc.ocrLines.slice(0,30).map(l=>{
+        const conf = l.confidence;
+        const cls  = conf>=80?'high':conf>=50?'med':'low';
+        return `<div class="ocr-line">
+          <span class="ocr-line-text">${esc(l.text)}</span>
+          <span class="ocr-conf ${cls}">${conf.toFixed(1)}%</span>
+        </div>`;
+      }).join('');
+  } else {
+    ocrCard.style.display = 'none';
+  }
+
+  // auto classify (text + filename)
+  const cl  = autoClassify(currentDoc.fullText || '', currentDoc.filename || '');
+  const cat = categories.find(c => c.id === cl.catId);
+  if (cat) {
+    selectedCatId = cl.catId;
+    document.getElementById('cl-cat').innerHTML =
+      `<strong style="color:var(--text)">${cat.emoji} ${cat.name}</strong>`;
+    const pct = Math.round(cl.conf * 100);
+    const cb  = document.getElementById('cl-conf');
+    cb.textContent   = pct + '% match';
+    cb.className     = 'conf-badge ' + (pct >= 50 ? 'conf-high' : 'conf-low');
+    cb.style.display = 'inline-block';
+    // Show text-matched keywords + filename-matched keywords with a 📄 prefix
+    const kwChips = cl.kws.map(k => `<span class="kw-chip">${esc(k)}</span>`).join('');
+    const fnChips = cl.fnKws.map(k => `<span class="kw-chip" title="matched in filename" style="background:#0c2a18;color:#86efac;border-color:#22c55e33">📄 ${esc(k)}</span>`).join('');
+    document.getElementById('cl-kws').innerHTML = kwChips + fnChips;
+    document.getElementById('apply-label-btn').disabled = false;
+    // Show source label if filename drove the classification
+    if (cl.fnKws.length > 0) {
+      document.getElementById('cl-source-lbl').innerHTML =
+        'Suggest <span class="sub-source" style="margin-left:3px">📄 filename</span>:';
+    }
+  } else {
+    document.getElementById('cl-cat').textContent = 'No match';
+    document.getElementById('cl-conf').style.display = 'none';
+    document.getElementById('cl-kws').innerHTML = '';
+  }
+
+  document.getElementById('ai-run-btn').disabled = !(ollamaConnected && currentDoc);
+  // Reset AI panel when switching documents
+  document.getElementById('doc-profile').style.display      = 'none';
+  document.getElementById('ai-result-row').style.display    = 'none';
+  document.getElementById('ai-stream-box').style.display    = 'none';
+  document.getElementById('ai-stream-box').textContent      = '';
+  document.getElementById('cat-changed-banner').style.display = 'none';
+  document.getElementById('cl-source-lbl').textContent      = 'Suggest:';
+  document.getElementById('cl-sub').style.display           = 'none';
+  // Restore keyword-classifier subcategory state (none until AI runs)
+  if (currentDoc && currentDoc._aiProfile) {
+    // Doc was already AI-classified — restore subcategory display
+    currentSubcategory = (currentDoc._aiProfile.subcategory || '').trim() || null;
+  } else {
+    currentSubcategory = null;
+  }
+  setAiStatus('', currentDoc ? 'Ready — click ▶ Run AI to classify' : 'Load a document first');
+  renderCatGrid();
+}
+
+function renderCatGrid() {
+  document.getElementById('cat-grid').innerHTML = categories.map(c => {
+    const isSelected = selectedCatId === c.id;
+    const subLabel   = isSelected && currentSubcategory
+      ? `<span class="cat-sub" title="${esc(currentSubcategory)}">${esc(currentSubcategory)}</span>`
+      : '';
+    return `<button class="cat-btn${isSelected?' sel':''}" onclick="selectCat('${c.id}')">
+      ${c.emoji} ${esc(c.name)}${subLabel}
+    </button>`;
+  }).join('');
+}
+
+function selectCat(id, keepSubcategory = false) {
+  const changed = selectedCatId !== id;
+  selectedCatId = id;
+  // If user manually picks a different category, clear the AI subcategory
+  if (changed && !keepSubcategory) {
+    currentSubcategory = null;
+    document.getElementById('cl-sub').style.display = 'none';
+    document.getElementById('cat-changed-banner').style.display = 'none';
+  }
+  renderCatGrid();
+  document.getElementById('apply-label-btn').disabled = false;
+}
+
+function addCategory() {
+  const inp  = document.getElementById('new-cat-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  if (categories.find(c=>c.name.toLowerCase()===name.toLowerCase())) {
+    toast('Already exists', 'error'); return;
+  }
+  categories.push({id:'cat_'+Date.now(), name, emoji:'📁'});
+  saveCats(); inp.value='';
+  renderCatGrid();
+  renderCatRules();
+  toast(`Category "${name}" added`, 'success');
+}
+
+function applyLabel() {
+  if (!currentDoc || !selectedCatId) return;
+  const cat = categories.find(c=>c.id===selectedCatId);
+  if (!cat) return;
+
+  // Update history record
+  const idx = documents.findIndex(d=>d.jobId===currentDoc.jobId);
+  if (idx>=0) documents[idx].labeledCategory = cat.name;
+  else { documents.unshift({...currentDoc, labeledCategory: cat.name}); }
+  saveDocs();
+
+  const banner = document.getElementById('label-banner');
+  banner.textContent = `✅ Labeled as "${cat.emoji} ${cat.name}"`;
+  banner.style.display = 'block';
+  updateHistBadge();
+  toast(`Labeled as "${cat.name}"`, 'success');
+  setTimeout(()=>banner.style.display='none', 4000);
+}
+
+function updateClassifyBadge(show) {
+  const b = document.getElementById('classify-badge');
+  b.style.display = show && currentDoc ? 'inline' : 'none';
+}
+function updateHistBadge() {
+  document.getElementById('hist-badge').textContent = documents.length;
+}
+
+// ─────────────────────────────────────────────────────────
+//  Ollama AI classify  — system-prompt driven, rich output
+// ─────────────────────────────────────────────────────────
+function setAiStatus(type, msg) {
+  const el = document.getElementById('ai-status-el');
+  if (type==='thinking') el.innerHTML = `<span class="spinner"></span> ${msg}`;
+  else if (type==='ok')  el.innerHTML = `<span style="color:var(--green)">✓</span> ${msg}`;
+  else if (type==='err') el.innerHTML = `<span style="color:var(--red)">✕</span> ${msg}`;
+  else                   el.textContent = msg;
+}
+
+// Build the system prompt with live category list
+function buildSystemPrompt() {
+  const catDescriptions = {
+    'Invoice':     'bills, invoices, payment requests, amounts due, PO numbers, vendor/client details',
+    'Contract':    'agreements, terms and conditions, obligations, signatures, parties, effective dates',
+    'Report':      'analysis, findings, summaries, research results, recommendations, conclusions',
+    'Receipt':     'purchase receipts, transaction confirmations, order records, payment proofs',
+    'Resume / CV': 'work experience, education history, skills, career objective, professional profile',
+    'ID Document': 'passports, national IDs, driving licences, identity cards, biometric documents',
+    'Medical':     'prescriptions, lab results, diagnoses, patient records, clinical notes, discharge summaries',
+    'Legal':       'court documents, judgments, legal filings, attorney correspondence, affidavits',
+    'Financial':   'bank statements, balance sheets, financial reports, account records, tax documents, account opening forms, KYC forms, customer onboarding forms, new account applications',
+    'Other':       'anything that does not clearly fit the categories above',
+  };
+  const catLines = categories.map(c => {
+    const desc = catDescriptions[c.name] || c.name;
+    return `  • ${c.name}: ${desc}`;
+  }).join('\n');
+
+  return `You are an expert document analyst and classifier. Your task is to:
+1. Classify the document into exactly ONE category from the list below
+2. Identify the specific document sub-type
+3. Extract the most important structured fields from the document text
+4. Assess OCR/scan quality
+5. Return ONLY valid JSON — no markdown fences, no explanation outside the JSON
+
+CATEGORIES:
+${catLines}
+
+KEY FIELDS TO EXTRACT (by category):
+  • Invoice: invoice_number, date, due_date, total_amount, currency, vendor_name, client_name, line_items_count
+  • Contract: contract_type, parties, effective_date, expiry_date, governing_law, key_obligations
+  • Report: report_title, author, date, subject, key_findings
+  • Receipt: merchant, date, total_amount, currency, payment_method, items_count
+  • Resume / CV: candidate_name, email, phone, current_title, years_experience, top_skills
+  • ID Document: full_name, document_type, document_number, date_of_birth, nationality, issuing_country, issue_date, expiry_date, gender
+  • Medical: patient_name, date, doctor_name, facility, diagnosis_or_condition, medications, follow_up
+  • Legal: case_number, court, judge, parties, filing_date, document_type
+  • Financial: document_subtype, applicant_name, account_type, account_number_last4, institution, branch, statement_period, opening_balance, closing_balance, application_date, signature_present
+  • Other: title, date, author, subject
+
+RULES:
+  - The filename and its tokens are provided at the top of the document — treat them as a strong, intentional classification signal. A file named "account_opening_form.pdf" is almost certainly Financial; "passport_scan.jpg" is almost certainly ID Document; "invoice_2024.pdf" is almost certainly Invoice. Prioritise the filename when it clearly indicates a document type.
+  - Extract only fields that are clearly present in the text; use null for missing fields
+  - OCR text may have artifacts (garbled characters, merged words) — infer sensibly, especially when OCR confidence is below 70%
+  - If quality is poor, note specific issues (e.g. "blurry scan", "low contrast", "rotated text")
+  - confidence reflects how certain you are of the classification (not OCR quality)
+  - If the filename and the text content disagree on category, favour the filename unless the text content is overwhelming evidence to the contrary
+
+REQUIRED JSON FORMAT (respond with ONLY this, no other text):
+{
+  "category": "<exact category name from the list>",
+  "subcategory": "<specific document type, e.g. Passport, Employment Contract, Tax Invoice, Account Opening Form, Bank Statement>",
+  "confidence": "high | medium | low",
+  "key_fields": { "<field>": "<value or null>" },
+  "quality": "good | fair | poor",
+  "quality_note": "<one sentence about scan/OCR quality>",
+  "reason": "<one sentence explaining your classification decision>"
+}`;
+}
+
+// Build the user message, enriched with filename + OCR metadata
+function buildUserMessage(doc) {
+  const lines = [];
+
+  // ── Filename (strong classification hint) ────────────────
+  if (doc.filename) {
+    const fnTokens = tokeniseFilename(doc.filename);
+    lines.push(`[Filename: ${doc.filename}]`);
+    lines.push(`[Filename tokens: ${fnTokens}]`);
+  }
+
+  // ── OCR / extraction metadata ────────────────────────────
+  if (doc.extractionMethod) {
+    lines.push(`[Extraction method: ${doc.extractionMethod}]`);
+  }
+  if (doc.avgOcrConfidence != null) {
+    lines.push(`[Average OCR confidence: ${doc.avgOcrConfidence.toFixed(1)}%${doc.avgOcrConfidence < 60 ? ' — low quality scan, some fields may be garbled' : ''}]`);
+  }
+  if (doc.pageCount) {
+    lines.push(`[Page count: ${doc.pageCount}]`);
+  }
+
+  lines.push('');
+  lines.push('DOCUMENT TEXT:');
+  lines.push('---');
+
+  // For multi-page docs include per-page text with page markers for context
+  if (doc.pages && doc.pages.length > 1) {
+    const pageSnippets = doc.pages.slice(0, 6).map(p => {
+      const txt = (p.text || '').slice(0, 600);
+      const confNote = p.ocrConfidence != null ? ` [OCR: ${p.ocrConfidence.toFixed(0)}%]` : '';
+      return `--- Page ${p.pageNumber}${confNote} ---\n${txt}`;
+    });
+    lines.push(pageSnippets.join('\n\n'));
+  } else {
+    // Single page or no page breakdown — just use fullText
+    lines.push((doc.fullText || '(no text extracted)').slice(0, 3000));
+  }
+
+  lines.push('---');
+  return lines.join('\n');
+}
+
+async function runOllamaClassify() {
+  if (!currentDoc || !ollamaConnected) return;
+  const btn = document.getElementById('ai-run-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Analysing…';
+
+  const box = document.getElementById('ai-stream-box');
+  box.style.display = 'block';
+  box.textContent   = '';
+  document.getElementById('ai-result-row').style.display = 'none';
+  document.getElementById('doc-profile').style.display   = 'none';
+  setAiStatus('thinking', `Sending to ${CFG.olModel}…`);
+
+  const systemPrompt = buildSystemPrompt();
+  const userMessage  = buildUserMessage(currentDoc);
+
+  try {
+    // LM Studio's OpenAI-compatible chat completions endpoint, with the
+    // system role kept separate (LM Studio merges it into the user turn
+    // for Gemma — that's fine, the instruction still lands).
+    // `response_format: {type:"json_object"}` is the OpenAI/LM Studio
+    // equivalent of Ollama's `format: "json"` and forces grammar-valid
+    // JSON output.
+    // POST through the extractor service's pass-through endpoint.
+    // The service forwards to LM Studio (using the x-llm-url header) and
+    // pipes the OpenAI SSE stream back unchanged, so the parser below
+    // stays identical to talking to LM Studio directly. This sidesteps
+    // browser CORS on file:// origins entirely.
+    const res = await fetch(CFG.extUrl+'/llm/chat/stream', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-llm-url':    CFG.olUrl,
+      },
+      body: JSON.stringify({
+        model:           CFG.olModel,
+        stream:          true,
+        temperature:     0.05,
+        max_tokens:      600,
+        //response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user',   content: userMessage  },
+        ],
+      }),
+    });
+
+    if (!res.ok) {
+      let detail = '';
+      try { detail = ' — ' + (await res.text()).slice(0, 200); } catch {}
+      throw new Error('LM Studio HTTP ' + res.status + detail);
+    }
+
+    // OpenAI-style SSE: events separated by blank lines. Each event has
+    // one or more "data: …" lines; the terminator is "data: [DONE]".
+    // We buffer across chunk boundaries so a token-line split across two
+    // network reads doesn't get silently dropped (the bug from the older
+    // Ollama path).
+    const reader  = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer  = '';
+    let full    = '';
+    let endSeen = false;
+
+    while (!endSeen) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, {stream: true});
+      let sep;
+      while ((sep = buffer.indexOf('\n\n')) !== -1) {
+        const evt = buffer.slice(0, sep);
+        buffer = buffer.slice(sep + 2);
+        const dataLines = evt.split('\n')
+          .filter(l => l.startsWith('data:'))
+          .map(l => l.slice(5).trimStart());
+        if (!dataLines.length) continue;
+        const payload = dataLines.join('\n');
+        if (payload === '[DONE]') { endSeen = true; break; }
+        try {
+          const obj   = JSON.parse(payload);
+          const token = obj?.choices?.[0]?.delta?.content || '';
+          if (token) {
+            full += token;
+            box.textContent = full;
+            box.scrollTop = box.scrollHeight;
+          }
+          if (obj?.error) throw new Error(obj.error.message || String(obj.error));
+        } catch (parseErr) {
+          if (!(parseErr instanceof SyntaxError)) throw parseErr;
+        }
+      }
+    }
+
+    parseAndDisplayAiResult(full, btn);
+
+  } catch(e) {
+    setAiStatus('err', e.message);
+    toast('AI error: '+e.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '▶ Run AI';
+  }
+}
+
+// Extract the first valid JSON object from the model's response
+function extractJson(raw) {
+  // Strip markdown fences if present
+  const stripped = raw.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+  // Try to find a JSON object
+  const match = stripped.match(/\{[\s\S]*\}/);
+  if (!match) return null;
+  try { return JSON.parse(match[0]); } catch {
+    // Attempt to fix common model mistakes: trailing commas, unquoted nulls
+    try {
+      const fixed = match[0]
+        .replace(/,\s*([}\]])/g, '$1')   // trailing commas
+        .replace(/:\s*undefined/g, ': null');
+      return JSON.parse(fixed);
+    } catch { return null; }
+  }
+}
+
+function parseAndDisplayAiResult(raw, btn) {
+  const parsed = extractJson(raw);
+
+  if (!parsed) {
+    setAiStatus('ok', 'Response received — could not parse JSON');
+    btn.disabled = false;
+    btn.innerHTML = '▶ Run AI';
+    return;
+  }
+
+  // ── Match category ────────────────────────────────────────
+  const catName  = (parsed.category || '').trim().toLowerCase();
+  const matched  = categories.find(c => c.name.toLowerCase() === catName)
+                || categories.find(c => catName.includes(c.name.toLowerCase()))
+                || categories.find(c => c.name.toLowerCase().includes(catName));
+
+  // Store subcategory globally so renderCatGrid can show it
+  currentSubcategory = (parsed.subcategory || '').trim() || null;
+
+  if (matched) {
+    aiSuggestedCatId = matched.id;
+
+    // ── Auto-update the main category selection ───────────
+    const prevCatId  = selectedCatId;
+    const prevCat    = categories.find(c => c.id === prevCatId);
+    const categoryChanged = prevCatId && prevCatId !== matched.id;
+
+    selectedCatId = matched.id;
+    renderCatGrid();  // re-render grid — selected button now shows subcategory
+    document.getElementById('apply-label-btn').disabled = false;
+
+    // ── Update the suggest bar to reflect AI result ───────
+    document.getElementById('cl-source-lbl').innerHTML =
+      '🤖 AI:';
+    document.getElementById('cl-cat').innerHTML =
+      `<strong style="color:var(--text)">${matched.emoji} ${matched.name}</strong>`;
+    const cb = document.getElementById('cl-conf');
+    const confPct = {high:'High',medium:'Med',low:'Low'}[parsed.confidence] || '?';
+    cb.textContent  = confPct + ' conf';
+    cb.className    = 'conf-badge ' + (parsed.confidence === 'high' ? 'conf-high' : 'conf-low');
+    cb.style.display = 'inline-block';
+    // Show subcategory pill in suggest bar
+    const subEl = document.getElementById('cl-sub');
+    if (currentSubcategory) {
+      subEl.innerHTML = `↳ ${esc(currentSubcategory)} <span class="sub-source">AI</span>`;
+      subEl.style.display = 'inline-flex';
+    } else {
+      subEl.style.display = 'none';
+    }
+    // Clear keyword chips — now showing AI result
+    document.getElementById('cl-kws').innerHTML = '';
+
+    // ── Category-changed banner ───────────────────────────
+    const banner = document.getElementById('cat-changed-banner');
+    if (categoryChanged && prevCat) {
+      document.getElementById('ccb-from').textContent = `${prevCat.emoji} ${prevCat.name}`;
+      document.getElementById('ccb-to').textContent   = `${matched.emoji} ${matched.name}`;
+      banner.style.display = 'flex';
+    } else {
+      banner.style.display = 'none';
+    }
+
+    // Keep the simple row hidden — profile card is the primary result now
+    document.getElementById('ai-result-row').style.display = 'none';
+  }
+
+  // ── Render document profile ───────────────────────────────
+  const profile = document.getElementById('doc-profile');
+  profile.style.display = 'block';
+
+  document.getElementById('dp-category').textContent =
+    matched ? `${matched.emoji} ${matched.name}` : (parsed.category || '—');
+  document.getElementById('dp-subcategory').textContent =
+    parsed.subcategory || '';
+
+  // Badges: confidence + quality
+  const confCls = { high:'high', medium:'medium', low:'low' }[parsed.confidence] || 'low';
+  const qualCls = { good:'good', fair:'fair', poor:'poor' }[parsed.quality]    || 'fair';
+  document.getElementById('dp-badges').innerHTML = `
+    <span class="dp-badge ${confCls}">
+      ${parsed.confidence === 'high' ? '✓' : parsed.confidence === 'medium' ? '~' : '?'}
+      ${(parsed.confidence || 'unknown')} confidence
+    </span>
+    <span class="dp-badge ${qualCls}">
+      ${parsed.quality === 'good' ? '👁' : parsed.quality === 'fair' ? '⚠' : '⚡'}
+      ${(parsed.quality || '?')} quality
+    </span>`;
+
+  // Key fields
+  const fields = parsed.key_fields || {};
+  const fieldEntries = Object.entries(fields).filter(([,v]) => v !== null && v !== '' && v !== 'null');
+  const fieldHtml = fieldEntries.length
+    ? fieldEntries.map(([k, v]) => `
+        <div class="dp-field-row">
+          <span class="dp-field-key">${esc(k.replace(/_/g,' '))}</span>
+          <span class="dp-field-val">${esc(String(v))}</span>
+        </div>`).join('')
+    : '<div style="color:var(--muted);font-size:11px;padding:4px 0">No fields extracted</div>';
+  document.getElementById('dp-fields-list').innerHTML = fieldHtml;
+
+  // Quality note + reason
+  const qualNote = parsed.quality_note || '';
+  const reason   = parsed.reason || '';
+  document.getElementById('dp-reason').innerHTML =
+    (qualNote ? `<span style="color:var(--yellow)">⚠ ${esc(qualNote)}</span><br>` : '') +
+    (reason   ? `<em>${esc(reason)}</em>` : '');
+
+  setAiStatus('ok', `Done · ${CFG.olModel}${matched ? ' · ' + matched.name : ''}`);
+  toast(`🤖 ${matched ? matched.emoji + ' ' + matched.name : parsed.category} — ${parsed.confidence} confidence`, 'success');
+
+  btn.disabled = false;
+  btn.innerHTML = '▶ Run AI';
+
+  // Store profile on currentDoc for history
+  if (currentDoc) currentDoc._aiProfile = parsed;
+}
+
+function applyAiSuggestion() {
+  if (!aiSuggestedCatId) return;
+  selectCat(aiSuggestedCatId);
+  document.getElementById('ai-result-row').style.display = 'none';
+  toast('AI suggestion applied — click Apply Label to save', 'info');
+}
+
+// ─────────────────────────────────────────────────────────
+//  History view
+// ─────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  histFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHistory();
+}
+
+function renderHistory() {
+  const query  = (document.getElementById('hist-search').value||'').toLowerCase();
+  let   docs   = documents.filter(d=>{
+    if (histFilter==='pdf'   && d.fileType!=='pdf')   return false;
+    if (histFilter==='image' && d.fileType!=='image') return false;
+    if (query && !d.filename.toLowerCase().includes(query)) return false;
+    return true;
+  });
+
+  // stats
+  const total   = documents.length;
+  const pdfs    = documents.filter(d=>d.fileType==='pdf').length;
+  const images  = documents.filter(d=>d.fileType==='image').length;
+  const labeled = documents.filter(d=>d.labeledCategory).length;
+  document.getElementById('hist-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-card"><div class="stat-num">${pdfs}</div><div class="stat-lbl">PDFs</div></div>
+    <div class="stat-card"><div class="stat-num">${images}</div><div class="stat-lbl">Images</div></div>
+    <div class="stat-card"><div class="stat-num">${labeled}</div><div class="stat-lbl">Labeled</div></div>`;
+
+  const wrap = document.getElementById('hist-table-wrap');
+  if (!docs.length) {
+    wrap.innerHTML = `<div class="empty-state"><div class="ei">🗂</div>
+      <p>${query||histFilter!=='all'?'No matching documents':'No documents yet — upload some files'}</p></div>`;
+    return;
+  }
+
+  wrap.innerHTML = `<table>
+    <thead><tr>
+      <th>File</th><th>Type</th><th>Words</th><th>Pages/Conf</th>
+      <th>Category</th><th>Processed</th><th></th>
+    </tr></thead>
+    <tbody>
+    ${docs.map(d=>`
+      <tr>
+        <td><div class="tbl-file"><span>${fileIcon(d.fileType)}</span>${esc(d.filename)}</div></td>
+        <td><span class="tbl-type">${d.fileType}</span></td>
+        <td>${d.wordCount}</td>
+        <td>${d.pageCount ? d.pageCount+'p' : d.ocrConfidence ? d.ocrConfidence.toFixed(1)+'%' : '—'}${d.extractionMethod==='screenshot-ocr' ? ' <span title="Screenshot OCR" style="font-size:10px">📷</span>' : ''}</td>
+        <td>${d.labeledCategory
+          ? `<span class="chip chip-green">${esc(d.labeledCategory)}</span>`
+          : `<span style="color:var(--muted);font-size:11px">unlabeled</span>`}</td>
+        <td style="color:var(--muted);font-size:11px">${new Date(d.processedAt).toLocaleString()}</td>
+        <td style="display:flex;gap:6px">
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px"
+            onclick='loadDoc(${JSON.stringify(d.jobId)})'>Open</button>
+          <button class="btn" style="background:var(--red);color:#fff;padding:4px 10px;font-size:11px"
+            onclick='deleteDoc("${d.jobId}")'>✕</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function loadDoc(jobId) {
+  const doc = documents.find(d=>d.jobId===jobId);
+  if (!doc) return;
+  showResult(doc);
+  nav('upload', document.querySelector('.nav-item'));
+  toast('Document loaded', 'info');
+}
+function deleteDoc(jobId) {
+  documents = documents.filter(d=>d.jobId!==jobId);
+  saveDocs(); renderHistory(); updateHistBadge();
+  toast('Removed', 'info');
+}
+
+// ─────────────────────────────────────────────────────────
+//  Settings view
+// ─────────────────────────────────────────────────────────
+function renderSettings() {
+  document.getElementById('ext-url-input').value = CFG.extUrl;
+  document.getElementById('ol-url-input').value  = CFG.olUrl;
+  document.getElementById('ol-model-input').value= CFG.olModel;
+  renderCatRules();
+}
+function renderCatRules() {
+  document.getElementById('cat-rules-list').innerHTML =
+    categories.map(c=>`
+      <span class="chip chip-blue" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px">
+        ${c.emoji} ${esc(c.name)}
+        ${c.id.startsWith('cat_')
+          ? `<button onclick="deleteCustomCat('${c.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px">✕</button>`
+          : ''}
+      </span>`).join('');
+}
+function deleteCustomCat(id) {
+  categories = categories.filter(c=>c.id!==id);
+  saveCats(); renderCatRules(); renderCatGrid();
+}
+
+// ─────────────────────────────────────────────────────────
+//  Thumbnail lightbox
+// ─────────────────────────────────────────────────────────
+function openLightbox(src) {
+  const lb = document.getElementById('thumb-lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('show');
+}
+function closeLightbox() {
+  document.getElementById('thumb-lightbox').classList.remove('show');
+  document.getElementById('lightbox-img').src = '';
+}
+
+// ─────────────────────────────────────────────────────────
+//  Misc helpers
+// ─────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────
+//  Boot
+// ─────────────────────────────────────────────────────────
+(async function init() {
+  // sync settings inputs
+  document.getElementById('ext-url-input').value  = CFG.extUrl;
+  document.getElementById('ol-url-input').value   = CFG.olUrl;
+  document.getElementById('ol-model-input').value = CFG.olModel;
+  document.getElementById('ai-model-tag').textContent    = CFG.olModel;
+  document.getElementById('ai-model-label').textContent  = CFG.olModel;
+  document.getElementById('ext-url').textContent  = CFG.extUrl.replace('http://','');
+  document.getElementById('ol-url').textContent   = CFG.olUrl.replace('http://','');
+
+  updateHistBadge();
+  renderCatGrid();
+
+  // ping both services
+  await Promise.all([pingExtractor(), pingOllama()]);
+
+  // load history from extractor /outputs endpoint
+  try {
+    const r = await fetch(CFG.extUrl+'/outputs', {signal:AbortSignal.timeout(4000)});
+    if (r.ok) {
+      const d = await r.json();
+      if (d.success && d.data.length) {
+        toast(`${d.data.length} output file(s) available on server`, 'info');
+      }
+    }
+  } catch {}
+}());
+</script>
+</body>
+</html>

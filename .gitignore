@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Local env / secrets (keep .env.example tracked)
+.env
+.env.local
+.env.*.local
+
+# Service runtime artifacts
+extractor-service/output/
+extractor-service/Input/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Large session captures
+*.mov
+*.mp4
+
+# Snapshot folders the user keeps for reference
+13 April 2026/
