@@ -19,6 +19,7 @@ export interface IndexedDocument {
   filename: string;
   outputFile?: string;
   fileType?: string;
+  sizeBytes?: number;
   processedAt?: string;
   indexedAt: string;
 

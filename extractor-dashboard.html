@@ -543,6 +543,10 @@ tr:hover td{background:var(--surface2)}
     <span class="nav-icon">🔎</span> Search
   </button>
 
+  <button class="nav-item" onclick="nav('semantic',this)" id="semantic-nav">
+    <span class="nav-icon">🧠</span> Semantic
+  </button>
+
   <div class="nav-section">Config</div>
   <button class="nav-item" onclick="nav('settings',this)">
     <span class="nav-icon">⚙</span> Settings
@@ -559,8 +563,8 @@ tr:hover td{background:var(--surface2)}
     <div class="service-pill" style="margin-top:7px" id="ollama-pill">
       <span class="dot" id="ol-dot"></span>
       <div class="service-text">
-        <div class="s-label">LM Studio</div>
-        <div class="s-url" id="ol-url">127.0.0.1:1234</div>
+        <div class="s-label">OpenRouter</div>
+        <div class="s-url" id="ol-url">openrouter.ai</div>
       </div>
     </div>
   </div>
@@ -580,7 +584,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="topbar-chip" id="ollama-chip">
       <span class="dot" id="chip-ol-dot"></span>
-      <span id="chip-ol-label">LM Studio</span>
+      <span id="chip-ol-label">OpenRouter</span>
     </div>
   </div>
 
@@ -724,7 +728,7 @@ tr:hover td{background:var(--surface2)}
 
         <!-- AI panel -->
         <div class="card">
-          <div class="card-title">AI Classification (LM Studio)</div>
+          <div class="card-title">AI Classification (OpenRouter)</div>
           <div class="ai-panel">
             <div class="ai-panel-header">
               <div class="ai-title">
@@ -818,6 +822,23 @@ tr:hover td{background:var(--surface2)}
     </div>
   </div>
 
+
+  <!-- ═══════════════ VIEW: SEMANTIC ═══════════════ -->
+  <div class="view" id="view-semantic">
+    <div class="card">
+      <div class="srch-bar">
+        <input type="text" id="sem-q" placeholder='Describe what you are looking for, e.g.  proof of identity   ·   salary or income statement   ·   NRI account application'
+          onkeydown="if(event.key==='Enter')runSemantic()"/>
+        <input type="text" id="sem-cat" placeholder="category (optional)" style="width:170px"/>
+        <button class="btn btn-primary" onclick="runSemantic()">Search by meaning</button>
+      </div>
+      <div class="srch-hint" id="sem-status">Checking embeddings…</div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;margin-top:16px" id="sem-results">
+      <div class="empty-state"><div class="ei">🧠</div><p>Ranks documents by meaning, not by exact identifiers</p></div>
+    </div>
+  </div>
+
   <!-- ═══════════════ VIEW: SEARCH ═══════════════ -->
   <div class="view" id="view-search">
     <div class="card">
@@ -880,21 +901,21 @@ tr:hover td{background:var(--surface2)}
       </div>
 
       <div class="card">
-        <div class="card-title">LM Studio</div>
+        <div class="card-title">AI model (OpenRouter)</div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div>
-            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Endpoint</label>
-            <input id="ol-url-input" value="http://127.0.0.1:1234"
+            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Endpoint (set on the server)</label>
+            <input id="ol-url-input" value="https://openrouter.ai/api" readonly
               style="width:100%;background:var(--surface2);border:1px solid var(--border);
                 border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
           </div>
           <div>
             <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Model</label>
-            <input id="ol-model-input" value="gemma-4-e2b-it:2"
+            <input id="ol-model-input" value="google/gemma-4-26b-a4b-it"
               style="width:100%;background:var(--surface2);border:1px solid var(--border);
                 border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
           </div>
-          <button class="btn btn-ghost" onclick="testOllama()" style="width:100%">🔌 Test LM Studio</button>
+          <button class="btn btn-ghost" onclick="testOllama()" style="width:100%">🔌 Test OpenRouter</button>
           <div class="ai-status" id="ol-test-status"></div>
           <div id="ol-model-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
@@ -930,11 +951,11 @@ tr:hover td{background:var(--surface2)}
 //  Config (persisted to localStorage)
 // ─────────────────────────────────────────────────────────
 const CFG = {
-  get extUrl()   { return localStorage.getItem('ext_url')   || 'http://localhost:3100' },
+  get extUrl()   { return localStorage.getItem('ext_url')   || (location.protocol.startsWith('http') ? location.origin : 'http://localhost:3100') },
   // Backend is LM Studio (OpenAI-compatible). The /v1 suffix is auto-
   // appended in lmBase() — leave it off the input field so the value
   // matches what the user sees in LM Studio's "Reachable at:" line.
-  get olUrl()    { return localStorage.getItem('ol_url')    || 'http://127.0.0.1:1234' },
+  get olUrl()    { return localStorage.getItem('ol_url')    || 'https://openrouter.ai/api' },
   get olModel()  { return localStorage.getItem('ol_model')  || 'gemma-4-e2b-it:2' },
   save(extUrl, olUrl, olModel) {
     localStorage.setItem('ext_url',  extUrl);
@@ -1033,7 +1054,7 @@ function saveDocs() { localStorage.setItem('docs', JSON.stringify(documents)); }
 // ─────────────────────────────────────────────────────────
 const PAGE_TITLES = {
   upload:'Upload Documents', classify:'Classify Document',
-  history:'Extraction History', search:'Search Documents', settings:'Settings'
+  history:'Extraction History', search:'Search Documents', semantic:'Semantic Search', settings:'Settings'
 };
 function nav(view, btn) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -1045,6 +1066,7 @@ function nav(view, btn) {
   if (view === 'classify') renderClassify();
   if (view === 'settings') renderSettings();
   if (view === 'search')   initSearchView();
+  if (view === 'semantic') refreshSemanticStatus();
 }
 
 // ─────────────────────────────────────────────────────────
@@ -1075,7 +1097,7 @@ function setOlStatus(ok, label) {
   const dotCls = ok ? 'dot green' : 'dot';
   document.getElementById('ol-dot').className       = dotCls;
   document.getElementById('chip-ol-dot').className  = dotCls;
-  document.getElementById('chip-ol-label').textContent = label || 'LM Studio';
+  document.getElementById('chip-ol-label').textContent = label || 'OpenRouter';
   document.getElementById('ol-url').textContent     = CFG.olUrl.replace('http://','');
   const aiBtn = document.getElementById('ai-run-btn');
   if (aiBtn) aiBtn.disabled = !(ok && currentDoc);
@@ -1121,13 +1143,13 @@ async function pingOllama() {
     });
     if (!r.ok) throw new Error('HTTP '+r.status);
     const payload = await r.json();
-    if (!payload?.success) throw new Error(payload?.error || 'service reports LM Studio unreachable');
+    if (!payload?.success) throw new Error(payload?.error || 'service reports OpenRouter unreachable');
     // Service wraps health in { success, data: { ok, url, models: [{name, ownedBy}] } }
     const models = (payload.data?.models || []).map(m => m.name).filter(Boolean);
     setOlStatus(true, CFG.olModel);
     return models;
   } catch {
-    setOlStatus(false, 'LM Studio offline');
+    setOlStatus(false, 'OpenRouter offline');
     return [];
   }
 }
@@ -1171,15 +1193,15 @@ async function testOllama() {
     } else {
       el.innerHTML = found
         ? `<span style="color:var(--green)">✓ Connected · model loaded</span>`
-        : `<span style="color:var(--yellow)">⚠ Connected but no models loaded. Open LM Studio → load a model → Start Server</span>`;
-      toast('LM Studio connected', 'success');
+        : `<span style="color:var(--yellow)">⚠ Connected but no models returned. Check OPENROUTER_API_KEY on the server</span>`;
+      toast('OpenRouter connected', 'success');
     }
     const chips = document.getElementById('ol-model-chips');
     chips.innerHTML = models.slice(0,8).map(m=>
       `<button class="chip chip-blue" style="cursor:pointer" onclick="pickOlModel('${m}')">${m}</button>`
     ).join('');
   } else {
-    el.innerHTML = `<span style="color:var(--red)">✕ Cannot reach LM Studio at ${url}. Open LM Studio → Local Server tab → load a model → Start Server (port 1234)</span>`;
+    el.innerHTML = `<span style="color:var(--red)">✕ Cannot reach OpenRouter from the extractor service. Check OPENROUTER_API_KEY and the server log.</span>`;
   }
 }
 function pickOlModel(name) {
@@ -1982,7 +2004,7 @@ async function runOllamaClassify() {
     if (!res.ok) {
       let detail = '';
       try { detail = ' — ' + (await res.text()).slice(0, 200); } catch {}
-      throw new Error('LM Studio HTTP ' + res.status + detail);
+      throw new Error('LLM HTTP ' + res.status + detail);
     }
 
     // OpenAI-style SSE: events separated by blank lines. Each event has
@@ -2332,6 +2354,67 @@ async function refreshIndexStats() {
       .map(([k, n]) => `<div class="ent-val" style="cursor:default"><span>${esc(k)}</span><small>${n} docs</small></div>`).join('');
     el.innerHTML = `<div>${d.documents} documents · ${d.classified} classified${d.embeddingModel ? ' · ' + d.embedded + ' embedded' : ''}</div>${keys}`;
   } catch { el.textContent = 'Extractor service unreachable'; }
+}
+
+
+// ── Semantic tab ─────────────────────────────────────────
+async function refreshSemanticStatus() {
+  const el = document.getElementById('sem-status');
+  try {
+    const d = (await (await fetch(CFG.extUrl + '/index/stats', {signal: AbortSignal.timeout(4000)})).json()).data;
+    if (!d.embeddingModel) {
+      el.innerHTML = `Embeddings are off, so ranking uses keywords only. Set <code>EMBEDDING_MODEL</code> on the server.`;
+    } else {
+      const missing = d.documents - d.embedded;
+      el.innerHTML = `Embeddings on (<code>${esc(d.embeddingModel)}</code>) · ${d.embedded} of ${d.documents} documents embedded` +
+        (missing > 0 ? ` · <a href="#" onclick="embedMissing();return false">embed ${missing} missing</a>` : '');
+    }
+  } catch { el.textContent = 'Extractor service unreachable'; }
+}
+async function embedMissing() {
+  const el = document.getElementById('sem-status');
+  el.textContent = 'Embedding documents…';
+  try {
+    const d = await (await fetch(CFG.extUrl + '/index/embed', {method: 'POST'})).json();
+    if (!d.success) throw new Error(d.error);
+    toast(`Embedded ${d.data.embedded} documents` + (d.data.failed ? `, ${d.data.failed} failed` : ''), d.data.failed ? 'error' : 'success');
+  } catch (e) { toast('Embedding failed: ' + e.message, 'error'); }
+  refreshSemanticStatus();
+}
+async function runSemantic() {
+  const query = document.getElementById('sem-q').value.trim();
+  const category = document.getElementById('sem-cat').value.trim();
+  if (!query) return;
+  const res = document.getElementById('sem-results');
+  res.innerHTML = '<div class="empty-state"><span class="spinner"></span></div>';
+  try {
+    const r = await fetch(CFG.extUrl + '/search', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({query, semanticOnly: true, limit: 20, ...(category ? {category} : {})}),
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || 'Search failed');
+    const hits = d.data.hits;
+    res.innerHTML = hits.length ? hits.map(h => {
+      const cat = h.labeledCategory || h.category;
+      return `<div class="hit">
+        <div class="hit-main">
+          <div class="hit-title">${esc(h.filename)}
+            ${cat ? `<span class="chip chip-green">${esc(cat)}</span>` : ''}
+            ${h.subcategory ? `<span class="chip chip-blue">${esc(h.subcategory)}</span>` : ''}</div>
+          <div class="hit-md">${h.metadata.filter(m => !m.sources.every(s => s === 'derived')).slice(0, 6)
+              .map(m => `<span>${esc(m.key)}: ${esc(m.value)}</span>`).join('')}</div>
+        </div>
+        <div class="hit-actions">
+          <div class="hit-score" title="semantic score ${h.semanticScore}">${(h.score * 100).toFixed(0)}%</div>
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px"
+            onclick='openSearchHit(${JSON.stringify(h.jobId)}, ${JSON.stringify(h.outputFile || "")})'>Open</button>
+        </div>
+      </div>`;
+    }).join('') : `<div class="empty-state"><div class="ei">∅</div><p>No documents matched</p></div>`;
+  } catch (e) {
+    res.innerHTML = `<div class="empty-state"><div class="ei">⚠</div><p>${esc(e.message)}</p></div>`;
+  }
 }
 
 async function rebuildIndex() {

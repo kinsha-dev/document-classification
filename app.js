@@ -211,6 +211,20 @@ async function processFile(file) {
   }
 }
 
+// Sends the file to the extractor service. This registers it in the search
+// index (jobId) and provides OCR text for images and scanned PDFs, which have
+// no text layer in the browser. Returns {text:'', jobId:null} on any failure.
+async function extractViaService(file) {
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch(serviceCfg.url + '/extract', { method: 'POST', body: fd });
+    if (!res.ok) return { text: '', jobId: null };
+    const d = (await res.json())?.data;
+    return { text: (d?.fullText || '').trim(), jobId: d?.jobId || null };
+  } catch { return { text: '', jobId: null }; }
+}
+
 async function processPDF(file) {
   const ab = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
@@ -219,7 +233,7 @@ async function processPDF(file) {
   // Extract text from first page
   const page = await pdf.getPage(1);
   const tc = await page.getTextContent();
-  const firstPageText = tc.items.map(i => i.str).join(' ');
+  let firstPageText = tc.items.map(i => i.str).join(' ');
 
   // Extract text from all pages (for learning)
   let fullText = firstPageText;
@@ -229,8 +243,12 @@ async function processPDF(file) {
     fullText += ' ' + t.items.map(i=>i.str).join(' ');
   }
 
+  const svc = await extractViaService(file);
+  if (fullText.trim().length < 30 && svc.text) { fullText = svc.text; firstPageText = svc.text; }
+
   return {
     filename: file.name,
+    jobId: svc.jobId,
     fileType: 'PDF',
     mimeType: file.type,
     sizeBytes: file.size,
@@ -248,14 +266,18 @@ async function processImage(file) {
     r.readAsDataURL(file);
   });
 
+  const svc = await extractViaService(file);
+  const ocrText = svc.text;
+
   return {
     filename: file.name,
+    jobId: svc.jobId,
     fileType: 'Image',
     mimeType: file.type,
     sizeBytes: file.size,
     pageCount: 1,
-    firstPageText: '[Image file — no text extracted. Please assign a label manually.]',
-    fullText: '',
+    firstPageText: ocrText ? ocrText.slice(0, 1500) : '[Image file — no text extracted. Please assign a label manually.]',
+    fullText: ocrText,
     thumbnail: dataUrl
   };
 }
@@ -792,6 +814,7 @@ function switchTab(name, btn) {
   if (name === 'history') renderHistory();
   if (name === 'rules')   renderRulesSidebar();
   if (name === 'io')      renderStats();
+  if (name === 'search')  refreshDocSearchStatus();
 }
 
 // ──────────────────────────────────────────
@@ -877,7 +900,7 @@ let serviceCfg = {
             const legacy = localStorage.getItem('ollama_url');
             // Anything still pointing at Ollama's 11434 is stale; reset.
             if (legacy && !legacy.includes(':11434')) return legacy;
-            return 'http://localhost:3100';
+            return location.protocol.startsWith('http') ? location.origin : 'http://localhost:3100';
           })(),
   // Default model id matches what LM Studio shows in its right-hand
   // "API Model Identifier" field (e.g. "gemma-4-e2b-it:2"). The trailing
@@ -1090,6 +1113,7 @@ async function classifyWithOllama() {
         text:       currentDoc.fullText || currentDoc.firstPageText,
         categories: state.categories.map(c => ({ name: c.name })),
         model:      serviceCfg.model,
+        jobId:      currentDoc.jobId || undefined,
       }),
     });
 
@@ -1268,3 +1292,70 @@ renderStats();
       setAiStatus('', 'LM Studio not connected — configure in Import/Export → Settings');
     });
 }());
+
+
+// ──────────────────────────────────────────
+//  Document search (semantic + identifier)
+// ──────────────────────────────────────────
+let docSearchMode = 'semantic';
+
+function setDocSearchMode(mode, btn) {
+  docSearchMode = mode;
+  document.querySelectorAll('#search-mode button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('search-q').placeholder = mode === 'semantic'
+    ? 'Describe the document, e.g. proof of identity, salary statement, NRI account form'
+    : 'Identifiers, e.g. CIF 1234567, passport N1234567, account_number:1012345678901';
+}
+
+async function refreshDocSearchStatus() {
+  const el = document.getElementById('search-status');
+  try {
+    const d = (await (await fetch(serviceCfg.url + '/index/stats', { signal: AbortSignal.timeout(4000) })).json()).data;
+    const emb = d.embeddingModel
+      ? `Embeddings on (${escHtml(d.embeddingModel)}), ${d.embedded} of ${d.documents} embedded` +
+        (d.documents > d.embedded ? ` · <a href="#" onclick="embedMissingDocs();return false">embed ${d.documents - d.embedded} missing</a>` : '')
+      : 'Embeddings off, keyword ranking only';
+    el.innerHTML = `${d.documents} documents indexed · ${d.classified} classified · ${emb}`;
+  } catch { el.textContent = 'Extractor service unreachable'; }
+}
+
+async function embedMissingDocs() {
+  document.getElementById('search-status').textContent = 'Embedding documents…';
+  try {
+    const d = await (await fetch(serviceCfg.url + '/index/embed', { method: 'POST' })).json();
+    if (!d.success) throw new Error(d.error);
+    showToast('Embedded ' + d.data.embedded + ' documents', 'success');
+  } catch (e) { showToast('Embedding failed: ' + e.message, 'error'); }
+  refreshDocSearchStatus();
+}
+
+async function runDocSearch() {
+  const query = document.getElementById('search-q').value.trim();
+  if (!query) return;
+  const out = document.getElementById('search-results');
+  out.innerHTML = '<div class="empty-state"><p>Searching…</p></div>';
+  try {
+    const res = await fetch(serviceCfg.url + '/search', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, limit: 20, semanticOnly: false }),
+    });
+    const d = await res.json();
+    if (!d.success) throw new Error(d.error || 'Search failed');
+    const hits = d.data.hits;
+    out.innerHTML = hits.length ? hits.map(h => {
+      const cat = h.labeledCategory || h.category;
+      const md = h.metadata.filter(m => !m.sources.every(s => s === 'derived')).slice(0, 6)
+        .map(m => '<span style="margin-right:12px">' + escHtml(m.key) + ': ' + escHtml(m.value) + '</span>').join('');
+      return '<div style="display:flex;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">' +
+        '<div style="flex:1;min-width:0"><div style="font-weight:600;overflow-wrap:anywhere">' + escHtml(h.filename) +
+        (cat ? ' <span style="color:var(--green,#22c55e);font-size:12px;font-weight:500">' + escHtml(cat) + '</span>' : '') +
+        (h.subcategory ? ' <span style="color:var(--muted);font-size:12px;font-weight:500">' + escHtml(h.subcategory) + '</span>' : '') +
+        '</div><div style="font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere">' + md + '</div></div>' +
+        '<div style="font-weight:700;font-variant-numeric:tabular-nums" title="metadata ' + h.metadataScore + ' · semantic ' + h.semanticScore + '">' +
+        Math.round(h.score * 100) + '%</div></div>';
+    }).join('') : '<div class="empty-state"><p>No documents matched</p></div>';
+  } catch (e) {
+    out.innerHTML = '<div class="empty-state"><p>' + escHtml(e.message) + '</p></div>';
+  }
+}

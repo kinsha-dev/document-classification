@@ -125,6 +125,15 @@ export function createSearchModule(opts: {
     res.json({ success: store.remove(req.params.jobId) });
   });
 
+  router.post('/index/embed', async (_req, res) => {
+    if (!embedding.model) { fail(res, 400, new Error('EMBEDDING_MODEL is not set')); return; }
+    try {
+      const r = await indexer.embedAll();
+      opts.log('info', 'index embedded', r);
+      res.json({ success: true, data: { ...r, model: embedding.model } });
+    } catch (e) { fail(res, 500, e); }
+  });
+
   router.post('/index/rebuild', (_req, res) => {
     try {
       const r = indexer.rebuild();

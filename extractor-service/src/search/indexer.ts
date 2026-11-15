@@ -78,15 +78,36 @@ export class Indexer {
     if (vecs && cur) { cur.vector = vecs[0]; this.store.upsert(cur); }
   }
 
+  /** Embed every indexed document that has no vector yet. */
+  async embedAll(): Promise<{ embedded: number; failed: number; skipped: number }> {
+    if (!this.embedding.model) return { embedded: 0, failed: 0, skipped: this.store.size() };
+    let embedded = 0, failed = 0, skipped = 0;
+    for (const d of this.store.all()) {
+      if (d.vector) { skipped++; continue; }
+      await this.embedLater(d.jobId);
+      if (this.store.get(d.jobId)?.vector) embedded++; else failed++;
+    }
+    return { embedded, failed, skipped };
+  }
+
   indexExtraction(result: ExtractionResult): IndexedDocument {
     const schema = this.getSchema();
-    const prev = this.store.get(result.jobId);
+    // Re-uploading the same file (same name and size) replaces the old entry
+    // instead of listing it twice. A previous classification carries over.
+    let prev = this.store.get(result.jobId);
+    for (const o of this.store.all()) {
+      if (o.jobId !== result.jobId && o.filename === result.filename && o.sizeBytes === result.sizeBytes) {
+        prev = prev ?? o;
+        this.store.remove(o.jobId);
+      }
+    }
     const text = result.fullText ?? '';
     const d: IndexedDocument = {
       jobId: result.jobId,
       filename: result.filename,
       outputFile: result.outputFile,
       fileType: result.fileType,
+      sizeBytes: result.sizeBytes,
       processedAt: result.processedAt,
       indexedAt: '',
       category: prev?.category,
@@ -155,6 +176,9 @@ export class Indexer {
     const fromFiles = new Set<string>();
     let files: string[] = [];
     try { files = fs.readdirSync(this.outputDir).filter((f) => f.endsWith('.json')); } catch { /* none */ }
+    // Oldest first, so when the same file was extracted several times the newest run wins.
+    const mtime = (f: string) => { try { return fs.statSync(path.join(this.outputDir, f)).mtimeMs; } catch { return 0; } };
+    files.sort((a, b) => mtime(a) - mtime(b));
     for (const f of files) {
       try {
         const r = JSON.parse(fs.readFileSync(path.join(this.outputDir, f), 'utf-8')) as ExtractionResult;

@@ -37,6 +37,8 @@ export interface SearchRequest {
   limit?: number;
   /** Only return documents in this category (classifier or human label) */
   category?: string;
+  /** Rank by meaning only: skip identifier extraction and pivoting, use the whole query as text */
+  semanticOnly?: boolean;
 }
 
 export interface Via { jobId: string; filename: string; key: string }
@@ -244,7 +246,10 @@ export async function iterativeSearch(
   const maxHops = Math.max(0, Math.min(6, req.maxHops ?? pattern?.maxHops ?? s.maxHops));
   const limit = Math.max(1, Math.min(500, req.limit ?? 50));
 
-  const { seeds, residual } = resolveSeeds(schema, store, req, allowed, pattern);
+  const resolved = req.semanticOnly
+    ? { seeds: [] as ReturnType<typeof resolveSeeds>['seeds'], residual: req.query ?? '' }
+    : resolveSeeds(schema, store, req, allowed, pattern);
+  const { seeds, residual } = resolved;
 
   const hits = new Map<string, SearchHit & { _contribs: number[] }>();
   const visited = new Set<string>();
@@ -254,7 +259,7 @@ export async function iterativeSearch(
   for (const p of frontier) visited.add(p.key + '|' + p.norm);
 
   // If we started from a document, it is itself hop 0.
-  if (req.seedJobId && store.get(req.seedJobId)) {
+  if (!req.semanticOnly && req.seedJobId && store.get(req.seedJobId)) {
     const d = store.get(req.seedJobId)!;
     hits.set(d.jobId, newHit(d, 0, [1]));
   }
@@ -319,7 +324,7 @@ export async function iterativeSearch(
     frontier = next;
   }
 
-  const mode: SearchResponse['mode'] = seeds.length || req.seedJobId ? 'metadata' : 'semantic';
+  const mode: SearchResponse['mode'] = !req.semanticOnly && (seeds.length || req.seedJobId) ? 'metadata' : 'semantic';
 
   // ── Semantic ranking over the residual text ──────────────
   const universe: IndexedDocument[] = mode === 'semantic'

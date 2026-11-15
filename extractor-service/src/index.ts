@@ -13,8 +13,8 @@ const config: ServiceConfig = {
   outputDir:        path.resolve(process.env.OUTPUT_DIR ?? './output'),
   tesseractLang:    process.env.TESSERACT_LANG ?? 'eng',
   logLevel:         process.env.LOG_LEVEL ?? 'info',
-  lmstudioUrl:      (process.env.LMSTUDIO_URL   ?? 'http://127.0.0.1:1234/v1').replace(/\/+$/, ''),
-  lmstudioModel:    process.env.LMSTUDIO_MODEL  ?? 'gemma-4-e2b-it:2',
+  lmstudioUrl:      (process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1').replace(/\/+$/, ''),
+  lmstudioModel:    process.env.OPENROUTER_MODEL ?? 'google/gemma-4-26b-a4b-it',
   classifyPromptFile: process.env.CLASSIFY_PROMPT_FILE
     ? path.resolve(process.env.CLASSIFY_PROMPT_FILE)
     : '',

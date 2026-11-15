@@ -1,3 +1,4 @@
+import { authHeaders } from '../lmstudio';
 // ─────────────────────────────────────────────────────────────
 //  Semantic ranking
 //
@@ -5,8 +6,8 @@
 //  (category, subcategory, approved metadata labels + values) plus the
 //  head of the extracted text.
 //
-//  Optional: dense embeddings from LM Studio's /v1/embeddings when
-//  EMBEDDING_MODEL is set (e.g. "text-embedding-nomic-embed-text-v1.5").
+//  Optional: dense embeddings from an OpenAI-compatible /v1/embeddings endpoint (OpenRouter) when
+//  EMBEDDING_MODEL is set (e.g. "openai/text-embedding-3-small").
 //  If the call fails the service silently stays on BM25.
 // ─────────────────────────────────────────────────────────────
 
@@ -68,13 +69,13 @@ function normaliseBase(url: string): string {
   return /\/v\d+$/.test(trimmed) ? trimmed : trimmed + '/v1';
 }
 
-/** Embed texts via LM Studio. Returns null if not configured or unavailable. */
+/** Embed texts via the configured endpoint. Returns null if not configured or unavailable. */
 export async function embed(url: string, model: string | undefined, texts: string[]): Promise<number[][] | null> {
   if (!model || !texts.length) return null;
   try {
     const res = await fetch(normaliseBase(url) + '/embeddings', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ model, input: texts }),
       signal: AbortSignal.timeout(20_000),
     });

@@ -66,6 +66,12 @@ function withTimeout(ms: number): AbortSignal {
  * either `http://host:1234` or `http://host:1234/v1` and always end up
  * with the latter.
  */
+/** Adds the OpenRouter bearer key (server-side only) to outgoing requests. */
+export function authHeaders(h: Record<string, string>): Record<string, string> {
+  const key = process.env.OPENROUTER_API_KEY;
+  return key ? { ...h, Authorization: `Bearer ${key}`, 'X-Title': 'doc-extractor-service' } : h;
+}
+
 function normaliseBase(url: string): string {
   const trimmed = url.replace(/\/+$/, '');
   return /\/v\d+$/.test(trimmed) ? trimmed : trimmed + '/v1';
@@ -231,7 +237,7 @@ export async function checkLlmHealth(url: string): Promise<LMStudioHealth> {
   try {
     const res = await fetch(base + '/models', {
       signal:  withTimeout(DEFAULT_TIMEOUT_MS),
-      headers: { Accept: 'application/json' },
+      headers: authHeaders({ Accept: 'application/json' }),
     });
     if (!res.ok) {
       return { ok: false, url: base, models: [], error: `HTTP ${res.status}` };
@@ -256,6 +262,7 @@ export async function checkLlmHealth(url: string): Promise<LMStudioHealth> {
  * logs.
  */
 export async function resolveModelId(url: string, requested: string): Promise<{ model: string; resolvedFrom: 'requested' | 'fallback' | 'unknown'; loadedIds: string[] }> {
+  if (/openrouter\.ai/.test(url)) return { model: requested, resolvedFrom: 'requested', loadedIds: [requested] };
   const health = await checkLlmHealth(url);
   const loaded = health.models.map((m) => m.name);
   if (!health.ok || loaded.length === 0) {
@@ -287,7 +294,7 @@ export async function classify(
 
   const res = await fetch(base + '/chat/completions', {
     method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
     signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
     body:    JSON.stringify(buildChatBody(model, prompt, false, !!opts.metadataFields?.length)),
   });
@@ -295,7 +302,7 @@ export async function classify(
   if (!res.ok) {
     let detail = '';
     try { detail = ' — ' + (await res.text()).slice(0, 300); } catch {}
-    throw new Error(`LM Studio HTTP ${res.status}${detail}`);
+    throw new Error(`LLM HTTP ${res.status}${detail}`);
   }
 
   const payload: any = await res.json();
@@ -371,14 +378,14 @@ export async function chatPassthrough(
   const sendBody = { ...body, stream: false };
   const res = await fetch(base + '/chat/completions', {
     method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
     signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
     body:    JSON.stringify(sendBody),
   });
   if (!res.ok) {
     let detail = '';
     try { detail = ' — ' + (await res.text()).slice(0, 300); } catch {}
-    throw new Error(`LM Studio HTTP ${res.status}${detail}`);
+    throw new Error(`LLM HTTP ${res.status}${detail}`);
   }
   return res.json();
 }
@@ -417,7 +424,7 @@ export async function streamChatPassthrough(
   try {
     const upstream = await fetch(base + '/chat/completions', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
       body:    JSON.stringify(sendBody),
     });
@@ -425,7 +432,7 @@ export async function streamChatPassthrough(
     if (!upstream.ok || !upstream.body) {
       let detail = '';
       try { detail = ' — ' + (await upstream.text()).slice(0, 300); } catch {}
-      emitErrorEvent(`LM Studio HTTP ${upstream.status}${detail}`);
+      emitErrorEvent(`LLM HTTP ${upstream.status}${detail}`);
       res.end();
       return;
     }
@@ -487,7 +494,7 @@ export async function streamClassify(
     }
     const upstream = await fetch(base + '/chat/completions', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
       body:    JSON.stringify(buildChatBody(model, prompt, true, !!opts.metadataFields?.length)),
     });
@@ -495,7 +502,7 @@ export async function streamClassify(
     if (!upstream.ok || !upstream.body) {
       let detail = '';
       try { detail = ' — ' + (await upstream.text()).slice(0, 300); } catch {}
-      throw new Error(`LM Studio HTTP ${upstream.status}${detail}`);
+      throw new Error(`LLM HTTP ${upstream.status}${detail}`);
     }
 
     // Read OpenAI-style SSE: events separated by blank lines, each event's

@@ -14,7 +14,7 @@ import path from 'path';
 export type FieldKind = 'identifier' | 'contact' | 'name' | 'date' | 'text';
 
 export type NormalizerName =
-  | 'digits' | 'account' | 'alnum_upper' | 'lower' | 'phone_uae' | 'name' | 'none';
+  | 'digits' | 'account' | 'alnum_upper' | 'lower' | 'phone_uae' | 'name' | 'date' | 'none';
 
 export type DeriveFn = 'last4' | 'uae_iban_account';
 
@@ -189,6 +189,24 @@ export function normaliseName(v: string): string {
     .join(' ');
 }
 
+const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+
+/** Day-first dates (14/12/2024, 14 12 2024, 14 Dec 2024) or ISO → yyyy-mm-dd; '' when not a real date. */
+export function normaliseDate(v: string): string {
+  let y: number, m: number, d: number;
+  let x: RegExpMatchArray | null;
+  // MRZ expiry is YYMMDD
+  if (/^\d{6}$/.test(v)) v = `${v.slice(4)}/${v.slice(2, 4)}/20${v.slice(0, 2)}`;
+  if ((x = v.match(/^(\d{4})[\s\/.\-](\d{1,2})[\s\/.\-](\d{1,2})$/))) { y = +x[1]; m = +x[2]; d = +x[3]; }
+  else if ((x = v.match(/^(\d{1,2})[\s\/.\-](\d{1,2})[\s\/.\-](\d{4})$/))) { d = +x[1]; m = +x[2]; y = +x[3]; }
+  else if ((x = v.match(/^(\d{1,2})[\s\/.\-]([A-Za-z]{3,9})[\s\/.\-,]*(\d{4})$/))) {
+    d = +x[1]; m = MONTHS.indexOf(x[2].slice(0, 3).toLowerCase()) + 1; y = +x[3];
+  } else return '';
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  if (!m || dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) return '';
+  return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
 export function applyNormalizer(n: NormalizerName, raw: string): string {
   const v = String(raw ?? '').trim();
   switch (n) {
@@ -197,6 +215,7 @@ export function applyNormalizer(n: NormalizerName, raw: string): string {
     case 'alnum_upper': return v.replace(/[^a-z0-9]/gi, '').toUpperCase();
     case 'lower':       return v.toLowerCase();
     case 'name':        return normaliseName(v);
+    case 'date':        return normaliseDate(v);
     case 'phone_uae': {
       let d = v.replace(/\D/g, '');
       if (d.startsWith('00')) d = d.slice(2);

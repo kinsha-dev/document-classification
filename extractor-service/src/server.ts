@@ -140,6 +140,13 @@ export function createServer(config: ServiceConfig): express.Application {
   app.use(cors());
   app.use(express.json());
 
+  // Serve the two UI pages (and app.js) from the repo root. Whitelisted, not a
+  // blanket static dir, so skill.md / extract.json / schema files stay private.
+  const uiRoot = path.resolve(__dirname, '../..');
+  const uiFiles = ['document-classifier.html', 'extractor-dashboard.html', 'app.js'];
+  for (const f of uiFiles) app.get('/' + f, (_req, res) => res.sendFile(path.join(uiRoot, f)));
+  app.get('/', (_req, res) => res.redirect('/document-classifier.html'));
+
   // Request logger — captures method/url/query, interesting headers, and
   // a summary of the JSON body. Multipart uploads have an empty req.body
   // here (multer parses later in the per-route handler) so we just note
@@ -662,10 +669,8 @@ export function createServer(config: ServiceConfig): express.Application {
   //  nothing else hits them.
   // ──────────────────────────────────────────────────────────────
   function pickLlmUrl(req: Request): string {
-    const override =
-      (req.header('x-llm-url') || '').trim() ||
-      (req.header('x-lmstudio-url') || '').trim();
-    return override || config.lmstudioUrl;
+    // Client URL overrides are ignored: the OpenRouter key must only go to the configured host.
+    return config.lmstudioUrl;
   }
 
   function pickLlmModel(req: Request, body: any): string {

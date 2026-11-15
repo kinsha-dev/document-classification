@@ -247,6 +247,7 @@
     .btn-success { background: var(--green); color: #fff; }
     .btn-danger  { background: var(--red);   color: #fff; }
     .btn-ghost   { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    #search-mode .btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     #label-btn {
       width: 100%;
@@ -731,6 +732,7 @@
   <nav>
     <button class="active" onclick="switchTab('upload', this)">⬆ Upload</button>
     <button onclick="switchTab('history', this)">🗂 History</button>
+    <button onclick="switchTab('search', this)">🔎 Search</button>
     <button onclick="switchTab('rules', this)">⚙ Rules</button>
     <button onclick="switchTab('io', this)">📦 Import / Export</button>
     <div id="ollama-nav-badge" style="display:flex;align-items:center;gap:6px;padding:0 10px;font-size:12px;color:var(--muted);">
@@ -828,6 +830,25 @@
     </div>
   </div>
 
+
+  <!-- ═══════════════ SEARCH TAB ═══════════════ -->
+  <div id="tab-search" class="tab">
+    <div class="card">
+      <div id="search-mode" style="display:flex;gap:8px;margin-bottom:10px">
+        <button class="btn btn-ghost active" onclick="setDocSearchMode('semantic', this)">Semantic</button>
+        <button class="btn btn-ghost" onclick="setDocSearchMode('identifier', this)">Identifier</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="text" id="search-q" style="flex:1;min-width:240px" placeholder="Describe the document, e.g. proof of identity, salary statement, NRI account form"
+          onkeydown="if(event.key==='Enter')runDocSearch()" />
+        <button class="btn" onclick="runDocSearch()">Search</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px" id="search-status">—</p>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden" id="search-results">
+      <div class="empty-state"><p>Documents you upload and classify are searchable here.</p></div>
+    </div>
+  </div>
 
   <!-- ═══════════════ HISTORY TAB ═══════════════ -->
   <div id="tab-history" class="tab">
