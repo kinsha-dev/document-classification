@@ -1,0 +1,196 @@
+{
+  "$comment": "Approved search metadata. Only keys listed under `fields` are indexed as searchable metadata; anything else the LLM returns is kept as an unapproved candidate (GET /metadata/candidates) until someone adds it here. Edit, then POST /metadata/schema/reload. Regex `patterns` must capture the value in group 1 and are run case-insensitively over the extracted text.",
+  "version": 1,
+
+  "settings": {
+    "hopDecay": 0.6,
+    "maxHops": 3,
+    "maxFanoutPerValue": 25,
+    "nameMatchThreshold": 0.8,
+    "semanticWeight": 0.35,
+    "textIndexChars": 8000
+  },
+
+  "fields": {
+    "cif": {
+      "label": "CIF / customer number",
+      "kind": "identifier",
+      "strength": 1.0,
+      "pivot": true,
+      "normalize": "digits",
+      "validate": "^[0-9]{6,12}$",
+      "aliases": ["cif", "cif_no", "cif_number", "customer_id", "customer_no", "customer_number", "client_id", "client_number", "relationship_number", "rim"],
+      "patterns": [
+        "\\b(?:CIF|C\\.I\\.F\\.?)\\s*(?:No\\.?|Number|ID|#)?\\s*[:#.\\-]?\\s*([0-9]{6,12})\\b",
+        "\\bCustomer\\s*(?:ID|No\\.?|Number)\\s*[:#.\\-]?\\s*([0-9]{6,12})\\b"
+      ]
+    },
+    "account_number": {
+      "label": "Account number",
+      "kind": "identifier",
+      "strength": 1.0,
+      "pivot": true,
+      "normalize": "account",
+      "validate": "^[0-9]{6,16}$",
+      "aliases": ["account_number", "account_no", "acct_no", "acc_no", "account", "a_c_no", "ac_number", "bank_account"],
+      "patterns": [
+        "\\b(?:A\\s?\\/\\s?C|Account|Acc\\.?|Acct\\.?)\\s*(?:No\\.?|Number|#)?\\s*[:#.\\-]?\\s*([0-9]{3,16}(?:[ \\-][0-9]{1,6}){0,5})\\b"
+      ],
+      "derive": [{ "to": "account_last4", "fn": "last4" }]
+    },
+    "iban": {
+      "label": "IBAN",
+      "kind": "identifier",
+      "strength": 1.0,
+      "pivot": true,
+      "normalize": "alnum_upper",
+      "validate": "^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$",
+      "aliases": ["iban", "iban_number", "iban_no"],
+      "patterns": [
+        "\\b(AE\\s?[0-9]{2}(?:\\s?[0-9]){19})\\b",
+        "\\bIBAN\\s*(?:No\\.?|Number)?\\s*[:#.\\-]?\\s*([A-Z]{2}[0-9]{2}(?:\\s?[A-Z0-9]){11,30})"
+      ],
+      "derive": [{ "to": "account_number", "fn": "uae_iban_account" }]
+    },
+    "account_last4": {
+      "label": "Account number (last 4)",
+      "kind": "identifier",
+      "strength": 0.3,
+      "pivot": false,
+      "normalize": "digits",
+      "validate": "^[0-9]{4}$",
+      "aliases": ["account_number_last4", "account_last4", "last4"],
+      "patterns": ["(?:[Xx*•]{4,})[\\s\\-]*([0-9]{4})\\b"]
+    },
+    "emirates_id": {
+      "label": "Emirates ID",
+      "kind": "identifier",
+      "strength": 1.0,
+      "pivot": true,
+      "normalize": "digits",
+      "validate": "^784[0-9]{12}$",
+      "aliases": ["emirates_id", "eid", "emirates_id_number", "national_id", "id_number"],
+      "patterns": ["\\b(784[\\s\\-]?[0-9]{4}[\\s\\-]?[0-9]{7}[\\s\\-]?[0-9])\\b"]
+    },
+    "passport_number": {
+      "label": "Passport number",
+      "kind": "identifier",
+      "strength": 0.9,
+      "pivot": true,
+      "normalize": "alnum_upper",
+      "validate": "^(?=.*[0-9])[A-Z0-9]{6,9}$",
+      "aliases": ["passport_number", "passport_no", "passport"],
+      "patterns": ["\\bPassport\\s*(?:No\\.?|Number|#)?\\s*[:#.\\-]?\\s*([A-Z0-9]{6,9})\\b"]
+    },
+    "trade_license": {
+      "label": "Trade licence number",
+      "kind": "identifier",
+      "strength": 0.9,
+      "pivot": true,
+      "normalize": "alnum_upper",
+      "validate": "^(?=.*[0-9])[A-Z0-9]{4,20}$",
+      "aliases": ["trade_license", "trade_licence", "trade_license_number", "license_number", "licence_number"],
+      "patterns": ["\\bTrade\\s*Licen[cs]e\\s*(?:No\\.?|Number|#)?\\s*[:#.\\-]?\\s*([A-Z0-9][A-Z0-9\\-\\/]{3,19})"]
+    },
+    "mobile": {
+      "label": "Mobile number",
+      "kind": "contact",
+      "strength": 0.7,
+      "pivot": true,
+      "normalize": "phone_uae",
+      "validate": "^9715[0-9]{8}$",
+      "aliases": ["mobile", "mobile_number", "phone", "phone_number", "contact_number", "telephone"],
+      "patterns": ["((?:\\+971|00971|\\b0)[\\s\\-]?5[0-9][\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{4})\\b"]
+    },
+    "email": {
+      "label": "Email",
+      "kind": "contact",
+      "strength": 0.7,
+      "pivot": true,
+      "normalize": "lower",
+      "validate": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$",
+      "aliases": ["email", "email_address", "e_mail"],
+      "patterns": ["\\b([A-Z0-9._%+\\-]+@[A-Z0-9.\\-]+\\.[A-Z]{2,})\\b"]
+    },
+    "customer_name": {
+      "label": "Customer / account holder name",
+      "kind": "name",
+      "strength": 0.4,
+      "pivot": false,
+      "normalize": "name",
+      "aliases": ["customer_name", "applicant_name", "account_holder", "account_holder_name", "account_name", "full_name", "client_name", "holder_name"]
+    },
+    "invoice_number": {
+      "label": "Invoice number",
+      "kind": "identifier",
+      "strength": 1.0,
+      "pivot": true,
+      "normalize": "alnum_upper",
+      "validate": "^(?=.*[0-9])[A-Z0-9]{3,30}$",
+      "aliases": ["invoice_number", "invoice_no", "inv_no", "bill_number"],
+      "patterns": ["\\bInvoice\\s*(?:No\\.?|Number|#)\\s*[:#.\\-]?\\s*([A-Z0-9][A-Z0-9\\-\\/]{2,29})"]
+    },
+    "po_number": {
+      "label": "Purchase order number",
+      "kind": "identifier",
+      "strength": 0.9,
+      "pivot": true,
+      "normalize": "alnum_upper",
+      "validate": "^(?=.*[0-9])[A-Z0-9]{3,30}$",
+      "aliases": ["po_number", "po_no", "purchase_order", "purchase_order_number"],
+      "patterns": ["\\b(?:P\\.?O\\.?|Purchase\\s*Order)\\s*(?:No\\.?|Number|#)\\s*[:#.\\-]?\\s*([A-Z0-9][A-Z0-9\\-\\/]{2,29})"]
+    },
+    "trn": {
+      "label": "Tax registration number (TRN)",
+      "kind": "identifier",
+      "strength": 0.9,
+      "pivot": true,
+      "normalize": "digits",
+      "validate": "^[0-9]{15}$",
+      "aliases": ["trn", "tax_registration_number", "vat_number", "vat_registration_number"],
+      "patterns": ["\\b(?:TRN|Tax\\s*Registration\\s*(?:No\\.?|Number)|VAT\\s*(?:Reg(?:istration)?\\.?\\s*)?(?:No\\.?|Number))\\s*[:#.\\-]?\\s*([0-9][0-9 ]{13,18}[0-9])"]
+    },
+    "vendor_name": {
+      "label": "Vendor / merchant name",
+      "kind": "name",
+      "strength": 0.4,
+      "pivot": false,
+      "normalize": "name",
+      "aliases": ["vendor_name", "vendor", "supplier", "supplier_name", "merchant", "merchant_name", "seller"]
+    }
+  },
+
+  "categoryFields": {
+    "Financial":   ["cif", "account_number", "iban", "account_last4", "customer_name", "emirates_id", "passport_number", "mobile", "email", "trade_license"],
+    "ID Document": ["emirates_id", "passport_number", "customer_name", "cif"],
+    "Contract":    ["customer_name", "cif", "account_number", "trade_license", "emirates_id"],
+    "Invoice":     ["invoice_number", "po_number", "trn", "vendor_name", "customer_name", "iban"],
+    "Receipt":     ["trn", "vendor_name", "invoice_number", "account_last4"],
+    "Legal":       ["customer_name", "cif", "emirates_id", "trade_license"],
+    "*":           ["cif", "account_number", "iban", "emirates_id", "passport_number", "customer_name", "mobile", "email"]
+  },
+
+  "searchPatterns": {
+    "customer": {
+      "label": "Customer / CIF documents",
+      "description": "Everything that belongs to one customer. Starts from any identifier and walks CIF ↔ account ↔ IBAN ↔ Emirates ID ↔ passport ↔ contact details.",
+      "triggers": ["cif", "customer", "client", "kyc", "relationship", "onboarding"],
+      "correlatedFields": ["cif", "account_number", "iban", "emirates_id", "passport_number", "trade_license", "mobile", "email", "customer_name", "account_last4"],
+      "maxHops": 3
+    },
+    "account": {
+      "label": "Account documents",
+      "description": "Documents for one account: statements, closure forms, opening forms. Pivots through IBAN and the owning CIF.",
+      "triggers": ["account", "statement", "iban", "closure"],
+      "correlatedFields": ["account_number", "iban", "cif", "account_last4"],
+      "maxHops": 2
+    },
+    "vendor": {
+      "label": "Vendor / invoice trail",
+      "description": "Invoices, receipts and POs tied to one supplier or tax registration.",
+      "triggers": ["invoice", "vendor", "supplier", "trn", "purchase order", "receipt"],
+      "correlatedFields": ["invoice_number", "po_number", "trn", "vendor_name", "iban"],
+      "maxHops": 2
+    }
+  }
+}

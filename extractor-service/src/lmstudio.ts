@@ -28,6 +28,8 @@ export interface ClassificationResult {
   confidence?: string;
   /** Single-sentence justification */
   reason?: string;
+  /** Approved search metadata the model pulled (keys from metadata-schema.json) */
+  search_metadata?: Record<string, unknown>;
   /** Raw decoded JSON object as returned by the model */
   raw: Record<string, unknown>;
 }
@@ -119,21 +121,29 @@ export function loadPromptTemplate(explicitPath?: string): CachedPrompt {
 
 export function clearPromptCache(): void { promptCache = null; }
 
+export interface MetadataFieldInput { key: string; label: string }
+
 export function renderPrompt(
   template: string,
   text: string,
-  categories: CategoryInput[]
+  categories: CategoryInput[],
+  metadataFields: MetadataFieldInput[] = []
 ): string {
   const catList = categories.map((c) => `- ${c.name}`).join('\n');
   const snippet = text.slice(0, 2000).replace(/\s+/g, ' ').trim();
+  const fieldList = metadataFields.length
+    ? metadataFields.map((f) => `- ${f.key}: ${f.label}`).join('\n')
+    : '- (none)';
   return template
     .replace(/\{\{\s*categories\s*\}\}/g, catList)
+    .replace(/\{\{\s*metadata_fields\s*\}\}/g, fieldList)
     .replace(/\{\{\s*text\s*\}\}/g,       snippet);
 }
 
 export function buildClassificationPrompt(
   text: string,
-  categories: CategoryInput[]
+  categories: CategoryInput[],
+  metadataFields: MetadataFieldInput[] = []
 ): string {
   let template: string;
   try {
@@ -147,7 +157,7 @@ export function buildClassificationPrompt(
       'Reply with a single JSON object only. Keys: "category", "subcategory", "confidence" (high|medium|low), "reason" (≤15 words).\n' +
       'Begin with { and end with }.';
   }
-  return renderPrompt(template, text, categories);
+  return renderPrompt(template, text, categories, metadataFields);
 }
 
 // ─── Balanced-brace JSON extractor (also re-exported for tests) ────
@@ -185,7 +195,8 @@ function isGemmaModel(model: string): boolean {
 function buildChatBody(
   model: string,
   prompt: string,
-  stream: boolean
+  stream: boolean,
+  withMetadata = false
 ): Record<string, unknown> {
   const gemma = isGemmaModel(model);
   return {
@@ -205,7 +216,8 @@ function buildChatBody(
     response_format: { type: 'json_object' },
     // Generous headroom — Gemma reasons can run long. JSON-mode + the
     // 15-word rule in the prompt keep us well under this in practice.
-    max_tokens:  gemma ? 512 : 384,
+    // search_metadata adds a handful of key/value pairs — give it room.
+    max_tokens:  (gemma ? 512 : 384) + (withMetadata ? 384 : 0),
   };
 }
 
@@ -263,10 +275,10 @@ export async function classify(
   model: string,
   text: string,
   categories: CategoryInput[],
-  opts: { timeoutMs?: number } = {}
+  opts: { timeoutMs?: number; metadataFields?: MetadataFieldInput[] } = {}
 ): Promise<ClassificationResult> {
   const base   = normaliseBase(url);
-  const prompt = buildClassificationPrompt(text, categories);
+  const prompt = buildClassificationPrompt(text, categories, opts.metadataFields);
   const resolved = await resolveModelId(url, model);
   if (resolved.resolvedFrom === 'fallback') {
     // Fall through with the substituted id; caller can read this from logs.
@@ -277,7 +289,7 @@ export async function classify(
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
-    body:    JSON.stringify(buildChatBody(model, prompt, false)),
+    body:    JSON.stringify(buildChatBody(model, prompt, false, !!opts.metadataFields?.length)),
   });
 
   if (!res.ok) {
@@ -326,8 +338,14 @@ export async function classify(
     subcategory: raw['subcategory'] != null ? String(raw['subcategory']).trim() : undefined,
     confidence:  raw['confidence']  != null ? String(raw['confidence'])         : undefined,
     reason:      raw['reason']      != null ? String(raw['reason'])             : undefined,
+    search_metadata: pickMetadata(raw),
     raw,
   };
+}
+
+function pickMetadata(raw: Record<string, unknown>): Record<string, unknown> | undefined {
+  const m = raw['search_metadata'] ?? raw['metadata'];
+  return m && typeof m === 'object' && !Array.isArray(m) ? (m as Record<string, unknown>) : undefined;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -439,7 +457,12 @@ export async function streamClassify(
   text: string,
   categories: CategoryInput[],
   res: ExpressResponse,
-  opts: { timeoutMs?: number } = {}
+  opts: {
+    timeoutMs?: number;
+    metadataFields?: MetadataFieldInput[];
+    /** Called with the parsed result before the final SSE event is sent */
+    onResult?: (r: ClassificationResult) => Record<string, unknown> | void;
+  } = {}
 ): Promise<void> {
   res.setHeader('Content-Type',  'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
@@ -455,7 +478,7 @@ export async function streamClassify(
   const base = normaliseBase(url);
 
   try {
-    const prompt = buildClassificationPrompt(text, categories);
+    const prompt = buildClassificationPrompt(text, categories, opts.metadataFields);
     // Substitute the requested model with whatever is actually loaded
     // if there's a mismatch — same logic as the one-shot classify().
     const resolved = await resolveModelId(url, model);
@@ -466,7 +489,7 @@ export async function streamClassify(
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       signal:  withTimeout(opts.timeoutMs ?? DEFAULT_GEN_TIMEOUT_MS),
-      body:    JSON.stringify(buildChatBody(model, prompt, true)),
+      body:    JSON.stringify(buildChatBody(model, prompt, true, !!opts.metadataFields?.length)),
     });
 
     if (!upstream.ok || !upstream.body) {
@@ -553,9 +576,12 @@ export async function streamClassify(
       subcategory: raw['subcategory'] != null ? String(raw['subcategory']).trim() : undefined,
       confidence:  raw['confidence']  != null ? String(raw['confidence'])         : undefined,
       reason:      raw['reason']      != null ? String(raw['reason'])             : undefined,
+      search_metadata: pickMetadata(raw),
       raw,
     };
-    sendEvent({ type: 'done', result, raw: accumulated });
+    let extra: Record<string, unknown> | void = undefined;
+    try { extra = opts.onResult?.(result); } catch { /* indexing is best-effort */ }
+    sendEvent({ type: 'done', result, raw: accumulated, ...(extra ?? {}) });
   } catch (err) {
     sendEvent({ type: 'error', message: (err as Error).message, raw: accumulated });
   } finally {

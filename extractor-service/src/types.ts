@@ -185,4 +185,8 @@ export interface ServiceConfig {
    * service auto-discovers it relative to cwd / source dir.
    */
   classifyPromptFile: string;
+  /** Path to metadata-schema.json (approved search metadata). Empty = auto-discover. */
+  metadataSchemaFile: string;
+  /** Optional LM Studio embedding model id for dense semantic ranking. Empty = BM25 only. */
+  embeddingModel: string;
 }

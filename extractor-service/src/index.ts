@@ -18,6 +18,10 @@ const config: ServiceConfig = {
   classifyPromptFile: process.env.CLASSIFY_PROMPT_FILE
     ? path.resolve(process.env.CLASSIFY_PROMPT_FILE)
     : '',
+  metadataSchemaFile: process.env.METADATA_SCHEMA_FILE
+    ? path.resolve(process.env.METADATA_SCHEMA_FILE)
+    : '',
+  embeddingModel:   process.env.EMBEDDING_MODEL ?? '',
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -48,6 +52,9 @@ const server = app.listen(config.port, config.host, () => {
       llmClassify:         `POST http://localhost:${config.port}/llm/classify`,
       llmClassifySse:      `POST http://localhost:${config.port}/llm/classify/stream`,
       llmReloadPrompt:     `POST http://localhost:${config.port}/llm/reload-prompt`,
+      search:              `POST http://localhost:${config.port}/search`,
+      metadataSchema:      `GET  http://localhost:${config.port}/metadata/schema`,
+      indexStats:          `GET  http://localhost:${config.port}/index/stats`,
     },
   }));
 });
@@ -61,6 +68,7 @@ const shutdown = (signal: string) => {
     level: 'info',
     msg: `${signal} received — shutting down`,
   }));
+  try { app.locals.flushIndex?.(); } catch { /* nothing to flush */ }
   server.close(() => {
     console.log(JSON.stringify({
       ts: new Date().toISOString(),
