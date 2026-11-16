@@ -110,6 +110,47 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 .view.active{display:block}
 
 /* ══════════════════════════════════════════════
+   SEARCH
+══════════════════════════════════════════════ */
+.srch-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.srch-bar input[type=text]{flex:1;min-width:260px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:10px 12px;color:var(--text);font-size:13px;outline:none}
+.srch-bar input[type=text]:focus{border-color:var(--blue)}
+.srch-bar select,.srch-bar input[type=number]{background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:9px 8px;color:var(--text);font-size:12px}
+.srch-hint{color:var(--muted);font-size:11px;margin-top:8px;line-height:1.6}
+.srch-hint code{background:var(--surface2);padding:1px 5px;border-radius:4px;color:var(--blue)}
+.srch-layout{display:grid;grid-template-columns:1fr 300px;gap:16px;margin-top:16px}
+@media(max-width:1000px){.srch-layout{grid-template-columns:1fr}}
+.srch-seed{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin:2px 4px 2px 0;
+  background:#0c2a3a;color:var(--blue);border:1px solid #1e4d6044;font-family:monospace}
+.hit{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;gap:12px}
+.hit:last-child{border-bottom:none}
+.hit-hop{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:9px;color:var(--muted);background:var(--surface2);
+  border:1px solid var(--border)}
+.hit-hop b{font-size:14px;color:var(--text)}
+.hit-hop.h0{border-color:var(--green)} .hit-hop.h1{border-color:var(--blue)} .hit-hop.h2{border-color:var(--purple)}
+.hit-hop.h3{border-color:var(--yellow)}
+.hit-main{flex:1;min-width:0}
+.hit-title{font-weight:700;font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hit-why{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6}
+.hit-why .k{color:var(--blue);font-family:monospace}
+.hit-why .v{color:var(--text);font-family:monospace}
+.hit-md{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.hit-md span{font-size:10px;padding:1px 6px;border-radius:4px;background:var(--surface2);color:var(--muted);font-family:monospace}
+.hit-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0;align-items:flex-end}
+.hit-score{font-size:11px;color:var(--muted);font-family:monospace}
+.ent-key{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:10px}
+.ent-val{font-family:monospace;font-size:12px;display:flex;justify-content:space-between;gap:8px;padding:2px 0;cursor:pointer}
+.ent-val:hover{color:var(--blue)}
+.ent-val small{color:var(--muted)}
+.trace-row{font-size:11px;color:var(--muted);padding:3px 0;font-family:monospace;line-height:1.5}
+.trace-row .ok{color:var(--green)} .trace-row .warn{color:var(--yellow)}
+.dp-index{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7}
+.dp-index .srch-seed{cursor:pointer}
+
+/* ══════════════════════════════════════════════
    CARDS & GRIDS
 ══════════════════════════════════════════════ */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
@@ -498,6 +539,14 @@ tr:hover td{background:var(--surface2)}
     <span class="nav-badge" id="hist-badge">0</span>
   </button>
 
+  <button class="nav-item" onclick="nav('search',this)" id="search-nav">
+    <span class="nav-icon">🔎</span> Search
+  </button>
+
+  <button class="nav-item" onclick="nav('semantic',this)" id="semantic-nav">
+    <span class="nav-icon">🧠</span> Semantic
+  </button>
+
   <div class="nav-section">Config</div>
   <button class="nav-item" onclick="nav('settings',this)">
     <span class="nav-icon">⚙</span> Settings
@@ -514,8 +563,8 @@ tr:hover td{background:var(--surface2)}
     <div class="service-pill" style="margin-top:7px" id="ollama-pill">
       <span class="dot" id="ol-dot"></span>
       <div class="service-text">
-        <div class="s-label">LM Studio</div>
-        <div class="s-url" id="ol-url">127.0.0.1:1234</div>
+        <div class="s-label">OpenRouter</div>
+        <div class="s-url" id="ol-url">openrouter.ai</div>
       </div>
     </div>
   </div>
@@ -535,7 +584,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="topbar-chip" id="ollama-chip">
       <span class="dot" id="chip-ol-dot"></span>
-      <span id="chip-ol-label">LM Studio</span>
+      <span id="chip-ol-label">OpenRouter</span>
     </div>
   </div>
 
@@ -679,7 +728,7 @@ tr:hover td{background:var(--surface2)}
 
         <!-- AI panel -->
         <div class="card">
-          <div class="card-title">AI Classification (LM Studio)</div>
+          <div class="card-title">AI Classification (OpenRouter)</div>
           <div class="ai-panel">
             <div class="ai-panel-header">
               <div class="ai-title">
@@ -773,6 +822,66 @@ tr:hover td{background:var(--surface2)}
     </div>
   </div>
 
+
+  <!-- ═══════════════ VIEW: SEMANTIC ═══════════════ -->
+  <div class="view" id="view-semantic">
+    <div class="card">
+      <div class="srch-bar">
+        <input type="text" id="sem-q" placeholder='Describe what you are looking for, e.g.  proof of identity   ·   salary or income statement   ·   NRI account application'
+          onkeydown="if(event.key==='Enter')runSemantic()"/>
+        <input type="text" id="sem-cat" placeholder="category (optional)" style="width:170px"/>
+        <button class="btn btn-primary" onclick="runSemantic()">Search by meaning</button>
+      </div>
+      <div class="srch-hint" id="sem-status">Checking embeddings…</div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;margin-top:16px" id="sem-results">
+      <div class="empty-state"><div class="ei">🧠</div><p>Ranks documents by meaning, not by exact identifiers</p></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VIEW: SEARCH ═══════════════ -->
+  <div class="view" id="view-search">
+    <div class="card">
+      <div class="srch-bar">
+        <input type="text" id="srch-q" placeholder='e.g.  CIF 1234567   ·   account_number:1012345678901   ·   "Ahmed Al Mansoori" statement'
+          onkeydown="if(event.key==='Enter')runSearch()"/>
+        <select id="srch-pattern" title="Search pattern — which approved metadata may be correlated">
+          <option value="">Auto pattern</option>
+        </select>
+        <input type="number" id="srch-hops" min="0" max="6" placeholder="hops" style="width:70px" title="Max pivot hops (blank = pattern default)"/>
+        <button class="btn btn-primary" onclick="runSearch()">Search</button>
+      </div>
+      <div class="srch-hint" id="srch-hint">
+        Identifiers in the query (CIF, account, IBAN, Emirates ID, passport, mobile, email…) start an iterative search:
+        every document found contributes its own approved metadata, which is used to find the next documents.
+        Leftover words rank results semantically. Use <code>key:value</code> to be explicit.
+      </div>
+    </div>
+    <div class="srch-layout">
+      <div>
+        <div class="card" style="padding:12px 14px;margin-bottom:12px;display:none" id="srch-summary"></div>
+        <div class="card" style="padding:0;overflow:hidden" id="srch-results">
+          <div class="empty-state"><div class="ei">🔎</div><p>Search the metadata index</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-title">Entity profile</div>
+          <div id="srch-entity" style="color:var(--muted);font-size:12px">Values discovered across matched documents appear here. Click one to search from it.</div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-title">Search trail</div>
+          <div id="srch-trace" style="color:var(--muted);font-size:12px">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Index</div>
+          <div id="srch-stats" style="color:var(--muted);font-size:12px">—</div>
+          <button class="btn btn-ghost" style="margin-top:10px;font-size:11px;width:100%" onclick="rebuildIndex()">↻ Rebuild index from server outputs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════ VIEW: SETTINGS ═══════════════ -->
   <div class="view" id="view-settings">
     <div class="two-col">
@@ -792,21 +901,21 @@ tr:hover td{background:var(--surface2)}
       </div>
 
       <div class="card">
-        <div class="card-title">LM Studio</div>
+        <div class="card-title">AI model (OpenRouter)</div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div>
-            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Endpoint</label>
-            <input id="ol-url-input" value="http://127.0.0.1:1234"
+            <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Endpoint (set on the server)</label>
+            <input id="ol-url-input" value="https://openrouter.ai/api" readonly
               style="width:100%;background:var(--surface2);border:1px solid var(--border);
                 border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
           </div>
           <div>
             <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase">Model</label>
-            <input id="ol-model-input" value="gemma-4-e2b-it:2"
+            <input id="ol-model-input" value="google/gemma-4-26b-a4b-it"
               style="width:100%;background:var(--surface2);border:1px solid var(--border);
                 border-radius:6px;color:var(--text);padding:8px 12px;font-size:13px;font-family:monospace;outline:none"/>
           </div>
-          <button class="btn btn-ghost" onclick="testOllama()" style="width:100%">🔌 Test LM Studio</button>
+          <button class="btn btn-ghost" onclick="testOllama()" style="width:100%">🔌 Test OpenRouter</button>
           <div class="ai-status" id="ol-test-status"></div>
           <div id="ol-model-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
@@ -842,11 +951,11 @@ tr:hover td{background:var(--surface2)}
 //  Config (persisted to localStorage)
 // ─────────────────────────────────────────────────────────
 const CFG = {
-  get extUrl()   { return localStorage.getItem('ext_url')   || 'http://localhost:3100' },
+  get extUrl()   { return localStorage.getItem('ext_url')   || (location.protocol.startsWith('http') ? location.origin : 'http://localhost:3100') },
   // Backend is LM Studio (OpenAI-compatible). The /v1 suffix is auto-
   // appended in lmBase() — leave it off the input field so the value
   // matches what the user sees in LM Studio's "Reachable at:" line.
-  get olUrl()    { return localStorage.getItem('ol_url')    || 'http://127.0.0.1:1234' },
+  get olUrl()    { return localStorage.getItem('ol_url')    || 'https://openrouter.ai/api' },
   get olModel()  { return localStorage.getItem('ol_model')  || 'gemma-4-e2b-it:2' },
   save(extUrl, olUrl, olModel) {
     localStorage.setItem('ext_url',  extUrl);
@@ -945,7 +1054,7 @@ function saveDocs() { localStorage.setItem('docs', JSON.stringify(documents)); }
 // ─────────────────────────────────────────────────────────
 const PAGE_TITLES = {
   upload:'Upload Documents', classify:'Classify Document',
-  history:'Extraction History', settings:'Settings'
+  history:'Extraction History', search:'Search Documents', semantic:'Semantic Search', settings:'Settings'
 };
 function nav(view, btn) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -956,6 +1065,8 @@ function nav(view, btn) {
   if (view === 'history')  renderHistory();
   if (view === 'classify') renderClassify();
   if (view === 'settings') renderSettings();
+  if (view === 'search')   initSearchView();
+  if (view === 'semantic') refreshSemanticStatus();
 }
 
 // ─────────────────────────────────────────────────────────
@@ -986,7 +1097,7 @@ function setOlStatus(ok, label) {
   const dotCls = ok ? 'dot green' : 'dot';
   document.getElementById('ol-dot').className       = dotCls;
   document.getElementById('chip-ol-dot').className  = dotCls;
-  document.getElementById('chip-ol-label').textContent = label || 'LM Studio';
+  document.getElementById('chip-ol-label').textContent = label || 'OpenRouter';
   document.getElementById('ol-url').textContent     = CFG.olUrl.replace('http://','');
   const aiBtn = document.getElementById('ai-run-btn');
   if (aiBtn) aiBtn.disabled = !(ok && currentDoc);
@@ -1032,13 +1143,13 @@ async function pingOllama() {
     });
     if (!r.ok) throw new Error('HTTP '+r.status);
     const payload = await r.json();
-    if (!payload?.success) throw new Error(payload?.error || 'service reports LM Studio unreachable');
+    if (!payload?.success) throw new Error(payload?.error || 'service reports OpenRouter unreachable');
     // Service wraps health in { success, data: { ok, url, models: [{name, ownedBy}] } }
     const models = (payload.data?.models || []).map(m => m.name).filter(Boolean);
     setOlStatus(true, CFG.olModel);
     return models;
   } catch {
-    setOlStatus(false, 'LM Studio offline');
+    setOlStatus(false, 'OpenRouter offline');
     return [];
   }
 }
@@ -1082,15 +1193,15 @@ async function testOllama() {
     } else {
       el.innerHTML = found
         ? `<span style="color:var(--green)">✓ Connected · model loaded</span>`
-        : `<span style="color:var(--yellow)">⚠ Connected but no models loaded. Open LM Studio → load a model → Start Server</span>`;
-      toast('LM Studio connected', 'success');
+        : `<span style="color:var(--yellow)">⚠ Connected but no models returned. Check OPENROUTER_API_KEY on the server</span>`;
+      toast('OpenRouter connected', 'success');
     }
     const chips = document.getElementById('ol-model-chips');
     chips.innerHTML = models.slice(0,8).map(m=>
       `<button class="chip chip-blue" style="cursor:pointer" onclick="pickOlModel('${m}')">${m}</button>`
     ).join('');
   } else {
-    el.innerHTML = `<span style="color:var(--red)">✕ Cannot reach LM Studio at ${url}. Open LM Studio → Local Server tab → load a model → Start Server (port 1234)</span>`;
+    el.innerHTML = `<span style="color:var(--red)">✕ Cannot reach OpenRouter from the extractor service. Check OPENROUTER_API_KEY and the server log.</span>`;
   }
 }
 function pickOlModel(name) {
@@ -1708,6 +1819,7 @@ function applyLabel() {
   if (idx>=0) documents[idx].labeledCategory = cat.name;
   else { documents.unshift({...currentDoc, labeledCategory: cat.name}); }
   saveDocs();
+  syncToIndex(currentDoc, { labeledCategory: cat.name });
 
   const banner = document.getElementById('label-banner');
   banner.textContent = `✅ Labeled as "${cat.emoji} ${cat.name}"`;
@@ -1785,12 +1897,14 @@ RULES:
   - confidence reflects how certain you are of the classification (not OCR quality)
   - If the filename and the text content disagree on category, favour the filename unless the text content is overwhelming evidence to the contrary
 
+${approvedMetadataPromptBlock()}
 REQUIRED JSON FORMAT (respond with ONLY this, no other text):
 {
   "category": "<exact category name from the list>",
   "subcategory": "<specific document type, e.g. Passport, Employment Contract, Tax Invoice, Account Opening Form, Bank Statement>",
   "confidence": "high | medium | low",
   "key_fields": { "<field>": "<value or null>" },
+  "search_metadata": { "<approved key>": "<value exactly as printed>" },
   "quality": "good | fair | poor",
   "quality_note": "<one sentence about scan/OCR quality>",
   "reason": "<one sentence explaining your classification decision>"
@@ -1878,7 +1992,7 @@ async function runOllamaClassify() {
         model:           CFG.olModel,
         stream:          true,
         temperature:     0.05,
-        max_tokens:      600,
+        max_tokens:      metadataSchema ? 900 : 600,
         //response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },
@@ -1890,7 +2004,7 @@ async function runOllamaClassify() {
     if (!res.ok) {
       let detail = '';
       try { detail = ' — ' + (await res.text()).slice(0, 200); } catch {}
-      throw new Error('LM Studio HTTP ' + res.status + detail);
+      throw new Error('LLM HTTP ' + res.status + detail);
     }
 
     // OpenAI-style SSE: events separated by blank lines. Each event has
@@ -2076,6 +2190,15 @@ function parseAndDisplayAiResult(raw, btn) {
 
   // Store profile on currentDoc for history
   if (currentDoc) currentDoc._aiProfile = parsed;
+
+  // Push approved metadata into the server's search index
+  if (currentDoc) syncToIndex(currentDoc, {
+    category:        matched ? matched.name : (parsed.category || ''),
+    subcategory:     parsed.subcategory || '',
+    confidence:      parsed.confidence || '',
+    search_metadata: parsed.search_metadata || {},
+    key_fields:      parsed.key_fields || {},
+  });
 }
 
 function applyAiSuggestion() {
@@ -2146,6 +2269,272 @@ function renderHistory() {
         </td>
       </tr>`).join('')}
     </tbody></table>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  Approved metadata + search index
+// ─────────────────────────────────────────────────────────
+let metadataSchema = null;   // GET /metadata/schema — null if the service is older / offline
+
+async function loadMetadataSchema() {
+  try {
+    const r = await fetch(CFG.extUrl + '/metadata/schema', {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    if (d.success) metadataSchema = d.data;
+  } catch { metadataSchema = null; }
+  const sel = document.getElementById('srch-pattern');
+  if (sel && metadataSchema) {
+    sel.innerHTML = '<option value="">Auto pattern</option>' +
+      Object.entries(metadataSchema.searchPatterns || {}).map(([k, p]) =>
+        `<option value="${esc(k)}" title="${esc(p.description || '')}">${esc(p.label || k)}</option>`).join('');
+  }
+}
+
+// Prompt section listing the approved keys per category, so the model pulls
+// exactly the metadata the search index can use.
+function approvedMetadataPromptBlock() {
+  if (!metadataSchema) return '';
+  const f  = metadataSchema.fields || {};
+  const cf = metadataSchema.categoryFields || {};
+  const label = k => f[k] ? `${k} (${f[k].label})` : k;
+  const lines = categories.map(c => {
+    const keys = cf[c.name] || cf['*'] || [];
+    return keys.length ? `  • ${c.name}: ${keys.map(label).join(', ')}` : null;
+  }).filter(Boolean);
+  if (!lines.length) return '';
+  return `APPROVED SEARCH METADATA (return these under "search_metadata", using these exact key names):
+${lines.join('\n')}
+  - Include a key only if its value is actually printed in the document. Copy the value as printed; never invent or complete numbers.
+  - Use {} when none are present. Do not add keys that are not listed.
+`;
+}
+
+async function syncToIndex(doc, payload) {
+  if (!doc || !doc.jobId) return;
+  try {
+    const r = await fetch(`${CFG.extUrl}/index/documents/${encodeURIComponent(doc.jobId)}/classification`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      // filename/fullText let the server index docs it no longer has on disk
+      body: JSON.stringify({ ...payload, filename: doc.filename, fullText: (doc.fullText || '').slice(0, 20000) }),
+    });
+    const d = await r.json();
+    if (!d.success) return;
+    doc._indexed = d.data;
+    renderIndexedMetadata(d.data);
+  } catch { /* search is optional */ }
+}
+
+function renderIndexedMetadata(data) {
+  const list = document.getElementById('dp-fields-list');
+  if (!list) return;
+  let box = document.getElementById('dp-index');
+  if (!box) { box = document.createElement('div'); box.id = 'dp-index'; box.className = 'dp-index'; list.after(box); }
+  const md = (data.metadata || []).filter(m => !(m.sources || []).every(s => s === 'derived'));
+  box.innerHTML = md.length
+    ? '🔎 Indexed for search: ' + md.map(m =>
+        `<span class="srch-seed" title="${esc((m.sources||[]).join(' + '))} — click to search"
+           onclick='searchFor(${JSON.stringify(m.key)}, ${JSON.stringify(m.value)})'>${esc(m.key)}=${esc(m.value)}</span>`).join('')
+      + (data.candidates && data.candidates.length ? `<br><span title="Fields the model returned that are not in metadata-schema.json">${data.candidates.length} unapproved field(s) parked for review</span>` : '')
+    : '🔎 No approved search metadata found in this document';
+}
+
+function initSearchView() {
+  if (!metadataSchema) loadMetadataSchema();
+  refreshIndexStats();
+  setTimeout(() => document.getElementById('srch-q').focus(), 50);
+}
+
+async function refreshIndexStats() {
+  const el = document.getElementById('srch-stats');
+  try {
+    const r = await fetch(CFG.extUrl + '/index/stats', {signal: AbortSignal.timeout(4000)});
+    const d = (await r.json()).data;
+    const keys = Object.entries(d.documentsPerKey || {}).sort((a, b) => b[1] - a[1])
+      .map(([k, n]) => `<div class="ent-val" style="cursor:default"><span>${esc(k)}</span><small>${n} docs</small></div>`).join('');
+    el.innerHTML = `<div>${d.documents} documents · ${d.classified} classified${d.embeddingModel ? ' · ' + d.embedded + ' embedded' : ''}</div>${keys}`;
+  } catch { el.textContent = 'Extractor service unreachable'; }
+}
+
+
+// ── Semantic tab ─────────────────────────────────────────
+async function refreshSemanticStatus() {
+  const el = document.getElementById('sem-status');
+  try {
+    const d = (await (await fetch(CFG.extUrl + '/index/stats', {signal: AbortSignal.timeout(4000)})).json()).data;
+    if (!d.embeddingModel) {
+      el.innerHTML = `Embeddings are off, so ranking uses keywords only. Set <code>EMBEDDING_MODEL</code> on the server.`;
+    } else {
+      const missing = d.documents - d.embedded;
+      el.innerHTML = `Embeddings on (<code>${esc(d.embeddingModel)}</code>) · ${d.embedded} of ${d.documents} documents embedded` +
+        (missing > 0 ? ` · <a href="#" onclick="embedMissing();return false">embed ${missing} missing</a>` : '');
+    }
+  } catch { el.textContent = 'Extractor service unreachable'; }
+}
+async function embedMissing() {
+  const el = document.getElementById('sem-status');
+  el.textContent = 'Embedding documents…';
+  try {
+    const d = await (await fetch(CFG.extUrl + '/index/embed', {method: 'POST'})).json();
+    if (!d.success) throw new Error(d.error);
+    toast(`Embedded ${d.data.embedded} documents` + (d.data.failed ? `, ${d.data.failed} failed` : ''), d.data.failed ? 'error' : 'success');
+  } catch (e) { toast('Embedding failed: ' + e.message, 'error'); }
+  refreshSemanticStatus();
+}
+async function runSemantic() {
+  const query = document.getElementById('sem-q').value.trim();
+  const category = document.getElementById('sem-cat').value.trim();
+  if (!query) return;
+  const res = document.getElementById('sem-results');
+  res.innerHTML = '<div class="empty-state"><span class="spinner"></span></div>';
+  try {
+    const r = await fetch(CFG.extUrl + '/search', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({query, semanticOnly: true, limit: 20, ...(category ? {category} : {})}),
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || 'Search failed');
+    const hits = d.data.hits;
+    res.innerHTML = hits.length ? hits.map(h => {
+      const cat = h.labeledCategory || h.category;
+      return `<div class="hit">
+        <div class="hit-main">
+          <div class="hit-title">${esc(h.filename)}
+            ${cat ? `<span class="chip chip-green">${esc(cat)}</span>` : ''}
+            ${h.subcategory ? `<span class="chip chip-blue">${esc(h.subcategory)}</span>` : ''}</div>
+          <div class="hit-md">${h.metadata.filter(m => !m.sources.every(s => s === 'derived')).slice(0, 6)
+              .map(m => `<span>${esc(m.key)}: ${esc(m.value)}</span>`).join('')}</div>
+        </div>
+        <div class="hit-actions">
+          <div class="hit-score" title="semantic score ${h.semanticScore}">${(h.score * 100).toFixed(0)}%</div>
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px"
+            onclick='openSearchHit(${JSON.stringify(h.jobId)}, ${JSON.stringify(h.outputFile || "")})'>Open</button>
+        </div>
+      </div>`;
+    }).join('') : `<div class="empty-state"><div class="ei">∅</div><p>No documents matched</p></div>`;
+  } catch (e) {
+    res.innerHTML = `<div class="empty-state"><div class="ei">⚠</div><p>${esc(e.message)}</p></div>`;
+  }
+}
+
+async function rebuildIndex() {
+  try {
+    const r = await fetch(CFG.extUrl + '/index/rebuild', {method: 'POST'});
+    const d = await r.json();
+    toast(d.success ? `Index rebuilt — ${d.data.documents} documents` : ('Rebuild failed: ' + d.error), d.success ? 'success' : 'error');
+    refreshIndexStats();
+  } catch (e) { toast('Rebuild failed: ' + e.message, 'error'); }
+}
+
+function searchFor(key, value) {
+  const q = `${key}:${/\s/.test(value) ? '"' + value + '"' : value}`;
+  nav('search', document.getElementById('search-nav'));
+  document.getElementById('srch-q').value = q;
+  runSearch();
+}
+
+async function runSearch(extra = {}) {
+  const query   = document.getElementById('srch-q').value.trim();
+  const pattern = document.getElementById('srch-pattern').value || undefined;
+  const hopsRaw = document.getElementById('srch-hops').value;
+  const body = { query: query || undefined, pattern, ...(hopsRaw !== '' ? { maxHops: +hopsRaw } : {}), ...extra };
+  if (!body.query && !body.seedJobId) return;
+  const res = document.getElementById('srch-results');
+  res.innerHTML = '<div class="empty-state"><span class="spinner"></span></div>';
+  try {
+    const r = await fetch(CFG.extUrl + '/search', {
+      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || 'Search failed');
+    renderSearch(d.data);
+  } catch (e) {
+    res.innerHTML = `<div class="empty-state"><div class="ei">⚠</div><p>${esc(e.message)}</p></div>`;
+  }
+}
+
+function pivotFrom(jobId, filename) {
+  document.getElementById('srch-q').value = '';
+  runSearch({ seedJobId: jobId });
+  toast(`Searching from everything in ${filename}`, 'info');
+}
+
+async function openSearchHit(jobId, outputFile) {
+  const local = documents.find(d => d.jobId === jobId);
+  if (local) { loadDoc(jobId); return; }
+  if (!outputFile) { toast('Extraction JSON not available for this document', 'error'); return; }
+  try {
+    const r = await fetch(CFG.extUrl + '/outputs/' + encodeURIComponent(outputFile));
+    const doc = await r.json();
+    showResult(doc);
+    nav('upload', document.querySelector('.nav-item'));
+  } catch (e) { toast('Could not open: ' + e.message, 'error'); }
+}
+
+function renderSearch(r) {
+  // Summary
+  const sum = document.getElementById('srch-summary');
+  sum.style.display = 'block';
+  sum.innerHTML = `
+    <div style="font-size:12px">
+      <b>${r.totalMatched}</b> document(s) · pattern <span class="chip chip-purple">${esc(r.pattern.label)}</span>
+      · ${r.mode === 'metadata' ? `${r.trace.length} hop(s)` : 'semantic only — no identifiers recognised'}
+      · <span style="color:var(--muted)">${r.tookMs} ms</span>
+    </div>
+    ${r.seeds.length ? `<div style="margin-top:6px;font-size:11px;color:var(--muted)">Started from:
+      ${r.seeds.map(s => `<span class="srch-seed" title="${esc(s.detectedBy)}">${esc(s.key)}=${esc(s.value)}</span>`).join('')}</div>` : ''}
+    ${r.residualQuery ? `<div style="margin-top:4px;font-size:11px;color:var(--muted)">Ranked by: “${esc(r.residualQuery)}”</div>` : ''}`;
+
+  // Results
+  const res = document.getElementById('srch-results');
+  if (!r.hits.length) {
+    res.innerHTML = `<div class="empty-state"><div class="ei">∅</div><p>No documents matched</p></div>`;
+  } else {
+    res.innerHTML = r.hits.map(h => {
+      const cat = h.labeledCategory || h.category;
+      const why = h.matchedOn.length
+        ? h.matchedOn.slice(0, 3).map(m =>
+            `<span class="k">${esc(m.key)}</span> = <span class="v">${esc(m.value)}</span>` +
+            (m.via ? ` <span>via ${esc(m.via.filename)}</span>` : ' <span>(from query)</span>') +
+            (m.similarity ? ` <span>~${Math.round(m.similarity * 100)}%</span>` : '')).join('<br>')
+        : `semantic match`;
+      return `<div class="hit">
+        <div class="hit-hop h${Math.min(h.hop, 3)}" title="Hops from the query"><b>${h.hop}</b>hop</div>
+        <div class="hit-main">
+          <div class="hit-title">${esc(h.filename)}
+            ${cat ? `<span class="chip chip-green">${esc(cat)}</span>` : ''}
+            ${h.subcategory ? `<span class="chip chip-blue">${esc(h.subcategory)}</span>` : ''}</div>
+          <div class="hit-why">${why}</div>
+          <div class="hit-md">${h.metadata.filter(m => !m.sources.every(s => s === 'derived')).slice(0, 8)
+              .map(m => `<span>${esc(m.key)}: ${esc(m.value)}</span>`).join('')}</div>
+        </div>
+        <div class="hit-actions">
+          <div class="hit-score" title="metadata ${h.metadataScore} · semantic ${h.semanticScore}">${(h.score * 100).toFixed(0)}%</div>
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px"
+            onclick='openSearchHit(${JSON.stringify(h.jobId)}, ${JSON.stringify(h.outputFile || "")})'>Open</button>
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" title="Search again starting from this document's metadata"
+            onclick='pivotFrom(${JSON.stringify(h.jobId)}, ${JSON.stringify(h.filename)})'>Pivot ↪</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Entity profile
+  const ent = document.getElementById('srch-entity');
+  const keys = Object.keys(r.entity || {});
+  const labels = (metadataSchema && metadataSchema.fields) || {};
+  ent.innerHTML = keys.length ? keys.map(k => `
+      <div class="ent-key">${esc((labels[k] && labels[k].label) || k)}</div>
+      ${r.entity[k].map(v => `<div class="ent-val" onclick='searchFor(${JSON.stringify(k)}, ${JSON.stringify(v.value)})'>
+          <span>${esc(v.value)}</span><small>${v.documents} doc${v.documents > 1 ? 's' : ''}</small></div>`).join('')}`).join('')
+    : '<span>—</span>';
+
+  // Trail
+  document.getElementById('srch-trace').innerHTML = r.trace.length ? r.trace.map(t =>
+    `<div class="ent-key">Hop ${t.hop}</div>` + t.probes.map(p =>
+      `<div class="trace-row"><span class="${p.newDocuments ? 'ok' : p.note ? 'warn' : ''}">${p.newDocuments ? '+' + p.newDocuments : '·'}</span>
+        ${esc(p.key)}=${esc(p.value)}${p.via ? ` ← ${esc(p.via.filename)}` : ''}${p.note ? `<br><span class="warn">${esc(p.note)}</span>` : ''}</div>`
+    ).join('')).join('') : '—';
 }
 
 function loadDoc(jobId) {
@@ -2225,6 +2614,7 @@ function esc(s) {
 
   // ping both services
   await Promise.all([pingExtractor(), pingOllama()]);
+  loadMetadataSchema();
 
   // load history from extractor /outputs endpoint
   try {

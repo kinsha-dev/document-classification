@@ -29,6 +29,7 @@ import {
   SupportedMimeType,
   FileType,
 } from './types';
+import { createSearchModule } from './search/routes';
 
 // ─────────────────────────────────────────────────────────────
 //  MIME → FileType mapping
@@ -139,6 +140,13 @@ export function createServer(config: ServiceConfig): express.Application {
   app.use(cors());
   app.use(express.json());
 
+  // Serve the two UI pages (and app.js) from the repo root. Whitelisted, not a
+  // blanket static dir, so skill.md / extract.json / schema files stay private.
+  const uiRoot = path.resolve(__dirname, '../..');
+  const uiFiles = ['document-classifier.html', 'extractor-dashboard.html', 'app.js'];
+  for (const f of uiFiles) app.get('/' + f, (_req, res) => res.sendFile(path.join(uiRoot, f)));
+  app.get('/', (_req, res) => res.redirect('/document-classifier.html'));
+
   // Request logger — captures method/url/query, interesting headers, and
   // a summary of the JSON body. Multipart uploads have an empty req.body
   // here (multer parses later in the per-route handler) so we just note
@@ -174,6 +182,28 @@ export function createServer(config: ServiceConfig): express.Application {
 
     next();
   });
+
+  // ── Metadata index + iterative search ──────────────────────
+  const search = createSearchModule({
+    outputDir:      config.outputDir,
+    schemaFile:     config.metadataSchemaFile,
+    embeddingUrl:   config.lmstudioUrl,
+    embeddingModel: config.embeddingModel,
+    log,
+  });
+  app.use(search.router);
+  // Lets index.ts flush pending index writes on shutdown.
+  app.locals.flushIndex = () => search.store.saveNow();
+
+  // Index a finished extraction. Never fails the request — search is additive.
+  function indexResult(result: ExtractionResult): void {
+    try {
+      const d = search.indexer.indexExtraction(result);
+      log('info', 'indexed', { jobId: result.jobId, keys: d.metadata.map((m) => `${m.key}=${m.value}`) });
+    } catch (err) {
+      log('warn', 'indexing failed', { jobId: result.jobId, error: (err as Error).message });
+    }
+  }
 
   // ── Multer (memory storage — keep file in RAM) ──────────────
   const upload = multer({
@@ -424,6 +454,8 @@ export function createServer(config: ServiceConfig): express.Application {
           fs.writeFileSync(outputFile, JSON.stringify(result, null, 2), 'utf-8');
         }
 
+        indexResult(result);
+
         log('info', 'extraction complete', {
           jobId,
           durationMs: result.durationMs,
@@ -519,6 +551,7 @@ export function createServer(config: ServiceConfig): express.Application {
         result.outputFile = writeOutput(result);
         result.durationMs = Date.now() - startMs;
         fs.writeFileSync(result.outputFile, JSON.stringify(result, null, 2), 'utf-8');
+        indexResult(result);
 
         log('info', 'screenshot-ocr complete', {
           jobId,
@@ -582,6 +615,7 @@ export function createServer(config: ServiceConfig): express.Application {
               outputFile: '',
             };
             result.outputFile = writeOutput(result);
+            indexResult(result);
             return { success: true, data: result };
           } else {
             const extracted = await extractImageText(
@@ -603,6 +637,7 @@ export function createServer(config: ServiceConfig): express.Application {
               outputFile: '',
             };
             result.outputFile = writeOutput(result);
+            indexResult(result);
             return { success: true, data: result };
           }
         } catch (err) {
@@ -634,10 +669,8 @@ export function createServer(config: ServiceConfig): express.Application {
   //  nothing else hits them.
   // ──────────────────────────────────────────────────────────────
   function pickLlmUrl(req: Request): string {
-    const override =
-      (req.header('x-llm-url') || '').trim() ||
-      (req.header('x-lmstudio-url') || '').trim();
-    return override || config.lmstudioUrl;
+    // Client URL overrides are ignored: the OpenRouter key must only go to the configured host.
+    return config.lmstudioUrl;
   }
 
   function pickLlmModel(req: Request, body: any): string {
@@ -681,6 +714,21 @@ export function createServer(config: ServiceConfig): express.Application {
   app.get('/llm/models',    handleModels);
   app.get('/ollama/models', handleModels); // legacy alias
 
+  // Push a classifier result into the metadata index (best-effort).
+  function attachToIndex(jobId: string, r: { category: string; subcategory?: string; confidence?: string; search_metadata?: Record<string, unknown>; raw: Record<string, unknown> }) {
+    try {
+      const d = search.indexer.applyClassification(jobId, {
+        category: r.category, subcategory: r.subcategory, confidence: r.confidence,
+        search_metadata: r.search_metadata,
+        key_fields: (r.raw?.['key_fields'] as Record<string, unknown> | undefined),
+      });
+      return { metadata: d.metadata.map((m) => ({ key: m.key, value: m.value, sources: m.sources })), candidates: d.candidates.length };
+    } catch (err) {
+      log('warn', 'index attach failed', { jobId, error: (err as Error).message });
+      return { error: (err as Error).message };
+    }
+  }
+
   // POST /llm/classify  — one-shot classification, JSON in / JSON out.
   // Body: { text: string, categories: [{name}], model?: string }
   const handleClassify = async (req: Request, res: Response): Promise<void> => {
@@ -714,7 +762,10 @@ export function createServer(config: ServiceConfig): express.Application {
         textPreview:   text.slice(0, 200),
       });
 
-      const result = await llmClassify(url, model, text, cats);
+      const jobId: string | undefined = typeof req.body?.jobId === 'string' ? req.body.jobId : undefined;
+      const metadataFields = req.body?.includeMetadata === false ? [] : search.indexer.promptFields(null);
+      const result = await llmClassify(url, model, text, cats, { metadataFields });
+      const indexed = jobId ? attachToIndex(jobId, result) : undefined;
 
       log('info', 'llm classify complete', {
         model,
@@ -724,7 +775,7 @@ export function createServer(config: ServiceConfig): express.Application {
 
       res.json({
         success: true,
-        data: { ...result, model, durationMs: Date.now() - startMs },
+        data: { ...result, model, durationMs: Date.now() - startMs, ...(indexed ? { indexed } : {}) },
       } satisfies ApiResponse);
     } catch (err) {
       const message = (err as Error).message;
@@ -791,7 +842,12 @@ export function createServer(config: ServiceConfig): express.Application {
 
     // Hand the live response off to llmStreamClassify; it owns res from
     // here on (writes SSE events and calls res.end()).
-    await llmStreamClassify(url, model, text, cats, res);
+    const jobId: string | undefined = typeof req.body?.jobId === 'string' ? req.body.jobId : undefined;
+    const metadataFields = req.body?.includeMetadata === false ? [] : search.indexer.promptFields(null);
+    await llmStreamClassify(url, model, text, cats, res, {
+      metadataFields,
+      onResult: (r) => (jobId ? { indexed: attachToIndex(jobId, r) } : undefined),
+    });
   };
   app.post('/llm/classify/stream',    handleClassifyStream);
   app.post('/ollama/classify/stream', handleClassifyStream); // legacy alias

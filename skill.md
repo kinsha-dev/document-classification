@@ -26,8 +26,10 @@ output_schema:
   subcategory: "string — 1–4 word free-form label for the specific document type; \"\" if unclear"
   confidence:  "string — one of: high, medium, low"
   reason:      "string — one short sentence (≤15 words) justifying the choice"
+  search_metadata: "object — approved metadata keys (from metadata-schema.json) found verbatim in the text; omit keys that are absent"
 placeholders:
   categories: "newline-separated list of allowed category names, each prefixed with '- '"
+  metadata_fields: "newline-separated '- key: label' list of approved search metadata keys, rendered from metadata-schema.json"
   text:       "the document text to classify (server truncates to ~2000 chars before substitution)"
 ---
 
@@ -96,6 +98,18 @@ front-end does fuzzy matching (case-insensitive, substring) so the model has
 some slack on punctuation/whitespace. `subcategory`, `confidence`, and
 `reason` are passed through verbatim and surfaced in the UI.
 
+## Search metadata
+
+The classifier also pulls **approved search metadata** — the identifiers
+listed in `metadata-schema.json` (CIF, account number, IBAN, Emirates ID,
+passport, mobile, email, invoice/PO/TRN…). The server renders that list
+into `{{metadata_fields}}` and indexes whatever comes back under
+`search_metadata`, alongside regex matches over the full text. Only
+approved keys are searchable; anything else the model returns is parked
+as a candidate (`GET /metadata/candidates`) until someone approves it in
+the schema. Send `"includeMetadata": false` to `/llm/classify` to get the
+old category-only prompt behaviour.
+
 ## Tweaks restored from the original prompt
 
 The first iteration of this prompt dropped a few cues that were doing
@@ -136,14 +150,19 @@ Output schema (single JSON object, one line, nothing else):
 - "subcategory" : a 1–4 word free-form label for the specific document type within that category (e.g. "Tax Invoice", "Bank Statement", "Lease Agreement", "Discharge Summary"). Use "" if unclear.
 - "confidence"  : "high" | "medium" | "low" — only "high" if the text clearly matches the chosen category
 - "reason"      : one short sentence explaining the choice
+- "search_metadata" : an object with any of the approved keys below whose value appears in the document, copied exactly as printed
+
+Approved search metadata keys (use these key names only):
+{{metadata_fields}}
 
 JSON shape (these are placeholders — fill them in based on this document, do not copy the placeholder text):
-{"category": "<one of the categories above>", "subcategory": "<1–4 word specific document type>", "confidence": "<high|medium|low>", "reason": "<one short sentence, max 15 words>"}
+{"category": "<one of the categories above>", "subcategory": "<1–4 word specific document type>", "confidence": "<high|medium|low>", "reason": "<one short sentence, max 15 words>", "search_metadata": {"<approved key>": "<value as printed>"}}
 
 Rules:
 - "category" MUST match one of the listed categories exactly.
 - Base the decision on substantive evidence (named entities, key phrases, document structure) — not on isolated stopword-adjacent keywords.
 - Keep "reason" to one sentence, 15 words or fewer. Do not pad it.
+- In "search_metadata", include only keys from the approved list and only values that are actually printed in the document. Never guess or invent a number. Use {} if none are present.
 - If the text is too short, garbled, or genuinely ambiguous, use "low" confidence and pick the closest fit.
 - No preamble, no commentary, no markdown, no code fences.
 - Begin your reply with the character { and end it with the character }.

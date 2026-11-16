@@ -13,11 +13,15 @@ const config: ServiceConfig = {
   outputDir:        path.resolve(process.env.OUTPUT_DIR ?? './output'),
   tesseractLang:    process.env.TESSERACT_LANG ?? 'eng',
   logLevel:         process.env.LOG_LEVEL ?? 'info',
-  lmstudioUrl:      (process.env.LMSTUDIO_URL   ?? 'http://127.0.0.1:1234/v1').replace(/\/+$/, ''),
-  lmstudioModel:    process.env.LMSTUDIO_MODEL  ?? 'gemma-4-e2b-it:2',
+  lmstudioUrl:      (process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1').replace(/\/+$/, ''),
+  lmstudioModel:    process.env.OPENROUTER_MODEL ?? 'google/gemma-4-26b-a4b-it',
   classifyPromptFile: process.env.CLASSIFY_PROMPT_FILE
     ? path.resolve(process.env.CLASSIFY_PROMPT_FILE)
     : '',
+  metadataSchemaFile: process.env.METADATA_SCHEMA_FILE
+    ? path.resolve(process.env.METADATA_SCHEMA_FILE)
+    : '',
+  embeddingModel:   process.env.EMBEDDING_MODEL ?? '',
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -48,6 +52,9 @@ const server = app.listen(config.port, config.host, () => {
       llmClassify:         `POST http://localhost:${config.port}/llm/classify`,
       llmClassifySse:      `POST http://localhost:${config.port}/llm/classify/stream`,
       llmReloadPrompt:     `POST http://localhost:${config.port}/llm/reload-prompt`,
+      search:              `POST http://localhost:${config.port}/search`,
+      metadataSchema:      `GET  http://localhost:${config.port}/metadata/schema`,
+      indexStats:          `GET  http://localhost:${config.port}/index/stats`,
     },
   }));
 });
@@ -61,6 +68,7 @@ const shutdown = (signal: string) => {
     level: 'info',
     msg: `${signal} received — shutting down`,
   }));
+  try { app.locals.flushIndex?.(); } catch { /* nothing to flush */ }
   server.close(() => {
     console.log(JSON.stringify({
       ts: new Date().toISOString(),
